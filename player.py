@@ -6,4 +6,4 @@ class Player:
 
     playerimage = pygame.image.load('images/New Piskel (5).png')
     def Render(screen):
-        screen.blit(Player.playerimage,(200,200))
+        screen.blit(Player.playerimage,(350,350))

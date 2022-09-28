@@ -2,7 +2,7 @@
 import pygame
 from player import Player
 pygame.init()
-screen = pygame.display.set_mode((500,500))
+screen = pygame.display.set_mode((750,750))
 
 exit = False
 while not exit:
