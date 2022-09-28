@@ -12,5 +12,6 @@ while not exit:
             exit=True
 
     Player.Render(screen)
+    Player.Move(event)
     
     pygame.display.flip()
