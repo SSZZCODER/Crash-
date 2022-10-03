@@ -12,12 +12,21 @@ class Player:
     playerimage = pygame.image.load('images/New Piskel (5).png')
 
     def Move(self):
+        
+
+    
+        
        if pygame.key.get_pressed()[pygame.K_a]:
-            Player.player_x -= 1
-            
+            Player.player_x -= 1    
+            if Player.player_x < -85:
+                Player.player_x = -85
        if pygame.key.get_pressed()[pygame.K_d]:
             Player.player_x += 1
-            
+            if Player.player_x > 630:
+                Player.player_x = 630
+
+
+        
 
     def Render(screen):
         screen.blit(Player.playerimage,(Player.player_x, Player.player_y))
