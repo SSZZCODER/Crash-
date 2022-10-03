@@ -1,5 +1,5 @@
 import pygame
-import time
+
 
 class Player:
 
@@ -17,13 +17,14 @@ class Player:
     
         
        if pygame.key.get_pressed()[pygame.K_a]:
-            Player.player_x -= 1    
+            Player.player_x -= 1
+            
             if Player.player_x < -85:
                 Player.player_x = -85
        if pygame.key.get_pressed()[pygame.K_d]:
             Player.player_x += 1
-            if Player.player_x > 630:
-                Player.player_x = 630
+            if Player.player_x > 621:
+                Player.player_x = 621
 
 
         

@@ -1,6 +1,7 @@
 # Main File
 import pygame
 from player import Player
+import time
 
 pygame.init()
 screen = pygame.display.set_mode((750,750))
@@ -15,5 +16,5 @@ while not exit:
     screen.fill((0,0,0))
     Player.Render(screen)
     Player.Move(event)
-    
+
     pygame.display.flip()
