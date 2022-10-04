@@ -3,7 +3,7 @@ import math
 
 class Player:
 
-    speed = 2
+    speed = 3
     health = 100
     hunger = 100 
     player_x = 250
