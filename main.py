@@ -6,6 +6,7 @@ import time
 pygame.init()
 screen = pygame.display.set_mode((750,750))
 
+clock = pygame.time.Clock()
 exit = False
 while not exit:
     
@@ -18,3 +19,4 @@ while not exit:
     Player.Move(event)
 
     pygame.display.flip()
+    clock.tick(60)
