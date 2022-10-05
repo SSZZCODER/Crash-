@@ -14,9 +14,11 @@ while not exit:
         if event.type == pygame.QUIT:   
             exit=True
 
+    
     screen.fill((0,0,0))
+    Player.Update()
     Player.Render(screen)
-    Player.Move(event)
+   
 
     pygame.display.flip()
     clock.tick(60)

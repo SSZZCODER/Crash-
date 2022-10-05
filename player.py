@@ -9,9 +9,20 @@ class Player:
     player_x = 250
     player_y = 250
 
+    
     playerimage = pygame.image.load('images/New Piskel (24).png')
+    playerimage = pygame.transform.scale(playerimage,(200, 200))
+    imageload = playerimage
+    playercenter = [50, 50]
 
-    def Move(self):
+    def Update():
+        Player.Rotate()
+        Player.Move()
+        
+
+
+        
+    def Move():
        direction = [0, 0]
        if pygame.key.get_pressed()[pygame.K_s]:
            direction[1] = 1
@@ -53,9 +64,17 @@ class Player:
                Player.player_y = -81.5
        if Player.player_y > 630:
                 Player.player_y = 630
-    def Render(screen):
-        screen.blit(Player.playerimage,(Player.player_x, Player.player_y))
-    playerimage = pygame.transform.scale(playerimage,(200, 200))
-    def Render(screen):
-        screen.blit(Player.playerimage,(Player.player_x, Player.player_y))
+    
+    
+    playercenter = [player_x +50, player_y +50]
 
+    def Rotate():
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        rel_x, rel_y = mouse_x - Player.playercenter[0], mouse_y - Player.playercenter[1]
+        angle = math.atan2(rel_x, rel_y)   * (180/math.pi) 
+        Player.imageload = pygame.transform.rotate(Player.playerimage, angle)
+        #Player.player_x, Player.player_y = Player.imageload.get_rect(center = Player.playercenter).topleft
+        
+    def Render(screen):
+        screen.blit(Player.imageload,(Player.player_x + Player.imageload.get_rect(center = Player.playercenter).topleft[0], Player.player_y + Player.imageload.get_rect(center = Player.playercenter).topleft[1])) 
+      
