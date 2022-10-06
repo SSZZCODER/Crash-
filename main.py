@@ -18,7 +18,6 @@ while not exit:
     screen.fill((0,0,0))
     Player.Update()
     Player.Render(screen)
-   
 
     pygame.display.flip()
     clock.tick(60)

@@ -56,14 +56,14 @@ class Player:
        Player.player_x += direction[0] * Player.speed
        Player.player_y += direction[1] * Player.speed
 
-       if Player.player_x > 627:
-                Player.player_x = 627
-       if Player.player_x < -85:
-                Player.player_x = -85
-       if Player.player_y < -81.5:
-               Player.player_y = -81.5
-       if Player.player_y > 630:
-                Player.player_y = 630
+       if Player.player_x > 425:
+                Player.player_x = 425
+       if Player.player_x < -280:
+                Player.player_x = -280
+       if Player.player_y < -280:
+               Player.player_y = -280
+       if Player.player_y > 425:
+                Player.player_y = 425
     
     
     playercenter = [player_x +50, player_y +50]
