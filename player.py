@@ -10,7 +10,7 @@ class Player:
     player_y = 250
 
     
-    playerimage = pygame.image.load('images/New Piskel (24).png')
+    playerimage = pygame.image.load('images/New Piskel (28).png')
     playerimage = pygame.transform.scale(playerimage,(200, 200))
     imageload = playerimage
     playercenter = [50, 50]

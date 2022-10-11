@@ -5,7 +5,7 @@ import time
 
 pygame.init()
 screen = pygame.display.set_mode((750,750))
-background = pygame.image.load('images/grass.png')
+background = pygame.image.load('images/Pixel_art_grass_image (2).png')
 background = pygame.transform.scale(background, (750,750))
 
 clock = pygame.time.Clock()
