@@ -72,7 +72,7 @@ class Player:
         mouse_x, mouse_y = pygame.mouse.get_pos()
         rel_x, rel_y = mouse_x - Player.playercenter[0], mouse_y - Player.playercenter[1]
         angle = math.atan2(rel_x, rel_y)   * (180/math.pi) 
-        Player.imageload = pygame.transform.rotate(Player.playerimage, angle-95)
+        Player.imageload = pygame.transform.rotate(Player.playerimage, angle-90)
         #Player.player_x, Player.player_y = Player.imageload.get_rect(center = Player.playercenter).topleft
         
     def Render(screen):
