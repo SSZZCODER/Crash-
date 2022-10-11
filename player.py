@@ -58,10 +58,10 @@ class Player:
 
        if Player.player_x > 425:
                 Player.player_x = 425
-       if Player.player_x < -280:
-                Player.player_x = -280
-       if Player.player_y < -280:
-               Player.player_y = -280
+       if Player.player_x < -275:
+                Player.player_x = -275
+       if Player.player_y < -275:
+               Player.player_y = -275
        if Player.player_y > 425:
                 Player.player_y = 425
     
