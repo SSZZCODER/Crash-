@@ -25,6 +25,7 @@ class Player:
         Player.Rotate()
         Player.Move()
         Player.Check()
+
     def Check():
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -91,3 +92,4 @@ class Player:
         screen.blit(Player.imageload,(Player.player_x + Player.imageload.get_rect(center = Player.playercenter).topleft[0], Player.player_y + Player.imageload.get_rect(center = Player.playercenter).topleft[1])) 
         if Player.inventoryShow:
             Player.playerInventory.Draw(screen)
+            
