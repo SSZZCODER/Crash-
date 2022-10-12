@@ -6,7 +6,7 @@ def menu():
     screen = pygame.display.set_mode((750,750))
 
 
-    font = pygame.font.Font('font/Pixelboy.ttf', 125)
+    font = pygame.font.Font('font/Elfboyclassic.ttf', 125)
     title = font.render("Crash!", True, (92, 122, 255))
     start = font.render("Start", True, (92, 122, 255))
 
@@ -26,8 +26,8 @@ def menu():
                 return -1
         screen.fill((13,2,33))
         pygame.draw.rect(screen, (15,8,75), pygame.Rect(130, 210, 500, 100))
-        screen.blit(title, (230, 30))
-        screen.blit(start, (230, 220))
+        screen.blit(title, (205, 30))
+        screen.blit(start, (230, 200))
         pygame.display.flip()
         clock.tick(60)
 
