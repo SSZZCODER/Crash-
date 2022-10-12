@@ -1,5 +1,6 @@
 import pygame
 import math
+from inventory import Inventory
 
 class Player:
 
@@ -14,11 +15,22 @@ class Player:
     playerimage = pygame.transform.scale(playerimage,(200, 200))
     imageload = playerimage
     playercenter = [50, 50]
+    playerInventory = Inventory()
+    inventoryShow = False
+
+
+
 
     def Update():
         Player.Rotate()
         Player.Move()
-        
+        Player.Check()
+    def Check():
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_t:
+                    Player.inventoryShow = not Player.inventoryShow
+    
 
 
         
@@ -74,7 +86,8 @@ class Player:
         angle = math.atan2(rel_x, rel_y)   * (180/math.pi) 
         Player.imageload = pygame.transform.rotate(Player.playerimage, angle-90)
         #Player.player_x, Player.player_y = Player.imageload.get_rect(center = Player.playercenter).topleft
-        
+    
     def Render(screen):
         screen.blit(Player.imageload,(Player.player_x + Player.imageload.get_rect(center = Player.playercenter).topleft[0], Player.player_y + Player.imageload.get_rect(center = Player.playercenter).topleft[1])) 
-      
+        if Player.inventoryShow:
+            Player.playerInventory.Draw(screen)

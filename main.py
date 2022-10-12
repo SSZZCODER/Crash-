@@ -1,5 +1,6 @@
 # Main File
 import pygame
+from inventory import Inventory
 from player import Player
 import time
 
