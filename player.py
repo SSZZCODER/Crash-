@@ -1,9 +1,10 @@
 import pygame
 import math
 from inventory import Inventory
-
+from enemy import zombie
 class Player:
 
+    attack_cooldown = 30
     speed = 3
     health = 100
     hunger = 100 
@@ -18,23 +19,30 @@ class Player:
     playerInventory = Inventory()
     inventoryShow = False
 
-
-
+    def attack():
+        zombie.getdamage(Player.player_x, Player.player_y)
+        Player.health -= 5
 
     def Update():
         Player.Rotate()
         Player.Move()
         Player.Check()
-
+        if Player.attack_cooldown >= 0:
+                        Player.attack_cooldown -= 1
     def Check():
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_t:
                     Player.inventoryShow = not Player.inventoryShow
-    
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    if Player.attack_cooldown < 0:
+                        Player.attack()
+                        Player.attack_cooldown = 30
 
+                 
 
-        
+                
     def Move():
        direction = [0, 0]
        if pygame.key.get_pressed()[pygame.K_s]:
@@ -92,4 +100,3 @@ class Player:
         screen.blit(Player.imageload,(Player.player_x + Player.imageload.get_rect(center = Player.playercenter).topleft[0], Player.player_y + Player.imageload.get_rect(center = Player.playercenter).topleft[1])) 
         if Player.inventoryShow:
             Player.playerInventory.Draw(screen)
-            

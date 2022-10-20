@@ -2,6 +2,7 @@
 import pygame
 from inventory import Inventory
 from player import Player
+from enemy import zombie
 import time
 
 def main():
@@ -25,6 +26,6 @@ def main():
         screen.blit(background, (0,0))
         Player.Update()
         Player.Render(screen)
-
+        zombie.Render(screen)
         pygame.display.flip()
         clock.tick(60)
