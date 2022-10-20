@@ -1,6 +1,7 @@
 import pygame
 import math
 from inventory import Inventory
+from hotbar import Hotbar
 
 class Player:
 
@@ -17,7 +18,8 @@ class Player:
     playercenter = [50, 50]
     playerInventory = Inventory()
     inventoryShow = False
-
+    
+    playerhotbar = Hotbar()
 
 
 
@@ -31,10 +33,7 @@ class Player:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_t:
                     Player.inventoryShow = not Player.inventoryShow
-    
 
-
-        
     def Move():
        direction = [0, 0]
        if pygame.key.get_pressed()[pygame.K_s]:
@@ -92,4 +91,6 @@ class Player:
         screen.blit(Player.imageload,(Player.player_x + Player.imageload.get_rect(center = Player.playercenter).topleft[0], Player.player_y + Player.imageload.get_rect(center = Player.playercenter).topleft[1])) 
         if Player.inventoryShow:
             Player.playerInventory.Draw(screen)
+        Player.playerhotbar.Render(screen)
+        
             

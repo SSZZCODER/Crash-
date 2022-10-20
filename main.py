@@ -2,6 +2,7 @@
 import pygame
 from inventory import Inventory
 from player import Player
+from hotbar import Hotbar
 import time
 
 def main():
@@ -24,6 +25,7 @@ def main():
         
         screen.blit(background, (0,0))
         Player.Update()
+        Player.Render(screen)
         Player.Render(screen)
 
         pygame.display.flip()
