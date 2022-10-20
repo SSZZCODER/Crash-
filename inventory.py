@@ -7,6 +7,8 @@ class Inventory:
         self.rect = pygame.Rect(324, 671.5, 110,72.5)
         self.rectcolor = (135,135,135)
 
+        self.size = []
+    
 
     def Draw(self, screen):
 
