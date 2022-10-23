@@ -1,5 +1,5 @@
 import pygame
-
+import random 
 class zombie():
         damage_cooldown = 30
         speed = 2
@@ -29,3 +29,25 @@ class zombie():
                 if zombie.damage_cooldown <= 0:
                     zombie.imageload = zombie.zombieimage
                     zombie.damage_cooldown = 30
+        def update():
+            zombie.move()
+        def move():
+                move_leftright= random.choice([1, 2])
+                move_updown= random.choice([1, 2])
+                if move_leftright == 1:
+                        zombie.zombie_x -= 1
+                        if zombie.zombie_x < -275:
+                                zombie.zombie_x += 1
+                if move_leftright == 2:
+                        zombie.zombie_x += 1
+                        if zombie.zombie_x > 425:
+                                zombie.zombie_x -= 1
+                if move_updown == 1:
+                        zombie.zombie_y -= 1
+                        if zombie.zombie_y > 425:
+                                zombie.zombie_y += 1
+                if move_leftright == 2:
+                        zombie.zombie_y += 1
+                        if zombie.zombie_y < - 275:
+                                zombie.zombie_y -= 1
+          

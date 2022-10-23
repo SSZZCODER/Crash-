@@ -2,6 +2,7 @@ import pygame
 import math
 from inventory import Inventory
 from enemy import zombie
+from hotbar import Hotbar
 class Player:
 
     attack_cooldown = 30
@@ -18,7 +19,6 @@ class Player:
     playercenter = [50, 50]
     playerInventory = Inventory()
     inventoryShow = False
-    
     playerhotbar = Hotbar()
 
 

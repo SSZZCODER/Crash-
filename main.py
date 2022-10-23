@@ -26,9 +26,9 @@ def main():
         
         screen.blit(background, (0,0))
         Player.Update()
+        zombie.update()
         Player.Render(screen)
         Player.Render(screen)
-
         zombie.Render(screen)
         pygame.display.flip()
         clock.tick(60)

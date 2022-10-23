@@ -4,8 +4,6 @@ import pygame
 
 class Inventory:
     def __init__(self):
-        self.rect = pygame.Rect(324, 671.5, 110,72.5)
-        self.rectcolor = (135,135,135)
 
         self.size = []
     
