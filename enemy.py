@@ -6,8 +6,8 @@ class zombie():
         health = 150
         zombie_x = 250
         zombie_y = 250
-
-        zombieimage = pygame.image.load('images/New Piskel (21).png')
+        transparent = (0, 0, 0, 0)
+        zombieimage = pygame.image.load('images/zombie.png')
         zombieimage = pygame.transform.scale(zombieimage,(200, 200))
         imageload = zombieimage
 
@@ -36,18 +36,18 @@ class zombie():
                 move_updown= random.choice([1, 2])
                 if move_leftright == 1:
                         zombie.zombie_x -= 1
-                        if zombie.zombie_x < -275:
-                                zombie.zombie_x += 1
+                       # if zombie.zombie_x < -275:
+                                #zombie.zombie_x += 1
                 if move_leftright == 2:
                         zombie.zombie_x += 1
-                        if zombie.zombie_x > 425:
-                                zombie.zombie_x -= 1
+                       #if zombie.zombie_x > 425:
+                                #zombie.zombie_x -= 1
                 if move_updown == 1:
                         zombie.zombie_y -= 1
-                        if zombie.zombie_y > 425:
-                                zombie.zombie_y += 1
+                        #if zombie.zombie_y > 425:
+                              #  zombie.zombie_y += 1
                 if move_leftright == 2:
                         zombie.zombie_y += 1
-                        if zombie.zombie_y < - 275:
-                                zombie.zombie_y -= 1
+                       # if zombie.zombie_y < - 275:
+                               # zombie.zombie_y -= 1
           
