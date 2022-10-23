@@ -106,4 +106,4 @@ class Player:
         if Player.inventoryShow:
             Player.playerInventory.Draw(screen)
         Player.playerhotbar.Render(screen)
-        Player.playerInventory.Draw(screen)
+        
