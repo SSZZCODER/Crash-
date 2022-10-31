@@ -35,19 +35,19 @@ class zombie():
                 move_leftright= random.choice([1, 2])
                 move_updown= random.choice([1, 2])
                 if move_leftright == 1:
-                        zombie.zombie_x -= 1
-                       # if zombie.zombie_x < -275:
-                                #zombie.zombie_x += 1
+                        zombie.zombie_x -= 10
+                        if zombie.zombie_x < -275:
+                                zombie.zombie_x += 1
                 if move_leftright == 2:
-                        zombie.zombie_x += 1
-                       #if zombie.zombie_x > 425:
-                                #zombie.zombie_x -= 1
+                        zombie.zombie_x += 5
+                        if zombie.zombie_x > 425:
+                                zombie.zombie_x -= 1
                 if move_updown == 1:
-                        zombie.zombie_y -= 1
-                        #if zombie.zombie_y > 425:
-                              #  zombie.zombie_y += 1
+                        zombie.zombie_y -= 10
+                        if zombie.zombie_y > 425:
+                            zombie.zombie_y += 1
                 if move_leftright == 2:
-                        zombie.zombie_y += 1
-                       # if zombie.zombie_y < - 275:
-                               # zombie.zombie_y -= 1
+                        zombie.zombie_y += 5
+                        if zombie.zombie_y < - 275:
+                                zombie.zombie_y -= 1
           
