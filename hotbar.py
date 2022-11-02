@@ -7,7 +7,9 @@ class  Hotbar:
     def __init__(self):
         self.rect = pygame.Rect(324, 671.5, 110,72.5)
         self.rectcolor = (135,135,135)
-    
+        self.item = None
+        self.stack = 0
+
     def Rectangle(self, screen):   
         pygame.draw.rect(screen, (0,0,0), (320, 668.5, 118.75,79.5))
         pygame.draw.rect(screen,self.rectcolor, self.rect)
@@ -15,9 +17,20 @@ class  Hotbar:
         if self.rect.collidepoint(pygame.mouse.get_pos()):
             self.rectcolor = (89, 89, 89)
         else:
-            self.rectcolor = (135,135,135)
-            
-            
+            self.rectcolor = (135,135,135) 
+    def setItem(self, prop, amount):
+        self.item = prop
+        self.stack = amount
+
+    def popItem(self):
+        amount = self.stack
+        self.stack = 0
+        prop = self.item
+        self.item = None
+        return prop, amount
+
+
+
 
 
     def Render(self,screen):
