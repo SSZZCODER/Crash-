@@ -3,7 +3,7 @@ import pygame
 from inventory import Inventory
 from player import Player
 from hotbar import Hotbar
-from enemy import zombie
+from enemy import *
 import time
 
 def main():
@@ -14,6 +14,9 @@ def main():
 
     clock = pygame.time.Clock()
     exit = False
+    
+    enemy_z1 = zombie(250, 250, 2, 100, 5, 30, 30)
+ 
     while not exit:
         
         for event in pygame.event.get():
@@ -22,12 +25,10 @@ def main():
 
         if event.type == pygame.QUIT:
             return -1
-        
-        
+    
         screen.blit(background, (0,0))
         Player.Update()
-        zombie.update()
-        zombie.Render(screen)
+        enemy_z1.update(screen)
         Player.Render(screen)
         pygame.display.flip()
         clock.tick(60)

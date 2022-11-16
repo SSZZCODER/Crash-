@@ -5,14 +5,15 @@ from enemy import zombie
 from hotbar import Hotbar
 class Player:
 
+    direction = [0, 0]
     attack_cooldown = 30
+    dash_speed = 60
     speed = 3
     health = 100
     hunger = 100 
     player_x = 250
     player_y = 250
-
-    
+    dash_cooldown = 1200
     playerimage = pygame.image.load('images/New Piskel (28).png')
     playerimage = pygame.transform.scale(playerimage,(200, 200))
     imageload = playerimage
@@ -20,67 +21,50 @@ class Player:
     playerInventory = Inventory()
     inventoryShow = False
     playerhotbar = Hotbar()
-
-
-
-    def attack():
-        zombie.getdamage(Player.player_x, Player.player_y)
-        Player.health -= 5
+    
+    def dash():
+        if Player.dash_cooldown != 0:
+            Player.dash_cooldown -= 1
+        if pygame.key.get_pressed()[pygame.K_SPACE] and Player.dash_cooldown <= 0:
+                    Player.player_x += Player.direction[0]*Player.dash_speed
+                    Player.player_y += Player.direction[1]*Player.dash_speed
+                    print("dashing")
+                    Player.dash_cooldown = 1200
 
     def Update():
         Player.Rotate()
         Player.Move()
         Player.Check()
-        if Player.attack_cooldown >= 0:
-                        Player.attack_cooldown -= 1
+        Player.dash()
+
     def Check():
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_t:
                     Player.inventoryShow = not Player.inventoryShow
-
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:
-                    if Player.attack_cooldown < 0:
-                        Player.attack()
-                        Player.attack_cooldown = 30
-
-                 
-
-                
+    
     def Move():
-       direction = [0, 0]
+       Player.direction = [0, 0]
        if pygame.key.get_pressed()[pygame.K_s]:
-           direction[1] = 1
-          #  Player.player_y += 1
-          #  if Player.player_y > 630:
-                #Player.player_y = 630
-
+           Player.direction[1] = 1
+           
        if pygame.key.get_pressed()[pygame.K_w]:
-            direction[1] = -1
-            #Player.player_y -= 1
-            #if Player.player_y < -81.5:
-               # Player.player_y = -81.5
-        
+            Player.direction[1] = -1
+
        if pygame.key.get_pressed()[pygame.K_a]:
-            direction[0] = -1
-            #Player.player_x -= 1
-            #if Player.player_x < -85:
-             #   Player.player_x = -85
+            Player.direction[0] = -1
+
        if pygame.key.get_pressed()[pygame.K_d]:
-            direction[0] = 1
-            #Player.player_x += 1
-            #if Player.player_x > 621:
-               # Player.player_x = 621
+            Player.direction[0] = 1
         
        #normalize the direction
-       c = direction[0]^2 + direction[1]^2
+       c = Player.direction[0]*Player.direction[0] + Player.direction[1]*Player.direction[1]
        if c>0:
             c = math.sqrt(c)
-            direction = [direction[0]/c, direction[1]/c]
+            Player.direction = [Player.direction[0]/c, Player.direction[1]/c]
 
-       Player.player_x += direction[0] * Player.speed
-       Player.player_y += direction[1] * Player.speed
+       Player.player_x += Player.direction[0] * Player.speed
+       Player.player_y += Player.direction[1] * Player.speed
 
        if Player.player_x > 425:
                 Player.player_x = 425
