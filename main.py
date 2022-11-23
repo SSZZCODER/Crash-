@@ -21,6 +21,7 @@ def main():
     GameLogic.enemyList.append(enemy_z1)
 
     StaminaBar = staminabar(0, 0, 115, 20)
+    HealthBar = healthbar(620, 0, 115, 20)
 
     while not exit:
         
@@ -36,5 +37,6 @@ def main():
         enemy_z1.update(screen)
         Player.Render(screen)
         StaminaBar.render(screen)
+        HealthBar.render(screen)
         pygame.display.flip()
         clock.tick(60)
