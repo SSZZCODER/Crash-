@@ -15,7 +15,7 @@ class enemy():
 
     def assignImage(self):
         pass
-    def render(self, screen):
+    def render(self, screen):   
         screen.blit(self.image, (self.xPos, self.yPos))
     def move(self):
         pass
@@ -74,7 +74,7 @@ class zombie(enemy):
                             self.move_updown = 1
 class spawner:
     def __init__(self, enemycount):
-        self.enemycount = self.enemycount
+        self.enemycount = enemycount
     def spawn(self):
         for i in range(self.enemycount):
             x = random.randint(50, 650)

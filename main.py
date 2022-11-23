@@ -6,6 +6,7 @@ from hotbar import Hotbar
 from enemy import *
 from bars import *
 import time
+from gamelogic import GameLogic
 
 def main():
     pygame.init()
@@ -17,7 +18,9 @@ def main():
     exit = False
     
     enemy_z1 = zombie(250, 250, 2, 100, 5, 30, 30)
-    StaminaBar = staminabar(320, 640, 115, 20)
+    GameLogic.enemyList.append(enemy_z1)
+
+    StaminaBar = staminabar(0, 0, 115, 20)
 
     while not exit:
         

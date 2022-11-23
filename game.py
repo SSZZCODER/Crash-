@@ -2,7 +2,6 @@ import menu
 import main 
 import pygame
 
-
 level = 0
 
 while level != -1:

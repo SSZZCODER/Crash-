@@ -1,8 +1,9 @@
 import pygame
 import math
 from inventory import Inventory
-from enemy import zombie
+from enemy import *
 from hotbar import Hotbar
+
 class Player:
 
     direction = [0, 0]
@@ -22,13 +23,20 @@ class Player:
     inventoryShow = False
     playerhotbar = Hotbar()
     
+    def damage_check():
+        for e in GameLogic.enemyList:
+            e.image
+            e.damage
+            if Player.imageload.get_rect().colliderect(e.image.get_rect()):
+                Player.health  -= e.damage
+                print(Player.health)
+
     def dash():
         if Player.dash_cooldown != 0:
             Player.dash_cooldown -= 1
         if pygame.key.get_pressed()[pygame.K_SPACE] and Player.dash_cooldown <= 0:
                     Player.player_x += Player.direction[0]*Player.dash_speed
                     Player.player_y += Player.direction[1]*Player.dash_speed
-                    print("dashing")
                     Player.dash_cooldown = 600
 
     def Update():
@@ -36,13 +44,13 @@ class Player:
         Player.Move()
         Player.Check()
         Player.dash()
-
+        Player.damage_check()
     def Check():
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_t:
                     Player.inventoryShow = not Player.inventoryShow
-    
+
     def Move():
        Player.direction = [0, 0]
        if pygame.key.get_pressed()[pygame.K_s]:
@@ -76,7 +84,7 @@ class Player:
                 Player.player_y = 425
     
     
-    playercenter = [player_x +50, player_y +50]
+       Player.playercenter = [Player.player_x +50, Player.player_y +50]
 
     def Rotate():
         mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -86,7 +94,7 @@ class Player:
         #Player.player_x, Player.player_y = Player.imageload.get_rect(center = Player.playercenter).topleft
     
     def Render(screen):
-        screen.blit(Player.imageload,(Player.player_x + Player.imageload.get_rect(center = Player.playercenter).topleft[0], Player.player_y + Player.imageload.get_rect(center = Player.playercenter).topleft[1])) 
+        screen.blit(Player.imageload,Player.imageload.get_rect(center = Player.playercenter)) 
         if Player.inventoryShow:
             Player.playerInventory.Draw(screen)
         Player.playerhotbar.Render(screen)
