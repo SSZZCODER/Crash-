@@ -14,7 +14,8 @@ class Inventory:
         for i in range(len(self.items)):
             if items[i] == None:
                 items[i] = items
-                return
+                return  
+                
     def removeItem(self, item):
         if item in self.items:
             self.items[item] -=1

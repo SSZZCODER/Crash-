@@ -4,6 +4,7 @@ from inventory import Inventory
 from player import Player
 from hotbar import Hotbar
 from enemy import *
+from staminabar import staminabar
 import time
 
 def main():
@@ -16,7 +17,7 @@ def main():
     exit = False
     
     enemy_z1 = zombie(250, 250, 2, 100, 5, 30, 30)
- 
+
     while not exit:
         
         for event in pygame.event.get():

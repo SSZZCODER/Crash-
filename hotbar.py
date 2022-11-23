@@ -31,6 +31,10 @@ class Hotbar:
         return prop, amount
 
 
+    def Render(self,screen):
+        self.Hover()
+        self.Rectangle(screen)
+        
 class Item:
     def __init__(self, amount, xPos, yPos, name):
         self.amount = amount
@@ -59,8 +63,3 @@ class Bandages(Item):
     def assignImage(self):
         return pygame.image.load('images/New Piskel (30).png')
 
-
-
-def Render(self,screen):
-        self.Hover()
-        self.Rectangle(screen)

@@ -13,12 +13,12 @@ class Player:
     hunger = 100 
     player_x = 250
     player_y = 250
-    dash_cooldown = 1200
+    dash_cooldown = 600
     playerimage = pygame.image.load('images/New Piskel (28).png')
     playerimage = pygame.transform.scale(playerimage,(200, 200))
     imageload = playerimage
     playercenter = [50, 50]
-    playerInventory = Inventory()
+    playerInventory = Inventory(3)
     inventoryShow = False
     playerhotbar = Hotbar()
     
@@ -29,7 +29,7 @@ class Player:
                     Player.player_x += Player.direction[0]*Player.dash_speed
                     Player.player_y += Player.direction[1]*Player.dash_speed
                     print("dashing")
-                    Player.dash_cooldown = 1200
+                    Player.dash_cooldown = 600
 
     def Update():
         Player.Rotate()
@@ -47,7 +47,7 @@ class Player:
        Player.direction = [0, 0]
        if pygame.key.get_pressed()[pygame.K_s]:
            Player.direction[1] = 1
-           
+
        if pygame.key.get_pressed()[pygame.K_w]:
             Player.direction[1] = -1
 
