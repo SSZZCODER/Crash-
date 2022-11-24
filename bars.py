@@ -1,6 +1,8 @@
 import pygame 
 from player import Player
 class bar:
+    x = 600
+    y = 0
     def __init__(self, x, y, width, height, color = (0,0,0)):
         self.rect = pygame.Rect(x, y, width, height)
         self.color = color
@@ -11,7 +13,7 @@ class bar:
 class staminabar(bar):
     def __init__(self, x, y, width, height):
         super().__init__(x, y, width, height)
-        self.color = (0, 255, 255)
+        self.color = (255, 242, 0)
 
     def render(self, screen):
          super().render(screen)
@@ -20,8 +22,9 @@ class staminabar(bar):
 class healthbar(bar):
     def __init__(self, x, y, width, height):
         super().__init__(x, y, width, height)
-        self.color = (255, 0, 0)
+        self.color = (250, 28, 0)
         
+
     def render(self, screen):
          super().render(screen)
          pygame.draw.rect(screen, self.color, pygame.Rect(self.rect.x, self.rect.y, int((Player.health/100)*self.rect.width), self.rect.height))

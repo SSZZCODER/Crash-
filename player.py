@@ -28,7 +28,6 @@ class Player:
     def damage_check():
         if Player.damage_cooldown != 0:
             Player.damage_cooldown -= 1
-    
         if Player.damage_cooldown <= 0:
             for e in GameLogic.enemyList:
                 pygame.Rect(e.xPos, e.yPos, 30, 30)
@@ -40,7 +39,6 @@ class Player:
                     Player.health  -= e.damage
                     print(Player.health)
                     Player.damage_cooldown = 60
-
     def dash():
         if Player.dash_cooldown != 0:
             Player.dash_cooldown -= 1
@@ -55,6 +53,8 @@ class Player:
         Player.Check()
         Player.dash()
         Player.damage_check()
+        Player.die()
+
     def Check():
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
