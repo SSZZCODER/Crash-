@@ -9,6 +9,8 @@ class Player:
     direction = [0, 0]
     attack_cooldown = 30
     dash_speed = 60
+    damage_cooldown = 0
+    regen_cooldown = 300
     speed = 3
     health = 100
     hunger = 100 
@@ -24,13 +26,19 @@ class Player:
     playerhotbar = Hotbar()
     
     def damage_check():
-        for e in GameLogic.enemyList:
-            e.image
-            e.damage
-            if Player.imageload.get_rect().colliderect(e.image.get_rect()):
-                Player.health  -= e.damage
-                
-
+        if Player.damage_cooldown != 0:
+            Player.damage_cooldown -= 1
+        if Player.damage_cooldown <= 0:
+            for e in GameLogic.enemyList:
+                pygame.Rect(e.xPos, e.yPos, 30, 30)
+                pygame.Rect(Player.player_x, Player.player_y, 70, 70)
+                e.image.get_rect().colliderect(Player.imageload.get_rect(center = Player.playercenter))
+                e.damage
+                if  pygame.Rect(e.xPos, e.yPos, 30, 30).colliderect(pygame.Rect(Player.player_x, Player.player_y, 70, 70)):
+                #if Player.imageload.get_rect(center = Player.playercenter).colliderect(e.image.get_rect()):
+                    Player.health  -= e.damage
+                    print(Player.health)
+                    Player.damage_cooldown = 60
     def dash():
         if Player.dash_cooldown != 0:
             Player.dash_cooldown -= 1
@@ -74,14 +82,14 @@ class Player:
        Player.player_x += Player.direction[0] * Player.speed
        Player.player_y += Player.direction[1] * Player.speed
 
-       if Player.player_x > 425:
-                Player.player_x = 425
-       if Player.player_x < -275:
-                Player.player_x = -275
-       if Player.player_y < -275:
-               Player.player_y = -275
-       if Player.player_y > 425:
-                Player.player_y = 425
+       if Player.player_x > 670:
+                Player.player_x = 670
+       if Player.player_x < -30:
+                Player.player_x = -30
+       if Player.player_y < -30:
+               Player.player_y = -30
+       if Player.player_y > 670:
+                Player.player_y = 670
     
     
        Player.playercenter = [Player.player_x +50, Player.player_y +50]
@@ -91,7 +99,6 @@ class Player:
         rel_x, rel_y = mouse_x - Player.playercenter[0], mouse_y - Player.playercenter[1]
         angle = math.atan2(rel_x, rel_y)   * (180/math.pi) 
         Player.imageload = pygame.transform.rotate(Player.playerimage, angle-90)
-        #Player.player_x, Player.player_y = Player.imageload.get_rect(center = Player.playercenter).topleft
     
     def Render(screen):
         screen.blit(Player.imageload,Player.imageload.get_rect(center = Player.playercenter)) 
