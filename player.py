@@ -53,8 +53,6 @@ class Player:
         Player.Check()
         Player.dash()
         Player.damage_check()
-        Player.die()
-
     def Check():
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
