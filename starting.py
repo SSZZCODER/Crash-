@@ -22,7 +22,7 @@ def main():
     enemy_z1 = zombie(250, 250, 2, 100, 5, 30, 30)
     GameLogic.enemyList.append(enemy_z1)
 
-    StaminaBar = staminabar(0, 0, 115, 20)
+    StaminaBar = staminabar(30, 30, 115, 20)
     HealthBar = healthbar(30, 0, 115, 20)
 
     lavawarp = Warp(0,400,100,100,(255,5,10))
