@@ -42,6 +42,7 @@ def main():
                 return 2
             if event.type == pygame.QUIT:
                 return -1
+        
         screen.blit(background, (0,0))
         lavawarp.Update(screen)
         Player.Update()
