@@ -1,6 +1,8 @@
 import menu
-import main 
+import starting
 import pygame
+import lava
+
 
 level = 0
 
@@ -8,4 +10,6 @@ while level != -1:
     if level == 0:
         level = menu.menu()
     if level == 1:
-        level = main.main() 
+        level = starting.main()    
+    if level == 2:
+        level = lava.main()

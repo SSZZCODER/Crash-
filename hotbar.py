@@ -10,6 +10,7 @@ class Hotbar:
         self.rectcolor = (135,135,135)
         self.item = None
         self.stack = 0
+        self.list = []
 
     def Rectangle(self, screen):   
         pygame.draw.rect(screen, (0,0,0), (320, 668.5, 118.75,79.5))
@@ -19,9 +20,10 @@ class Hotbar:
             self.rectcolor = (89, 89, 89)
         else:
             self.rectcolor = (135,135,135) 
-    def setItem(self, prop, amount):
+    def setItem(self, prop):
         self.item = prop
-        self.stack = amount
+        self.stack = prop.amount
+
 
     def popItem(self):
         amount = self.stack
@@ -34,32 +36,3 @@ class Hotbar:
     def Render(self,screen):
         self.Hover()
         self.Rectangle(screen)
-        
-class Item:
-    def __init__(self, amount, xPos, yPos, name):
-        self.amount = amount
-        self.xPos = xPos
-        self.yPos = yPos
-        self.image = self.assignImage()
-        self.name = name
-       
-
-    def assignImage(self):
-        pass
-    def Render(self, screen):
-        screen.blit(self.image, (self.xPos, self.yPos))
-
-class Club(Item):
-    def __init__(self, amount, xPos, yPos):
-        Item.__init__(self, amount, xPos, yPos, "Club")
-
-    def assignImage(self):
-        return pygame.image.load('images/New Piskel (29).png')
-
-class Bandages(Item):
-    def __init__(self, amount, xPos, yPos):
-        Item.__init__(self, amount, xPos, yPos, "Bandages")
-
-    def assignImage(self):
-        return pygame.image.load('images/New Piskel (30).png')
-

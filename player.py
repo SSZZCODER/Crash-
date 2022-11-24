@@ -18,7 +18,7 @@ class Player:
     playerimage = pygame.image.load('images/New Piskel (28).png')
     playerimage = pygame.transform.scale(playerimage,(200, 200))
     imageload = playerimage
-    playercenter = [50, 50]
+    playercenter = [300, 300]
     playerInventory = Inventory(3)
     inventoryShow = False
     playerhotbar = Hotbar()
@@ -29,7 +29,7 @@ class Player:
             e.damage
             if Player.imageload.get_rect().colliderect(e.image.get_rect()):
                 Player.health  -= e.damage
-                print(Player.health)
+                
 
     def dash():
         if Player.dash_cooldown != 0:
@@ -98,4 +98,5 @@ class Player:
         if Player.inventoryShow:
             Player.playerInventory.Draw(screen)
         Player.playerhotbar.Render(screen)
+        
         

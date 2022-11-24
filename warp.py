@@ -1,17 +1,22 @@
-from enum import auto
+from re import X
+from tkinter import Y
 import pygame
 import player
 from player import Player
 
 
 class Warp:
-    def __init__(self, xpos, ypos, width, height, auto):
-        self.rect = pygame.Rect(xpos, ypos, width,height)
-        self.auto = auto
 
-    def lavaWarp(self):
-        self.rect = pygame.Rect(0,0,100,100)
-        self.auto = auto
-        
-        if self.rect.colliderect(Player.imageload.get_rect(center =(player.player_x, player.player_y))):
-            print("Touched")
+    def __init__(self, xpos, ypos, width, height, color):   
+        self.rect = pygame.Rect(xpos, ypos, width,height)
+        self.color = color
+    def Touched(self):  
+        if self.rect.collidepoint(Player.playercenter):
+            return True
+        else:
+            return False
+    def Render(self,screen):
+        pygame.draw.rect(screen,self.color ,self.rect)
+    def Update(self, screen):
+        self.Touched()
+        self.Render(screen) 
