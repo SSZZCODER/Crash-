@@ -7,6 +7,7 @@ from bars import *
 from enemy import zombie
 import time
 from gamelogic import GameLogic
+from warp import Warp
 
 
 
@@ -33,6 +34,8 @@ def main():
     enemy_z1 = zombie(250, 250, 2, 100, 5, 30, 30)
     GameLogic.enemyList.append(enemy_z1)
 
+    startingwarp = Warp(0,500, 35,100, (5,5,255))
+
     StaminaBar = staminabar(30, 30, 115, 20)
     HealthBar = healthbar(30, 0, 115, 20)
 
@@ -48,9 +51,12 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:   
                 exit=True
+            if  startingwarp.Touched() == True:
+                return 1
             if event.type == pygame.QUIT:
                 return -1
         screen.blit(lavaImage, (0,0))
+        startingwarp.Update(screen)
         Player.Update()
         enemy_z1.update(screen)
         Player.Render(screen)

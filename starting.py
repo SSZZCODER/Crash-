@@ -25,7 +25,7 @@ def main():
     StaminaBar = staminabar(30, 30, 115, 20)
     HealthBar = healthbar(30, 0, 115, 20)
 
-    lavawarp = Warp(0,400,100,100,(255,5,10))
+    lavawarp = Warp(0,650,35,100,(255,5,10))
 
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
