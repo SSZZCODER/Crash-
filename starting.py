@@ -23,7 +23,15 @@ def main():
     GameLogic.enemyList.append(enemy_z1)
 
     StaminaBar = staminabar(0, 0, 115, 20)
+    HealthBar = healthbar(30, 0, 115, 20)
+
     lavawarp = Warp(0,400,100,100,(255,5,10))
+
+    heart = pygame.image.load('images/heart.png')
+    heart = pygame.transform.scale(heart, (120, 120))
+
+    energy = pygame.image.load('images/energy.png')
+    energy = pygame.transform.scale(energy, (65, 65))
 
     while not exit:
         
@@ -40,5 +48,8 @@ def main():
         enemy_z1.update(screen)
         Player.Render(screen)
         StaminaBar.render(screen)
+        HealthBar.render(screen)
+        screen.blit(heart, (-29, -45))
+        screen.blit(energy, (-9, 10))
         pygame.display.flip()
         clock.tick(60)
