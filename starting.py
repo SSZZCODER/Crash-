@@ -40,6 +40,7 @@ def main():
                 exit=True
             if  lavawarp.Touched() == True:
                 return 2
+                
             if event.type == pygame.QUIT:
                 return -1
         

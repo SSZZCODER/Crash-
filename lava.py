@@ -34,7 +34,7 @@ def main():
     enemy_z1 = zombie(250, 250, 2, 100, 5, 30, 30)
     GameLogic.enemyList.append(enemy_z1)
 
-    startingwarp = Warp(0,500, 35,100, (5,5,255))
+    startingwarp = Warp(0,550, 35,100, (5,5,255))
 
     StaminaBar = staminabar(30, 30, 115, 20)
     HealthBar = healthbar(30, 0, 115, 20)
