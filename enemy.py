@@ -74,7 +74,7 @@ class zombie(enemy):
                             self.move_updown = 1
 class spawner:
     def __init__(self, enemycount):
-        self.enemycount = enemycount
+        self.enemycount = enemycount   
     def spawn(self):
         for i in range(self.enemycount):
             x = random.randint(50, 650)
