@@ -40,10 +40,13 @@ def main():
                 exit=True
             if  lavawarp.Touched() == True:
                 return 2
-                
+            if Player.zero() == True:
+                Player.health +=100       
+                return 0 
+                       
             if event.type == pygame.QUIT:
                 return -1
-        
+
         screen.blit(background, (0,0))
         lavawarp.Update(screen)
         Player.Update()

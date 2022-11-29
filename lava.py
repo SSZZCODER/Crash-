@@ -66,3 +66,4 @@ def main():
         screen.blit(energy, (-9, 10))
         pygame.display.flip()
         clock.tick(60)
+#inventory not showing

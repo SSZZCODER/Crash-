@@ -39,6 +39,11 @@ class Player:
                     Player.health  -= e.damage
                     print(Player.health)
                     Player.damage_cooldown = 60
+    def zero():
+        if Player.health == 0:
+            return True
+        else: 
+            return False
     def dash():
         if Player.dash_cooldown != 0:
             Player.dash_cooldown -= 1

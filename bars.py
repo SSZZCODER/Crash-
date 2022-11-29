@@ -23,7 +23,8 @@ class healthbar(bar):
     def __init__(self, x, y, width, height):
         super().__init__(x, y, width, height)
         self.color = (250, 28, 0)
-        
+    
+
 
     def render(self, screen):
          super().render(screen)
