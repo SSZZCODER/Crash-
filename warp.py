@@ -7,9 +7,11 @@ from player import Player
 
 class Warp:
 
-    def __init__(self, xpos, ypos, width, height, color):   
+    def __init__(self, xpos, ypos, width, height, color, offset_x, offset_y):   
         self.rect = pygame.Rect(xpos, ypos, width,height)
         self.color = color
+        self.offset_x = offset_x
+        self.offset_y = offset_y
     def Touched(self):  
         if self.rect.collidepoint(Player.playercenter):
             return True

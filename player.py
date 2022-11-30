@@ -39,6 +39,10 @@ class Player:
                     Player.health  -= e.damage
                     print(Player.health)
                     Player.damage_cooldown = 60
+    def MoveBy(x, y):
+        Player.player_x += x
+        Player.player_y += y
+        Player.playercenter = [Player.player_x +50, Player.player_y +50]
     def zero():
         if Player.health == 0:
             return True

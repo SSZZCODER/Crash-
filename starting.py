@@ -25,7 +25,8 @@ def main():
     StaminaBar = staminabar(30, 30, 115, 20)
     HealthBar = healthbar(30, 0, 115, 20)
 
-    lavawarp = Warp(0,650,35,100,(255,5,10))
+    lavawarp = Warp(0,650,35,100,(255,5,10), 50,0)
+
 
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
@@ -39,11 +40,11 @@ def main():
             if event.type == pygame.QUIT:   
                 exit=True
             if  lavawarp.Touched() == True:
+                Player.MoveBy(lavawarp.offset_x, lavawarp.offset_y)
                 return 2
             if Player.zero() == True:
                 Player.health +=100       
-                return 0 
-                       
+                return 0        
             if event.type == pygame.QUIT:
                 return -1
 
