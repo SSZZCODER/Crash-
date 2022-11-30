@@ -13,3 +13,5 @@ while level != -1:
         level = starting.main()    
     if level == 2:
         level = lava.main()
+        
+    print(level)

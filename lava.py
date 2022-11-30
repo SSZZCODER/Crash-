@@ -22,8 +22,6 @@ def main():
     clock = pygame.time.Clock()
     exit = False
     
-    clock = pygame.time.Clock()
-    exit = False
     
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
@@ -34,7 +32,7 @@ def main():
     enemy_z1 = zombie(250, 250, 2, 100, 5, 30, 30)
     GameLogic.enemyList.append(enemy_z1)
 
-    startingwarp = Warp(0,550, 35,100, (5,5,255))
+    startingwarp = Warp(0,650, 35,100, (5,5,255), 50,0)
 
     StaminaBar = staminabar(30, 30, 115, 20)
     HealthBar = healthbar(30, 0, 115, 20)
@@ -51,10 +49,13 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:   
                 exit=True
+            
             if  startingwarp.Touched() == True:
+                Player.MoveBy(startingwarp.offset_x, startingwarp.offset_y)
                 return 1
             if event.type == pygame.QUIT:
                 return -1
+
         screen.blit(lavaImage, (0,0))
         startingwarp.Update(screen)
         Player.Update()
