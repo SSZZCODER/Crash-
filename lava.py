@@ -29,9 +29,10 @@ def main():
     energy = pygame.image.load('images/energy.png')
     energy = pygame.transform.scale(energy, (65, 65))
 
-    enemy_z1 = zombie(250, 250, 2, 100, 5, 30, 30)
+    enemy_z1 = zombie(250, 250, 2, 100, 5, 30, 30, 200)
     GameLogic.enemyList.append(enemy_z1)
 
+    spawner1 = spawner(3, 600)
     startingwarp = Warp(0,650, 35,100, (5,5,255), 50,0)
 
     StaminaBar = staminabar(30, 30, 115, 20)
@@ -61,6 +62,8 @@ def main():
         Player.Update()
         enemy_z1.update(screen)
         Player.Render(screen)
+        spawner1.spawn()
+        GameLogic.Update(screen)
         StaminaBar.render(screen)
         HealthBar.render(screen)
         screen.blit(heart, (-29, -45))

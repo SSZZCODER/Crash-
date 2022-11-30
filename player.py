@@ -1,7 +1,7 @@
 import pygame
 import math
 from inventory import Inventory
-from enemy import *
+from gamelogic import GameLogic
 from hotbar import Hotbar
 
 class Player:
@@ -14,11 +14,11 @@ class Player:
     speed = 3
     health = 100
     hunger = 100 
-    player_x = 250
-    player_y = 250
+    player_x = 0
+    player_y = 0
     dash_cooldown = 600
     playerimage = pygame.image.load('images/New Piskel (28).png')
-    playerimage = pygame.transform.scale(playerimage,(200, 200))
+    playerimage = pygame.transform.scale(playerimage,(50, 55))
     imageload = playerimage
     playercenter = [300, 300]
     playerInventory = Inventory(3)
@@ -39,15 +39,19 @@ class Player:
                     Player.health  -= e.damage
                     print(Player.health)
                     Player.damage_cooldown = 60
+
     def MoveBy(x, y):
         Player.player_x += x
         Player.player_y += y
-        Player.playercenter = [Player.player_x +50, Player.player_y +50]
+        Player.playercenter = [Player.player_x +25, Player.player_y +27]
+        GameLogic.playerPos = [Player.player_x, Player.player_y]
+
     def zero():
         if Player.health == 0:
             return True
         else: 
             return False
+
     def dash():
         if Player.dash_cooldown != 0:
             Player.dash_cooldown -= 1
@@ -62,6 +66,7 @@ class Player:
         Player.Check()
         Player.dash()
         Player.damage_check()
+
     def Check():
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -91,17 +96,19 @@ class Player:
        Player.player_x += Player.direction[0] * Player.speed
        Player.player_y += Player.direction[1] * Player.speed
 
-       if Player.player_x > 670:
-                Player.player_x = 670
-       if Player.player_x < -30:
-                Player.player_x = -30
-       if Player.player_y < -30:
-               Player.player_y = -30
-       if Player.player_y > 670:
-                Player.player_y = 670
+       if Player.player_x > 695:
+                Player.player_x = 695
+       if Player.player_x < 0:
+                Player.player_x = 0
+       if Player.player_y < 0:
+               Player.player_y = 0
+       if Player.player_y > 695:
+                Player.player_y = 695
     
     
-       Player.playercenter = [Player.player_x +50, Player.player_y +50]
+       Player.playercenter = [Player.player_x +25, Player.player_y +27]
+       
+       GameLogic.playerPos = [Player.player_x, Player.player_y]
 
     def Rotate():
         mouse_x, mouse_y = pygame.mouse.get_pos()
