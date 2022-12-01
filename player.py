@@ -47,7 +47,7 @@ class Player:
         GameLogic.playerPos = [Player.player_x, Player.player_y]
 
     def zero():
-        if Player.health == 0:
+        if Player.health <= 0:
             return True
         else: 
             return False
@@ -66,7 +66,7 @@ class Player:
         Player.Check()
         Player.dash()
         Player.damage_check()
-
+        Player.zero()
     def Check():
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:

@@ -19,10 +19,10 @@ def main():
     clock = pygame.time.Clock()
     exit = False
     
-    enemy_z1 = zombie(250, 250, 2, 100, 5, 30, 30, 200)
+    enemy_z1 = zombie(250, 250, 1, 100, 5, 30, 30, 200)
     GameLogic.enemyList.append(enemy_z1)
 
-    spawner1 = spawner(3, 600)
+    spawner1 = spawner(0, 600, 11)
     StaminaBar = staminabar(30, 30, 115, 20)
     HealthBar = healthbar(30, 0, 115, 20)
 
@@ -51,11 +51,11 @@ def main():
 
         screen.blit(background, (0,0))
         lavawarp.Update(screen)
+        spawner1.spawn()
+        GameLogic.Update(screen)
         Player.Update()
         enemy_z1.update(screen)
         Player.Render(screen)
-        spawner1.spawn()
-        GameLogic.Update(screen)
         StaminaBar.render(screen)
         HealthBar.render(screen)
         screen.blit(heart, (-29, -45))

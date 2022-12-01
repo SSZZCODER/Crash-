@@ -89,21 +89,23 @@ class zombie(enemy):
             #                 self.move_cooldown = 30
             #                 self.move_updown = 1
 class spawner:
-    def __init__(self, enemycount, spawn_cooldown):
+    def __init__(self, enemycount, spawn_cooldown, max_enemycount):
         self.enemycount = enemycount
         self.spawn_cooldown = spawn_cooldown
         self.life = self.spawn_cooldown
-
+        self.max_enemycount = max_enemycount
 
     def spawn(self):
         if self.life > 0:
             self.life -= 1
         else:
+          if self.enemycount <= self.max_enemycount:
             for i in range(self.enemycount):
                 x = random.randint(50, 650)
                 y = random.randint(50, 650)
                 speed = random.randint(1,2)
                 health =random.randint(100, 150)
-                damage = random.randint(5, 7)
+                damage = random.randint(5, 6)
                 GameLogic.enemyList.append( zombie(x, y, speed, health, damage, 30, 30, 200))
+                self.enemycount += 1
                 self.life = self.spawn_cooldown         
