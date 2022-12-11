@@ -49,6 +49,7 @@ def main():
                 return -1
 
         screen.blit(background, (0,0))
+        particles.Update(screen)
         lavawarp.Update(screen)
         spawner1.spawn()
         GameLogic.Update(screen)
@@ -56,7 +57,6 @@ def main():
             return 3
         #enemy_z1.update(screen)
         Player.Update()
-        particles.Update(screen)
         Player.Render(screen)
         StaminaBar.render(screen)
         HealthBar.render(screen)

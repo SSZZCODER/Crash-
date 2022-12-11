@@ -61,10 +61,11 @@ def main():
                 return -1
 
         screen.blit(lavaImage, (0,0))
+        particlelava.Update(screen)
         startingwarp.Update(screen)
         spawner1.spawn()
         GameLogic.Update(screen)
-        particlelava.Update(screen)
+      
         Player.Update()
        # enemy_z1.update(screen)
         Player.Render(screen)
