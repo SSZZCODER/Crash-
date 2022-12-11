@@ -29,7 +29,7 @@ class Player:
         if Player.damage_cooldown != 0:
             Player.damage_cooldown -= 1
         if Player.damage_cooldown <= 0:
-            for e in GameLogic.enemyList:
+            for e in GameLogic.enemyList[GameLogic.current_chunk]:
                 pygame.Rect(e.xPos, e.yPos, 30, 30)
                 pygame.Rect(Player.player_x, Player.player_y, 70, 70)
                 e.image.get_rect().colliderect(Player.imageload.get_rect(center = Player.playercenter))
@@ -48,9 +48,13 @@ class Player:
 
     def zero():
         if Player.health <= 0:
+            GameLogic.clear_enemies() 
             return True
-        else: 
+        else:
             return False
+    def reset_player():
+        Player.health = 100
+        Player.dash_cooldown = 600
 
     def dash():
         if Player.dash_cooldown != 0:
@@ -66,7 +70,7 @@ class Player:
         Player.Check()
         Player.dash()
         Player.damage_check()
-        Player.zero()
+        return Player.zero()
     def Check():
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:

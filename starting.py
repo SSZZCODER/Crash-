@@ -19,10 +19,10 @@ def main():
     clock = pygame.time.Clock()
     exit = False
     
-    enemy_z1 = zombie(250, 250, 1, 100, 5, 30, 30, 200)
-    GameLogic.enemyList.append(enemy_z1)
+    #enemy_z1 = zombie(250, 250, 1, 100, 5, 30, 30, 200)
+    #GameLogic.enemyList.append(enemy_z1)
 
-    spawner1 = spawner(0, 600, 11)
+    spawner1 = spawner(0, 600, 10)
     StaminaBar = staminabar(30, 30, 115, 20)
     HealthBar = healthbar(30, 0, 115, 20)
 
@@ -34,18 +34,14 @@ def main():
 
     energy = pygame.image.load('images/energy.png')
     energy = pygame.transform.scale(energy, (65, 65))
-
+    GameLogic.current_chunk = "grass"
     while not exit:
-        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:   
                 exit=True
             if  lavawarp.Touched() == True:
                 Player.MoveBy(lavawarp.offset_x, lavawarp.offset_y)
-                return 2
-            if Player.zero() == True:
-                Player.health +=100       
-                return 0        
+                return 2   
             if event.type == pygame.QUIT:
                 return -1
 
@@ -53,8 +49,9 @@ def main():
         lavawarp.Update(screen)
         spawner1.spawn()
         GameLogic.Update(screen)
-        Player.Update()
-        enemy_z1.update(screen)
+        if Player.Update() == True:
+            return 3
+        #enemy_z1.update(screen)
         Player.Render(screen)
         StaminaBar.render(screen)
         HealthBar.render(screen)

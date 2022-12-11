@@ -29,8 +29,8 @@ def main():
     energy = pygame.image.load('images/energy.png')
     energy = pygame.transform.scale(energy, (65, 65))
 
-    enemy_z1 = zombie(250, 250, 1, 100, 5, 30, 30, 200)
-    GameLogic.enemyList.append(enemy_z1)
+    #enemy_z1 = zombie(250, 250, 1, 100, 5, 30, 30, 200)
+    #GameLogic.enemyList.append(enemy_z1)
 
     spawner1 = spawner(0, 600, 11)
     startingwarp = Warp(0,650, 35,100, (5,5,255), 50,0)
@@ -44,7 +44,7 @@ def main():
 
     energy = pygame.image.load('images/energy.png')
     energy = pygame.transform.scale(energy, (65, 65))
-
+    GameLogic.current_chunk = "lava"
     while not exit:
         
         for event in pygame.event.get():
@@ -62,7 +62,7 @@ def main():
         spawner1.spawn()
         GameLogic.Update(screen)
         Player.Update()
-        enemy_z1.update(screen)
+       # enemy_z1.update(screen)
         Player.Render(screen)
         StaminaBar.render(screen)
         HealthBar.render(screen)

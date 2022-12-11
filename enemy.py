@@ -100,12 +100,15 @@ class spawner:
             self.life -= 1
         else:
           if self.enemycount <= self.max_enemycount:
-            for i in range(self.enemycount):
+            enemies = random.randint(2,3)
+            if self.max_enemycount - self.enemycount < enemies:
+                enemies = self.max_enemycount - self.enemycount
+            for i in range(enemies):
                 x = random.randint(50, 650)
                 y = random.randint(50, 650)
                 speed = random.randint(1,2)
                 health =random.randint(100, 150)
                 damage = random.randint(5, 6)
-                GameLogic.enemyList.append( zombie(x, y, speed, health, damage, 30, 30, 200))
+                GameLogic.enemyList[GameLogic.current_chunk].append( zombie(x, y, speed, health, damage, 30, 30, 200))
                 self.enemycount += 1
                 self.life = self.spawn_cooldown         
