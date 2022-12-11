@@ -8,7 +8,7 @@ level = 0
 
 while level != -1:
     if level == 0:
-        level = deathscreen.menu()#menu.menu()
+        level = menu.menu()
     if level == 1:
         level = starting.main()    
     if level == 2:

@@ -1,5 +1,6 @@
 import pygame
 from inventory import Inventory
+from particle import ParticleSystem
 from player import Player
 from hotbar import Hotbar
 from enemy import *
@@ -45,6 +46,8 @@ def main():
     energy = pygame.image.load('images/energy.png')
     energy = pygame.transform.scale(energy, (65, 65))
     GameLogic.current_chunk = "lava"
+
+    particlelava = ParticleSystem(10,700,(5,5,250))
     while not exit:
         
         for event in pygame.event.get():
@@ -61,6 +64,7 @@ def main():
         startingwarp.Update(screen)
         spawner1.spawn()
         GameLogic.Update(screen)
+        particlelava.Update(screen)
         Player.Update()
        # enemy_z1.update(screen)
         Player.Render(screen)
@@ -70,4 +74,3 @@ def main():
         screen.blit(energy, (-9, 10))
         pygame.display.flip()
         clock.tick(60)
-#inventory not showing

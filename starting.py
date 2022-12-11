@@ -10,6 +10,7 @@ from warp import Warp
 import time
 from gamelogic import GameLogic
 
+from particle import ParticleSystem
 def main():
     pygame.init()
     screen = pygame.display.set_mode((750,750))
@@ -28,13 +29,15 @@ def main():
 
     lavawarp = Warp(0,650,35,100,(255,5,10), 50,0)
 
-
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
 
     energy = pygame.image.load('images/energy.png')
     energy = pygame.transform.scale(energy, (65, 65))
     GameLogic.current_chunk = "grass"
+
+    particles = ParticleSystem(10,700, (250,5,5))
+
     while not exit:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:   
@@ -52,6 +55,8 @@ def main():
         if Player.Update() == True:
             return 3
         #enemy_z1.update(screen)
+        Player.Update()
+        particles.Update(screen)
         Player.Render(screen)
         StaminaBar.render(screen)
         HealthBar.render(screen)
@@ -59,3 +64,4 @@ def main():
         screen.blit(energy, (-9, 10))
         pygame.display.flip()
         clock.tick(60)
+
