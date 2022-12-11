@@ -9,8 +9,8 @@ def menu():
 
     font = pygame.font.Font('font/Elfboyclassic.ttf', 125)
     font2 = pygame.font.Font('font/zorque.ttf', 125)
-    title = font2.render("You Died :(", True, (255, 60, 56))
-    again = font2.render("Again?", True, (255, 60, 56))
+    title = font2.render("You Died :(", True, (244, 44, 4))
+    again = font2.render("Again?", True, (244, 44, 4))
 
     clock = pygame.time.Clock()
 
@@ -28,13 +28,13 @@ def menu():
             if event.type == pygame.QUIT:
                 return -1
 
-        screen.fill((255, 140, 66))
-        pygame.draw.rect(screen, (0,0,0), pygame.Rect(115, 135  , 530, 130))
-        pygame.draw.rect(screen, (101, 184, 145), pygame.Rect(130, 150, 500, 100))
+        screen.fill((23, 96, 135))
+        pygame.draw.rect(screen, (8, 61, 119), pygame.Rect(115, 135  , 530, 130))
+        pygame.draw.rect(screen, (23, 96, 135), pygame.Rect(130, 150, 500, 100))
        # pygame.draw.rect(screen, (0,0,0), pygame.Rect(115, 15, 530, 130))
        # pygame.draw.rect(screen, (101, 184, 145), pygame.Rect(130, 30, 500, 100))
-        screen.blit(title, (70, 5))
-        screen.blit(again, (180, 145))
+        screen.blit(title, (30, 5))
+        screen.blit(again, (150, 130))
         pygame.display.flip()
         clock.tick(60)
 
