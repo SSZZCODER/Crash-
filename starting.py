@@ -56,7 +56,6 @@ def main():
         if Player.Update() == True:
             return 3
         #enemy_z1.update(screen)
-        Player.Update()
         Player.Render(screen)
         StaminaBar.render(screen)
         HealthBar.render(screen)
