@@ -33,7 +33,7 @@ def main():
     #enemy_z1 = zombie(250, 250, 1, 100, 5, 30, 30, 200)
     #GameLogic.enemyList.append(enemy_z1)
 
-    spawner1 = spawner(0, 600, 11)
+    spawner2 = spawner(0, 600, 11)
     startingwarp = Warp(0,650, 35,100, (5,5,255), 50,0)
 
     StaminaBar = staminabar(30, 30, 115, 20)
@@ -63,10 +63,11 @@ def main():
         screen.blit(lavaImage, (0,0))
         particlelava.Update(screen)
         startingwarp.Update(screen)
-        spawner1.spawn()
+        spawner2.spawn_magma()
         GameLogic.Update(screen)
-      
-        Player.Update()
+        if Player.Update() == True:
+            return 3
+
        # enemy_z1.update(screen)
         Player.Render(screen)
         StaminaBar.render(screen)

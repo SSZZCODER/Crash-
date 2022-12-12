@@ -4,6 +4,7 @@ import pygame
 import lava
 import deathscreen
 
+
 level = 0
 
 while level != -1:

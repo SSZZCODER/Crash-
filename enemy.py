@@ -57,6 +57,20 @@ class zombie(enemy):
         def render(self, screen):
              screen.blit(self.image, (self.xPos, self.yPos)) 
 
+class magma(enemy):
+        def __init__(self, xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range):
+            super().__init__(xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range)
+            self.damage_cooldown = 30
+            self.move_cooldown = 30
+            # self.move_leftright= random.choice([1, 2])
+            # self.move_updown = random.choice([1, 2])
+
+        def assignImage(self):
+            return pygame.transform.scale(pygame.image.load('images/New Piskel (34) (1).png'),(57, 40))
+
+        def render(self, screen):
+             screen.blit(self.image, (self.xPos, self.yPos)) 
+
         #def move(self):
             # if self.move_cooldown != 0:
             #      self.move_cooldown -= 1 
@@ -110,5 +124,22 @@ class spawner:
                 health =random.randint(100, 150)
                 damage = random.randint(5, 6)
                 GameLogic.enemyList[GameLogic.current_chunk].append( zombie(x, y, speed, health, damage, 30, 30, 200))
+                self.enemycount += 1
+                self.life = self.spawn_cooldown         
+    def spawn_magma(self):
+        if self.life > 0:
+            self.life -= 1
+        else:
+          if self.enemycount <= self.max_enemycount:
+            enemies = random.randint(2,3)
+            if self.max_enemycount - self.enemycount < enemies:
+                enemies = self.max_enemycount - self.enemycount
+            for i in range(enemies):
+                x = random.randint(50, 650)
+                y = random.randint(50, 650)
+                speed = random.randint(1,2)
+                health =random.randint(100, 150)
+                damage = random.randint(5, 6)
+                GameLogic.enemyList[GameLogic.current_chunk].append( magma(x, y, speed, health, damage, 30, 30, 200))
                 self.enemycount += 1
                 self.life = self.spawn_cooldown         
