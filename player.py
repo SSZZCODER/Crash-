@@ -45,7 +45,7 @@ class Player:
         Player.player_y += y
         Player.playercenter = [Player.player_x +25, Player.player_y +27]
         GameLogic.playerPos = [Player.player_x, Player.player_y]
-
+    
     def zero():
         if Player.health <= 0:
             GameLogic.clear_enemies() 
