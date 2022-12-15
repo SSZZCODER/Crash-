@@ -14,8 +14,8 @@ class Player:
     speed = 3
     health = 100
     hunger = 100 
-    player_x = 0
-    player_y = 0
+    player_x = 340
+    player_y = 340
     dash_cooldown = 600
     playerimage = pygame.image.load('images/New Piskel (28).png')
     playerimage = pygame.transform.scale(playerimage,(50, 55))
