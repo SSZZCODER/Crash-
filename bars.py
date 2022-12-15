@@ -1,5 +1,6 @@
 import pygame 
 from player import Player
+
 class bar:
     x = 600
     y = 0
@@ -29,4 +30,3 @@ class healthbar(bar):
     def render(self, screen):
          super().render(screen)
          pygame.draw.rect(screen, self.color, pygame.Rect(self.rect.x, self.rect.y, int((Player.health/100)*self.rect.width), self.rect.height))
-

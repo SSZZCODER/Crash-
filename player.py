@@ -3,10 +3,11 @@ import math
 from inventory import Inventory
 from gamelogic import GameLogic
 from hotbar import Hotbar
-
+from weapons import weapon
 class Player:
 
     direction = [0, 0]
+    weapon = weapon("Fist", 50, 7, 40, 30)
     attack_cooldown = 30
     dash_speed = 60
     damage_cooldown = 0
@@ -25,6 +26,8 @@ class Player:
     inventoryShow = False
     playerhotbar = Hotbar()
     
+    def attack():
+        pass
     def damage_check():
         if Player.damage_cooldown != 0:
             Player.damage_cooldown -= 1
@@ -64,12 +67,14 @@ class Player:
                     Player.player_y += Player.direction[1]*Player.dash_speed
                     Player.dash_cooldown = 600
 
-    def Update():
+    def Update(screen):
         Player.Rotate()
         Player.Move()
         Player.Check()
         Player.dash()
         Player.damage_check()
+        Player.weapon.update(screen)
+        Player.Render(screen)
         return Player.zero()
     def Check():
         for event in pygame.event.get():

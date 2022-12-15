@@ -15,12 +15,16 @@ class enemy():
         self.original_image = self.assignImage()
         self.image = self.original_image
         self.range = range
-
+        self.max_health = health
+    
     def assignImage(self):
         pass
     def render(self, screen):   
         screen.blit(self.image, (self.xPos, self.yPos))
-    def move(self):
+        
+        #pygame.draw.rect(screen, (250, 28, 0), pygame.Rect(self.xPos,self.yPos-20, int((self.health/100)*57), 10))
+
+    def move(self): 
         player_x, player_y = GameLogic.playerPos
         rel_x, rel_y = player_x - self.xPos, player_y - self.yPos 
         n = rel_x**2 + rel_y**2
@@ -38,8 +42,12 @@ class enemy():
     def update(self, screen):
         self.move()
         self.render(screen)
-    def takeDamage(self):
-        pass
+    def takeDamage(self, damage):
+        self.health -= damage
+        if self.health <= 0:
+            GameLogic.enemyList[GameLogic.current_chunk].remove(self)
+
+        print("taken damage")
     def attack(self):
         pass
 
@@ -55,8 +63,9 @@ class zombie(enemy):
             return pygame.transform.scale(pygame.image.load('images/zombie.png'),(57, 40))
 
         def render(self, screen):
-             screen.blit(self.image, (self.xPos, self.yPos)) 
-
+             screen.blit(self.image, (self.xPos, self.yPos))
+             pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(self.xPos+15,self.yPos-20, 40, 10))
+             pygame.draw.rect(screen, (250, 28, 0), pygame.Rect(self.xPos+15,self.yPos-20, int((self.health/self.max_health)*40), 10))
 class magma(enemy):
         def __init__(self, xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range):
             super().__init__(xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range)
@@ -70,7 +79,8 @@ class magma(enemy):
 
         def render(self, screen):
              screen.blit(self.image, (self.xPos, self.yPos)) 
-
+             pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(self.xPos+15,self.yPos-20, 40, 10))
+             pygame.draw.rect(screen, (250, 28, 0), pygame.Rect(self.xPos+15,self.yPos-20, int((self.health/self.max_health)*40), 10))
         #def move(self):
             # if self.move_cooldown != 0:
             #      self.move_cooldown -= 1 

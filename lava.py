@@ -65,11 +65,10 @@ def main():
         startingwarp.Update(screen)
         spawner2.spawn_magma()
         GameLogic.Update(screen)
-        if Player.Update() == True:
+        if Player.Update(screen) == True:
             return 3
 
        # enemy_z1.update(screen)
-        Player.Render(screen)
         StaminaBar.render(screen)
         HealthBar.render(screen)
         screen.blit(heart, (-29, -45))
