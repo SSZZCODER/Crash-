@@ -59,7 +59,9 @@ def main():
                 return 1
             if event.type == pygame.QUIT:
                 return -1
-
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_m:
+                    return 0
         screen.blit(lavaImage, (0,0))
         particlelava.Update(screen)
         startingwarp.Update(screen)

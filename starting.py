@@ -47,6 +47,9 @@ def main():
                 return 2   
             if event.type == pygame.QUIT:
                 return -1
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_m:
+                    return 0
 
         screen.blit(background, (0,0))
         particles.Update(screen)

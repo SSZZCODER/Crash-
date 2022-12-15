@@ -66,6 +66,11 @@ class Player:
                     Player.player_x += Player.direction[0]*Player.dash_speed
                     Player.player_y += Player.direction[1]*Player.dash_speed
                     Player.dash_cooldown = 600
+    def changeimage(newimage):
+        Player.playerimage = newimage
+        Player.playerimage = pygame.transform.scale(newimage, (50, 55))
+        Player.imageload = Player.playerimage
+
 
     def Update(screen):
         Player.Rotate()
@@ -75,7 +80,9 @@ class Player:
         Player.damage_check()
         Player.weapon.update(screen)
         Player.Render(screen)
+
         return Player.zero()
+        
     def Check():
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:

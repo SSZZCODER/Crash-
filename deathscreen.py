@@ -36,7 +36,7 @@ def menu():
                 return -1
 
         screen.fill((23, 96, 135))
-        pygame.draw.rect(screen, (8, 61, 119), pygame.Rect(115, 135  , 530, 130))
+        pygame.draw.rect(screen, (8, 61, 119), pygame.Rect(115, 135 , 530, 130))
         pygame.draw.rect(screen, (8, 61, 119), pygame.Rect(115, 335  , 530, 130))
         pygame.draw.rect(screen, (23, 96, 135), pygame.Rect(130, 150, 500, 100))
         pygame.draw.rect(screen, (23, 96, 135), pygame.Rect(130, 350, 500, 100))
