@@ -60,6 +60,8 @@ class Player:
     def reset_player():
         Player.health = 100
         Player.dash_cooldown = 600
+        Player.player_x = 340
+        Player.player_y = 340
 
     def dash():
         if Player.dash_cooldown != 0:

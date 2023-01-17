@@ -18,4 +18,4 @@ while level != -1:
         level = deathscreen.menu()
     if level == 4:
         level = skinsmenu.main()
-    print(level)    
+    print(level) 
