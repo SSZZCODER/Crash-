@@ -1,6 +1,7 @@
 import pygame
 import math
 from inventory import Inventory
+import random
 from gamelogic import GameLogic
 from hotbar import Hotbar
 from weapons import weapon
@@ -8,7 +9,8 @@ from weapons import weapon
 class Player:
 
     direction = [0, 0]
-    weapon = weapon("Fist", 50, 7, 40, 30)
+    dmg = random.randint(2,6)
+    weapon = weapon("Fist", dmg, 7, 40, 30)
     attack_cooldown = 30
     dash_speed = 60
     damage_cooldown = 0
@@ -61,6 +63,8 @@ class Player:
         Player.dash_cooldown = 600
         Player.changeimage(pygame.image.load('images/New Piskel (28).png'))
 
+        Player.player_x = 340
+        Player.player_y = 340
 
     def dash():
         if Player.dash_cooldown != 0:
