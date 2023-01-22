@@ -61,7 +61,7 @@ class Player:
     def reset_player():
         Player.health = 100
         Player.dash_cooldown = 600
-        Player.changeimage(pygame.image.load('images/New Piskel (28).png'))
+      
 
         Player.player_x = 340
         Player.player_y = 340
