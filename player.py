@@ -4,6 +4,7 @@ from inventory import Inventory
 from gamelogic import GameLogic
 from hotbar import Hotbar
 from weapons import weapon
+
 class Player:
 
     direction = [0, 0]
@@ -58,6 +59,8 @@ class Player:
     def reset_player():
         Player.health = 100
         Player.dash_cooldown = 600
+        Player.changeimage(pygame.image.load('images/New Piskel (28).png'))
+
 
     def dash():
         if Player.dash_cooldown != 0:
