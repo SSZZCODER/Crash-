@@ -1,6 +1,7 @@
 
 from cmath import rect
 import pygame
+from items import spawneritems
 from player import Player
 from hotbar import Hotbar
 from enemy import *
@@ -23,7 +24,11 @@ def main():
     #enemy_z1 = zombie(250, 250, 1, 100, 5, 30, 30, 200)
     #GameLogic.enemyList.append(enemy_z1)
 
+    spawner3 = spawneritems(0,300,20)
+    spawner4 = spawneritems(0,300,1)
+    
     spawner1 = spawner(0, 600, 10)
+
     StaminaBar = staminabar(30, 30, 115, 20)
     HealthBar = healthbar(30, 0, 115, 20)
 
@@ -37,7 +42,7 @@ def main():
     GameLogic.current_chunk = "grass"
 
     particles = ParticleSystem(10,700, (250,5,5))
-
+    particlesp = ParticleSystem(Player.player_x, Player.player_y, (255, 165, 0))
     while not exit:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:   
@@ -53,8 +58,12 @@ def main():
 
         screen.blit(background, (0,0))
         particles.Update(screen)
+        particlesp.Update2(screen)
         lavawarp.Update(screen)
+        spawner3.spawncoin()
+        spawner4.spawnbandage()
         spawner1.spawn()
+        
         GameLogic.Update(screen)
         if Player.Update(screen) == True:
             return 3
