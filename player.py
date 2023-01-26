@@ -28,10 +28,23 @@ class Player:
     playerInventory = Inventory(3)
     inventoryShow = False
     playerhotbar = Hotbar()
+    poison_cooldown = 0
+    burn_cooldown = 0
+    burn_dmg = 0
+    poison_dmg = 0
     
     def attack():
         pass
     def damage_check():
+        if Player.poison_cooldown != 0:
+            Player.poison_cooldown -= 1 
+            if Player.poison_cooldown % 60 == 0:
+                Player.health -= Player.poison_dmg
+        if Player.burn_cooldown != 0:
+            Player.burn_cooldown -= 1 
+            if Player.burn_cooldown % 60 == 0:
+                Player.health -= Player.burn_dmg
+
         if Player.damage_cooldown != 0:
             Player.damage_cooldown -= 1
         if Player.damage_cooldown <= 0:
@@ -40,11 +53,21 @@ class Player:
                 pygame.Rect(Player.player_x, Player.player_y, 70, 70)
                 e.image.get_rect().colliderect(Player.imageload.get_rect(center = Player.playercenter))
                 e.damage
+                
                 if  pygame.Rect(e.xPos, e.yPos, 30, 30).colliderect(pygame.Rect(Player.player_x, Player.player_y, 70, 70)):
                 #if Player.imageload.get_rect(center = Player.playercenter).colliderect(e.image.get_rect()):
-                    Player.health  -= e.damage
-                    print(Player.health)
-                    Player.damage_cooldown = 60
+                    eattack = e.attack()
+                    if eattack[0] == 0:
+                        Player.health  -= eattack[1]
+                        print(Player.health)
+                        Player.damage_cooldown = 60
+                    if eattack[0] == 1:
+                        Player.poison_dmg = eattack[1]
+                        Player.poison_cooldown = eattack[2]
+                    if eattack[0] == 2:
+                        Player.burn_dmg = eattack[1]
+                        Player.burn_cooldown = eattack[2]
+
 
     def MoveBy(x, y):
         Player.player_x += x

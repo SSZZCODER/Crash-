@@ -49,28 +49,39 @@ class enemy():
 
         print("taken damage")
     def attack(self):
-        pass
+        return [0, self.damage]
 
 class zombie(enemy):
         def __init__(self, xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range):
             super().__init__(xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range)
             self.damage_cooldown = 30
             self.move_cooldown = 30
+            self.poison_dmg = random.choice([4, 5])
+            self.poison_duration = random.choice([120, 240])
             # self.move_leftright= random.choice([1, 2])
             # self.move_updown = random.choice([1, 2])
 
         def assignImage(self):
             return pygame.transform.scale(pygame.image.load('images/zombie.png'),(57, 40))
-
+    
         def render(self, screen):
              screen.blit(self.image, (self.xPos, self.yPos))
              pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(self.xPos+15,self.yPos-20, 40, 10))
-             pygame.draw.rect(screen, (250, 28, 0), pygame.Rect(self.xPos+15,self.yPos-20, int((self.health/self.max_health)*40), 10))
+             pygame.draw.rect(screen, (250, 2 , 0), pygame.Rect(self.xPos+15,self.yPos-20, int((self.health/self.max_health)*40), 10))
+    
+        def attack(self):
+            attack_choice = random.randint(1,5)
+            if attack_choice == 3:
+                return [1, self.poison_dmg, self.poison_duration]
+            else:
+                return [0, self.damage]
 class magma(enemy):
         def __init__(self, xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range):
             super().__init__(xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range)
             self.damage_cooldown = 30
             self.move_cooldown = 30
+            self.fire_dmg = random.choice([4, 5])
+            self.burn_duration = random.choice([120, 240])
             # self.move_leftright= random.choice([1, 2])
             # self.move_updown = random.choice([1, 2])
 
@@ -81,6 +92,13 @@ class magma(enemy):
              screen.blit(self.image, (self.xPos, self.yPos)) 
              pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(self.xPos+15,self.yPos-20, 40, 10))
              pygame.draw.rect(screen, (250, 28, 0), pygame.Rect(self.xPos+15,self.yPos-20, int((self.health/self.max_health)*40), 10))
+
+        def attack(self):
+            attack_choice = random.randint(1,5)
+            if attack_choice == 3:
+                return [2, self.fire_dmg, self.burn_duration]
+            else:
+                return [0, self.damage]
         #def move(self):
             # if self.move_cooldown != 0:
             #      self.move_cooldown -= 1 
@@ -135,7 +153,8 @@ class spawner:
                 damage = random.randint(5, 6)
                 GameLogic.enemyList[GameLogic.current_chunk].append( zombie(x, y, speed, health, damage, 30, 30, 200))
                 self.enemycount += 1
-                self.life = self.spawn_cooldown         
+                self.life = self.spawn_cooldown        
+                
     def spawn_magma(self):
         if self.life > 0:
             self.life -= 1
