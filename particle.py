@@ -33,8 +33,8 @@ class ParticleSystem:
         else: 
             self.Spawn()
             self.timer = self.cooldown
-            self.xpos = Player.player_x
-            self.ypos = Player.player_y
+            self.xpos = Player.player_x +25
+            self.ypos = Player.player_y +25
         for particle in self.particles:
             if particle.Update(screen) == False:
                 self.particles.remove(particle)
