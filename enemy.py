@@ -58,8 +58,6 @@ class zombie(enemy):
             self.move_cooldown = 30
             self.poison_dmg = random.choice([4, 5])
             self.poison_duration = random.choice([120, 240])
-            # self.move_leftright= random.choice([1, 2])
-            # self.move_updown = random.choice([1, 2])
 
         def assignImage(self):
             return pygame.transform.scale(pygame.image.load('images/zombie.png'),(57, 40))
@@ -82,8 +80,6 @@ class magma(enemy):
             self.move_cooldown = 30
             self.fire_dmg = random.choice([4, 5])
             self.burn_duration = random.choice([120, 240])
-            # self.move_leftright= random.choice([1, 2])
-            # self.move_updown = random.choice([1, 2])
 
         def assignImage(self):
             return pygame.transform.scale(pygame.image.load('images/New Piskel (34) (1).png'),(57, 40))
@@ -99,37 +95,7 @@ class magma(enemy):
                 return [2, self.fire_dmg, self.burn_duration]
             else:
                 return [0, self.damage]
-        #def move(self):
-            # if self.move_cooldown != 0:
-            #      self.move_cooldown -= 1 
 
-            # if self.move_cooldown == 0:
-            #    self.move_cooldown = 30
-            #    self.move_leftright= random.choice([1, 2])
-            #    self.move_updown = random.choice([1, 2])
-                
-            # if self.move_leftright == 1:
-            #         self.xPos -= self.speed
-            #         if self.xPos < -85:
-            #                 self.move_cooldown = 30
-            #                 self.move_leftright = 2
-            # if self.move_leftright == 2:
-            #        self.xPos += self.speed
-            #        if self.xPos > 621:
-            #                 self.move_cooldown = 30
-            #                 self.move_leftright = 1
-
-            # if self.move_updown == 1:
-            #         self.yPos -= self.speed
-            #         if self.yPos < 0:
-            #             self.move_cooldown = 30
-            #             self.move_updown = 2 
-
-            # if self.move_updown == 2:
-            #         self.yPos += self.speed
-            #         if self.yPos > 650:
-            #                 self.move_cooldown = 30
-            #                 self.move_updown = 1
 class spawner:
     def __init__(self, enemycount, spawn_cooldown, max_enemycount):
         self.enemycount = enemycount

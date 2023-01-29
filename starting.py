@@ -42,7 +42,6 @@ def main():
     GameLogic.current_chunk = "grass"
 
     particles = ParticleSystem(10,700, (250,5,5))
-    particlesp = particlePlayer(Player.player_x, Player.player_y, (255, 165, 0))
     while not exit:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:   
@@ -58,7 +57,6 @@ def main():
 
         screen.blit(background, (0,0))
         particles.Update(screen)
-        particlesp.Update(screen)
         lavawarp.Update(screen)
         spawner3.spawncoin()
         spawner4.spawnbandage()

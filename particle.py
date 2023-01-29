@@ -3,7 +3,7 @@ from turtle import width
 import pygame
 import random
 import math
-from player import Player
+from gamelogic import GameLogic
 class ParticleSystem:
     def __init__(self, xpos, ypos, color):
         self.xpos = xpos
@@ -78,8 +78,8 @@ class particlePlayer(ParticleSystem):
         else: 
             self.Spawn()
             self.timer = self.cooldown
-            self.xpos = Player.player_x +25
-            self.ypos = Player.player_y +25
+            self.xpos = GameLogic.playerPos[0] +25
+            self.ypos = GameLogic.playerPos[1] +25
         for particle in self.particles:
             if particle.Update(screen) == False:
                 self.particles.remove(particle)

@@ -5,9 +5,9 @@ import random
 from gamelogic import GameLogic
 from hotbar import Hotbar
 from weapons import weapon
+from particle import *
 
 class Player:
-
     direction = [0, 0]
     dmg = random.randint(2,6)
     weapon = weapon("Fist", dmg, 7, 40, 30)
@@ -32,6 +32,8 @@ class Player:
     burn_cooldown = 0
     burn_dmg = 0
     poison_dmg = 0
+    particlesp = particlePlayer(player_x, player_y, (255, 165, 0))
+    
     
     def attack():
         pass
@@ -40,10 +42,13 @@ class Player:
             Player.poison_cooldown -= 1 
             if Player.poison_cooldown % 60 == 0:
                 Player.health -= Player.poison_dmg
+        
         if Player.burn_cooldown != 0:
             Player.burn_cooldown -= 1 
             if Player.burn_cooldown % 60 == 0:
                 Player.health -= Player.burn_dmg
+        else:
+             Player.particlesp.showEffect = False
 
         if Player.damage_cooldown != 0:
             Player.damage_cooldown -= 1
@@ -66,8 +71,9 @@ class Player:
                         Player.poison_cooldown = eattack[2]
                     if eattack[0] == 2:
                         Player.burn_dmg = eattack[1]
+                        Player.particlesp.showEffect = True
                         Player.burn_cooldown = eattack[2]
-
+                        
 
     def MoveBy(x, y):
         Player.player_x += x
@@ -78,13 +84,15 @@ class Player:
     def zero():
         if Player.health <= 0:
             GameLogic.clear_enemies() 
+            Player.poison_cooldown = 0
+            Player.burn_cooldown = 0
             return True
         else:
             return False
     def reset_player():
         Player.health = 100
         Player.dash_cooldown = 600
-      
+        
 
         Player.player_x = 340
         Player.player_y = 340
@@ -108,6 +116,7 @@ class Player:
         Player.Check()
         Player.dash()
         Player.damage_check()
+        Player.particlesp.Update(screen)
         Player.weapon.update(screen)
         Player.Render(screen)
 
