@@ -27,19 +27,7 @@ class ParticleSystem:
                 self.particles.remove(particle)
                 self.xpos
                 self.ypos
-    def Update2(self, screen):
-        if self.timer > 0:
-            self.timer -= 1
-        else: 
-            self.Spawn()
-            self.timer = self.cooldown
-            self.xpos = Player.player_x +25
-            self.ypos = Player.player_y +25
-        for particle in self.particles:
-            if particle.Update(screen) == False:
-                self.particles.remove(particle)
-                self.xpos
-                self.ypos           
+     
 class Particle:
     def __init__(self, xpos, ypos, color, width, height, direction):
         self.xpos = xpos
@@ -70,5 +58,33 @@ class Particle:
 
     def Render(self, screen):
         pygame.draw.rect(screen, self.color, pygame.Rect(self.xpos, self.ypos, self.width, self.height))
+
+class particlePlayer(ParticleSystem):
+    def __init__(self, xpos, ypos, color):
+        self.xpos = xpos
+        self.ypos = ypos
+        self.color = color
+        self.particles = []
+        self.cooldown = 0
+        self.timer = self.cooldown
+        self.showEffect = False
+
+    def Update(self, screen):
+        if self.showEffect == False: 
+            self.particles = []
+            return
+        if self.timer > 0:
+            self.timer -= 1
+        else: 
+            self.Spawn()
+            self.timer = self.cooldown
+            self.xpos = Player.player_x +25
+            self.ypos = Player.player_y +25
+        for particle in self.particles:
+            if particle.Update(screen) == False:
+                self.particles.remove(particle)
+                self.xpos
+                self.ypos              
+    
 
 

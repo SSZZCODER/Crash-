@@ -11,7 +11,7 @@ from warp import Warp
 import time
 from gamelogic import GameLogic
 
-from particle import ParticleSystem
+from particle import ParticleSystem, particlePlayer
 def main():
     pygame.init()
     screen = pygame.display.set_mode((750,750))
@@ -42,7 +42,7 @@ def main():
     GameLogic.current_chunk = "grass"
 
     particles = ParticleSystem(10,700, (250,5,5))
-    particlesp = ParticleSystem(Player.player_x, Player.player_y, (255, 165, 0))
+    particlesp = particlePlayer(Player.player_x, Player.player_y, (255, 165, 0))
     while not exit:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:   
@@ -58,7 +58,7 @@ def main():
 
         screen.blit(background, (0,0))
         particles.Update(screen)
-        particlesp.Update2(screen)
+        particlesp.Update(screen)
         lavawarp.Update(screen)
         spawner3.spawncoin()
         spawner4.spawnbandage()
