@@ -6,6 +6,7 @@ from gamelogic import GameLogic
 from hotbar import Hotbar
 from weapons import weapon
 from particle import *
+from items import *
 
 class Player:
     direction = [0, 0]
@@ -33,7 +34,7 @@ class Player:
     burn_dmg = 0
     poison_dmg = 0
     particlesp = particlePlayer(player_x, player_y, (255, 165, 0))
-    
+
     
     def attack():
         pass
@@ -74,6 +75,14 @@ class Player:
                         Player.particlesp.showEffect = True
                         Player.burn_cooldown = eattack[2]
                         
+    def itemCheck():
+        for items in GameLogic.itemlist[GameLogic.current_chunk]:
+            if items.image.get_rect(center = (items.xPos, items.yPos)).colliderect(Player.imageload.get_rect(center = Player.playercenter)):
+                    print("Picked up item")
+                    items.spawner.itemcount -= 1
+                    GameLogic.itemlist[GameLogic.current_chunk].remove(items)
+                    Player.playerInventory.addItem(items)
+
 
     def MoveBy(x, y):
         Player.player_x += x
@@ -81,7 +90,7 @@ class Player:
         Player.playercenter = [Player.player_x +25, Player.player_y +27]
         GameLogic.playerPos = [Player.player_x, Player.player_y]
     
-    def zero():
+    def zero():                 
         if Player.health <= 0:
             GameLogic.clear_enemies() 
             Player.poison_cooldown = 0
@@ -92,7 +101,7 @@ class Player:
     def reset_player():
         Player.health = 100
         Player.dash_cooldown = 600
-        
+        Player.playerInventory.clearInventory()
 
         Player.player_x = 340
         Player.player_y = 340
@@ -119,6 +128,7 @@ class Player:
         Player.particlesp.Update(screen)
         Player.weapon.update(screen)
         Player.Render(screen)
+        Player.itemCheck()
 
         return Player.zero()
         
@@ -164,7 +174,7 @@ class Player:
        Player.playercenter = [Player.player_x +25, Player.player_y +27]
        
        GameLogic.playerPos = [Player.player_x, Player.player_y]
-
+    
     def Rotate():
         mouse_x, mouse_y = pygame.mouse.get_pos()
         rel_x, rel_y = mouse_x - Player.playercenter[0], mouse_y - Player.playercenter[1]
@@ -177,4 +187,4 @@ class Player:
             Player.playerInventory.Draw(screen)
         Player.playerhotbar.Render(screen)
         
-        
+   
