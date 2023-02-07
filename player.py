@@ -9,8 +9,12 @@ from particle import *
 from items import *
 
 class Player:
+    animations = pygame.image.load("animations/animation1.png"),pygame.image.load("animations/animation2.png"),pygame.image.load("animations/animation3.png"),pygame.image.load("animations/animation4.png"),pygame.image.load("animations/animation5.png"),pygame.image.load("animations/animation6.png"),pygame.image.load("animations/animation7.png"),pygame.image.load("animations/animation8.png"),pygame.image.load("animations/animation9.png"),pygame.image.load("animations/animation10.png")
     direction = [0, 0]
+    attacking = False
+    animation_counter = 0
     dmg = random.randint(2,6)
+    animation_reverse = False
     weapon = weapon("Fist", dmg, 7, 40, 30)
     attack_cooldown = 30
     dash_speed = 60
@@ -37,7 +41,7 @@ class Player:
 
     
     def attack():
-        pass
+        Player.attacking = True   
     def damage_check():
         if Player.poison_cooldown != 0:
             Player.poison_cooldown -= 1 
@@ -129,6 +133,20 @@ class Player:
         Player.weapon.update(screen)
         Player.Render(screen)
         Player.itemCheck()
+        if pygame.mouse.get_pressed()[0]:
+            Player.attack()
+        if Player.attacking == True:
+            Player.imageload = pygame.transform.scale(Player.animations[Player.animation_counter], (50, 55))
+            if Player.animation_reverse == True:
+                Player.animation_counter -= 1
+            elif Player.animation_reverse == False:
+                Player.animation_counter +=1
+                if Player.animation_counter >= len(Player.animations)-1:
+                    Player.animation_reverse = True
+            if Player.animation_counter < 0:
+                Player.attacking = False
+                Player.animation_reverse = False
+                Player.animation_counter = 0
 
         return Player.zero()
         
@@ -179,8 +197,10 @@ class Player:
         mouse_x, mouse_y = pygame.mouse.get_pos()
         rel_x, rel_y = mouse_x - Player.playercenter[0], mouse_y - Player.playercenter[1]
         angle = math.atan2(rel_x, rel_y)   * (180/math.pi) 
-        Player.imageload = pygame.transform.rotate(Player.playerimage, angle-90)
-    
+        if Player.attacking == False:
+            Player.imageload = pygame.transform.rotate(Player.playerimage, angle-90)
+        else:
+            Player.imageload = pygame.transform.scale(pygame.transform.rotate(Player.animations[Player.animation_counter], angle-90), (50,55))
     def Render(screen):
         screen.blit(Player.imageload,Player.imageload.get_rect(center = Player.playercenter)) 
         if Player.inventoryShow:
