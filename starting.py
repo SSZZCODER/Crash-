@@ -12,6 +12,7 @@ import time
 from gamelogic import GameLogic
 
 from particle import ParticleSystem, particlePlayer
+
 def main():
     pygame.init()
     screen = pygame.display.set_mode((750,750))

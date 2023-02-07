@@ -3,6 +3,8 @@ import random
 from gamelogic import GameLogic
 import math
 
+
+
 class enemy():
     def __init__(self, xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range):
         self.xPos = xPos
@@ -70,8 +72,10 @@ class zombie(enemy):
         def attack(self):
             attack_choice = random.randint(1,5)
             if attack_choice == 3:
+                GameLogic.playSound("zombie")
                 return [1, self.poison_dmg, self.poison_duration]
             else:
+                GameLogic.playSound("zombie")
                 return [0, self.damage]
 class magma(enemy):
         def __init__(self, xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range):
