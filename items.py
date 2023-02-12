@@ -76,3 +76,9 @@ class spawneritems:
                 self.life = self.spawn_cooldown
 
     #def use(self):
+
+class inventoryItem():
+    def __init__(self, amount, name, image):
+         self.amount = amount
+         self.name =  name
+         self.image = image

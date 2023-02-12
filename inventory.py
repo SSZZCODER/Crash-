@@ -7,6 +7,7 @@ class Inventory:
     def __init__(self, slots):
         self.items = [None]*slots
         self.positions = [(175,295),(315,295),(455,295)]
+        self.amount = 0
     def Draw(self, screen):
 
         pygame.draw.rect(screen, (0,0,0), (160,286.5, 430,90))
@@ -24,10 +25,12 @@ class Inventory:
         for i in range(len(self.items)):
             if self.items[i] == None:
                 self.items[i] = thing
+                self.amount += 1
                 return
             if self.items[i].name == thing.name:    
                 self.items[i].amount += thing.amount
                 return
+            
             
     def removeItem(self, thing):
         for i in range(len(self.items)):
@@ -41,9 +44,11 @@ class Inventory:
             if self.items[i].name == thing.name:
                 item = self.items[i]
                 item.amount -= amount
+                self.amount -= 1
                 if item.amount <= 0:
                     self.items.remove(item)
                 return item
     def clearInventory(self):
         self.items=[]
+        self.amount = 0 
             

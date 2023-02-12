@@ -10,6 +10,7 @@ from enemy import zombie
 from warp import Warp
 import time
 from gamelogic import GameLogic
+from data import saveData
 
 from particle import ParticleSystem, particlePlayer
 
@@ -71,6 +72,7 @@ def main():
         HealthBar.render(screen)
         screen.blit(heart, (-29, -45))
         screen.blit(energy, (-9, 10))
+        saveData.save()
         pygame.display.flip()
         clock.tick(60)
 
