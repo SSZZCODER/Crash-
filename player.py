@@ -136,7 +136,6 @@ class Player:
         if pygame.mouse.get_pressed()[0]:
             Player.attack()
         if Player.attacking == True:
-            Player.imageload = pygame.transform.scale(Player.animations[Player.animation_counter], (50, 55))
             if Player.animation_reverse == True:
                 Player.animation_counter -= 1
             elif Player.animation_reverse == False:
@@ -200,7 +199,7 @@ class Player:
         if Player.attacking == False:
             Player.imageload = pygame.transform.rotate(Player.playerimage, angle-90)
         else:
-            Player.imageload = pygame.transform.scale(pygame.transform.rotate(Player.animations[Player.animation_counter], angle-90), (50,55))
+            Player.imageload = pygame.transform.rotate(pygame.transform.scale(Player.animations[Player.animation_counter], (50+Player.animation_counter*2,55) ), angle-90)
     def Render(screen):
         screen.blit(Player.imageload,Player.imageload.get_rect(center = Player.playercenter)) 
         if Player.inventoryShow:

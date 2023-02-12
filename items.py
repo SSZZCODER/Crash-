@@ -55,7 +55,7 @@ class spawneritems:
             for i in range(Items):
                 self.xPos = random.randint(50, 650)
                 self.yPos = random.randint(50, 650)
-                GameLogic.itemlist[GameLogic.current_chunk].append( Coin(20, self.xPos, self.yPos,self))
+                GameLogic.itemlist[GameLogic.current_chunk].append( Coin(1, self.xPos, self.yPos,self))
                 self.itemcount += 1
                 self.life = self.spawn_cooldown
                 
@@ -71,7 +71,7 @@ class spawneritems:
             for i in range(Items):
                 self.xPos = random.randint(50, 650)
                 self.yPos = random.randint(50, 650)
-                GameLogic.itemlist[GameLogic.current_chunk].append( Bandages(3,self.xPos, self.yPos, self))
+                GameLogic.itemlist[GameLogic.current_chunk].append( Bandages(1,self.xPos, self.yPos, self))
                 self.itemcount += 1
                 self.life = self.spawn_cooldown
 

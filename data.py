@@ -13,8 +13,8 @@ class saveData:
         small = {}
         
         for i in range(Player.playerInventory.amount):
-            small[Player.playerInventory[i].name] = Player.playerInventory[i].amount
+            small[Player.playerInventory.items[i].name] = Player.playerInventory.items[i].amount
         playerdata["inventory"].append(small) 
-        json.dump(playerdata,f)
+        json.dump(playerdata,f, indent = 4)
         f.close()
        

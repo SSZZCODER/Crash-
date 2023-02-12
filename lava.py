@@ -9,8 +9,7 @@ from enemy import zombie
 import time
 from gamelogic import GameLogic
 from warp import Warp
-
-
+from items import spawneritems
 
 
 
@@ -32,6 +31,8 @@ def main():
 
     #enemy_z1 = zombie(250, 250, 1, 100, 5, 30, 30, 200)
     #GameLogic.enemyList.append(enemy_z1)
+    spawner5 = spawneritems(0,300,20)
+    spawner6 = spawneritems(0,300,1)
 
     spawner2 = spawner(0, 600, 11)
     startingwarp = Warp(0,650, 35,100, (5,5,255), 50,0)
@@ -66,6 +67,8 @@ def main():
         particlelava.Update(screen)
         startingwarp.Update(screen)
         spawner2.spawn_magma()
+        spawner5.spawncoin()
+        spawner5.spawnbandage()
         GameLogic.Update(screen)
         if Player.Update(screen) == True:
             return 3
