@@ -7,6 +7,7 @@ class GameLogic:
     enemyList = {"grass":[], "lava":[]}
     itemlist = {"grass":[], "lava":[]}
     soundlist = {"zombie": pygame.mixer.Sound("sounds/Zombie Sound.wav")}
+    spellList = []
     current_chunk = "grass"
     playerPos = [0, 0]
     pygame.mixer.Sound.set_volume(soundlist["zombie"], .05)
@@ -23,6 +24,7 @@ class GameLogic:
         for enemy in GameLogic.enemyList[GameLogic.current_chunk]:
 
             enemy.update(screen)
-    
+        for spell in GameLogic.spellList:
+            spell.update(screen)
     def playSound(name):
         pygame.mixer.Sound.play(GameLogic.soundlist[name])

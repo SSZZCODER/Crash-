@@ -1,3 +1,4 @@
+from telnetlib import GA
 import pygame
 import math
 from inventory import Inventory
@@ -7,7 +8,7 @@ from hotbar import Hotbar
 from weapons import weapon
 from particle import *
 from items import *
-
+from spells import Fire
 class Player:
     animations = pygame.image.load("animations/animation1.png"),pygame.image.load("animations/animation2.png"),pygame.image.load("animations/animation3.png"),pygame.image.load("animations/animation4.png"),pygame.image.load("animations/animation5.png"),pygame.image.load("animations/animation6.png"),pygame.image.load("animations/animation7.png"),pygame.image.load("animations/animation8.png"),pygame.image.load("animations/animation9.png"),pygame.image.load("animations/animation10.png")
     direction = [0, 0]
@@ -132,6 +133,7 @@ class Player:
         Player.particlesp.Update(screen)
         Player.weapon.update(screen)
         Player.Render(screen)
+        Player.spellangle()
         Player.itemCheck()
         if pygame.mouse.get_pressed()[0]:
             Player.attack()
@@ -191,7 +193,12 @@ class Player:
        Player.playercenter = [Player.player_x +25, Player.player_y +27]
        
        GameLogic.playerPos = [Player.player_x, Player.player_y]
-    
+    def spellangle():
+        if pygame.key.get_pressed()[pygame.K_e]:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            rel_x, rel_y = mouse_x - Player.playercenter[0], mouse_y - Player.playercenter[1]
+            angle = math.atan2(rel_y, rel_x)   * (180/math.pi) 
+            GameLogic.spellList.append(Fire(20,10, 15, angle,Player.playercenter[0], Player.playercenter[1]))
     def Rotate():
         mouse_x, mouse_y = pygame.mouse.get_pos()
         rel_x, rel_y = mouse_x - Player.playercenter[0], mouse_y - Player.playercenter[1]
@@ -200,6 +207,7 @@ class Player:
             Player.imageload = pygame.transform.rotate(Player.playerimage, angle-90)
         else:
             Player.imageload = pygame.transform.rotate(pygame.transform.scale(Player.animations[Player.animation_counter], (50+Player.animation_counter*2,55) ), angle-90)
+    
     def Render(screen):
         screen.blit(Player.imageload,Player.imageload.get_rect(center = Player.playercenter)) 
         if Player.inventoryShow:
