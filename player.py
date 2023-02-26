@@ -11,6 +11,7 @@ from items import *
 from spells import Fire
 class Player:
     animations = pygame.image.load("animations/animation1.png"),pygame.image.load("animations/animation2.png"),pygame.image.load("animations/animation3.png"),pygame.image.load("animations/animation4.png"),pygame.image.load("animations/animation5.png"),pygame.image.load("animations/animation6.png"),pygame.image.load("animations/animation7.png"),pygame.image.load("animations/animation8.png"),pygame.image.load("animations/animation9.png"),pygame.image.load("animations/animation10.png")
+    rainbowanimation = pygame.image.load("animations2/rainbow1.png"),pygame.image.load("animations2/rainbow2.png"),pygame.image.load("animations2/rainbow3.png"),pygame.image.load("animations2/rainbow4.png"),pygame.image.load("animations2/rainbow5.png"),pygame.image.load("animations2/rainbow6.png"),pygame.image.load("animations2/rainbow7.png"),pygame.image.load("animations2/rainbow8.png"),pygame.image.load("animations2/rainbow9.png"),pygame.image.load("animations2/rainbow10.png")
     direction = [0, 0]
     attacking = False
     animation_counter = 0
@@ -39,7 +40,6 @@ class Player:
     burn_dmg = 0
     poison_dmg = 0
     particlesp = particlePlayer(player_x, player_y, (255, 165, 0))
-
     
     def attack():
         Player.attacking = True   
@@ -119,9 +119,11 @@ class Player:
                     Player.player_y += Player.direction[1]*Player.dash_speed
                     Player.dash_cooldown = 600
     def changeimage(newimage):
-        Player.playerimage = newimage
-        Player.playerimage = pygame.transform.scale(newimage, (50, 55))
+        Player.playerimage = pygame.transform.scale(pygame.image.load(newimage), (50, 55))
         Player.imageload = Player.playerimage
+        if newimage == 'images/New_Piskel-3 (1).png':
+            print("changed")
+            Player.animations = Player.rainbowanimation
 
 
     def Update(screen):
