@@ -1,6 +1,7 @@
 from telnetlib import GA
 import pygame
 import math
+from enemy import enemy
 from inventory import Inventory
 import random
 from gamelogic import GameLogic
@@ -22,6 +23,7 @@ class Player:
     dash_speed = 60
     damage_cooldown = 0
     regen_cooldown = 300
+
     speed = 3
     health = 100
     hunger = 100 
@@ -199,8 +201,15 @@ class Player:
         if pygame.key.get_pressed()[pygame.K_e]:
             mouse_x, mouse_y = pygame.mouse.get_pos()
             rel_x, rel_y = mouse_x - Player.playercenter[0], mouse_y - Player.playercenter[1]
-            angle = math.atan2(rel_y, rel_x)   * (180/math.pi) 
-            GameLogic.spellList.append(Fire(20,10, 15, angle,Player.playercenter[0], Player.playercenter[1]))
+            angle = math.atan2(rel_x,rel_y) *(180/math.pi)
+            distance = math.sqrt(rel_x**2+rel_y**2)
+            if distance > 0:
+                rel_x /= distance
+                rel_y /= distance
+           
+            GameLogic.spellList.append(Fire(angle - 90, 0,10, [rel_x, rel_y],Player.playercenter[0], Player.playercenter[1]))
+ 
+            
     def Rotate():
         mouse_x, mouse_y = pygame.mouse.get_pos()
         rel_x, rel_y = mouse_x - Player.playercenter[0], mouse_y - Player.playercenter[1]

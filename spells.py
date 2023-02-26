@@ -6,19 +6,22 @@ import pygame
 
 import pygame
 class Fire():
-    def __init__(self, damage, life, cooldown, angle, xPos, yPos):
+    def __init__(self, angle,damage, life, direction, xPos, yPos):
+         self.angle = angle
          self.damage = damage
          self.speed = 5
          self.life = life
-         self.cooldown = cooldown
          self.image = pygame.image.load('images/New Piskel (35) (1).png')
-         self.angle = angle
+         self.image = pygame.transform.scale(self.image,(35, 20))
+         self.image = pygame.transform.rotate(self.image, self.angle)
+         self.direction = direction
          self.xPos = xPos
          self.yPos = yPos
     def render(self,screen):
+        
         screen.blit(self.image, self.image.get_rect(center = (self.xPos, self.yPos))) 
-
+        
     def update(self, screen):
-        self.xPos +=  math.cos(self.angle) *self.speed
-        self.yPos +=  math.sin(self.angle) *self.speed  
+        self.xPos +=  self.direction[0]*self.speed
+        self.yPos +=  self.direction[1]*self.speed  
         self.render(screen)
