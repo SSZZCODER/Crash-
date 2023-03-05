@@ -50,6 +50,7 @@ def main():
                 exit=True
             if  lavawarp.Touched() == True:
                 Player.MoveBy(lavawarp.offset_x, lavawarp.offset_y)
+                GameLogic.spellList = []
                 return 2   
             if event.type == pygame.QUIT:
                 return -1

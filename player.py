@@ -46,6 +46,8 @@ class Player:
     weaponcooldown = 30
     particlesp = particlePlayer(player_x, player_y, (255, 165, 0))
 
+    
+    
     def attack():
         Player.attacking = True   
     def damage_check():
@@ -222,7 +224,7 @@ class Player:
                 rel_x /= distance
                 rel_y /= distance
            
-            GameLogic.spellList.append(Fire(angle - 90, 0,10, [rel_x, rel_y],Player.playercenter[0], Player.playercenter[1]))
+            GameLogic.spellList.append(Fire(angle - 90,55, [rel_x, rel_y],Player.playercenter[0], Player.playercenter[1]))
  
             
     def Rotate():

@@ -57,6 +57,7 @@ def main():
             
             if  startingwarp.Touched() == True:
                 Player.MoveBy(startingwarp.offset_x, startingwarp.offset_y)
+                GameLogic.spellList = []
                 return 1
             if event.type == pygame.QUIT:
                 return -1
