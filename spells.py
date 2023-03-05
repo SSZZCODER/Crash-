@@ -23,9 +23,11 @@ class Fire():
         for enemy in GameLogic.enemyList[GameLogic.current_chunk]:
             if (self.image.get_rect(center=(self.xPos, self.yPos))).colliderect(enemy.image.get_rect(center=(enemy.xPos, enemy.yPos))):
                 enemy.takeDamage(self.damage)
-                print("Hit")
                 GameLogic.spellList.remove(self)
-    
+                return True
+        return False
+                
+
     def render(self,screen):    
         screen.blit(self.image, self.image.get_rect(center = (self.xPos, self.yPos))) 
 
@@ -33,10 +35,8 @@ class Fire():
         self.xPos +=  self.direction[0]*self.speed
         self.yPos +=  self.direction[1]*self.speed  
         self.render(screen)
-        Fire.hit(self)
+        if self.hit() == False:
+            if self.life <=0:
+                GameLogic.spellList.remove(self)
         if self.life >0:
             self.life -= 1
-        else:
-            GameLogic.spellList.remove(self)
-
-        
