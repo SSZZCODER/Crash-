@@ -33,7 +33,7 @@ def main():
 
     StaminaBar = staminabar(30, 30, 115, 20)
     HealthBar = healthbar(30, 0, 115, 20)
-
+    Spell = spell(320, 640, 115, 20)
     lavawarp = Warp(0,650,35,100,(255,5,10), 50,0)
 
     heart = pygame.image.load('images/heart.png')
@@ -69,6 +69,7 @@ def main():
             return 3
         #enemy_z1.update(screen)
         StaminaBar.render(screen)
+        Spell.render(screen)
         HealthBar.render(screen)
         screen.blit(heart, (-29, -45))
         screen.blit(energy, (-9, 10))

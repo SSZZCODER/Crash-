@@ -39,7 +39,7 @@ def main():
 
     StaminaBar = staminabar(30, 30, 115, 20)
     HealthBar = healthbar(30, 0, 115, 20)
-
+    Spell = spell(320, 640, 115, 20)
 
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
@@ -74,6 +74,7 @@ def main():
             return 3
 
        # enemy_z1.update(screen)
+        Spell.render(screen)
         StaminaBar.render(screen)
         HealthBar.render(screen)
         screen.blit(heart, (-29, -45))

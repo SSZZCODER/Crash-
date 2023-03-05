@@ -10,21 +10,23 @@ from weapons import weapon
 from particle import *
 from items import *
 from spells import Fire
+
 class Player:
     animations = pygame.image.load("animations/animation1.png"),pygame.image.load("animations/animation2.png"),pygame.image.load("animations/animation3.png"),pygame.image.load("animations/animation4.png"),pygame.image.load("animations/animation5.png"),pygame.image.load("animations/animation6.png"),pygame.image.load("animations/animation7.png"),pygame.image.load("animations/animation8.png"),pygame.image.load("animations/animation9.png"),pygame.image.load("animations/animation10.png")
     rainbowanimation = pygame.image.load("animations2/rainbow1.png"),pygame.image.load("animations2/rainbow2.png"),pygame.image.load("animations2/rainbow3.png"),pygame.image.load("animations2/rainbow4.png"),pygame.image.load("animations2/rainbow5.png"),pygame.image.load("animations2/rainbow6.png"),pygame.image.load("animations2/rainbow7.png"),pygame.image.load("animations2/rainbow8.png"),pygame.image.load("animations2/rainbow9.png"),pygame.image.load("animations2/rainbow10.png")
     direction = [0, 0]
     attacking = False
     animation_counter = 0
-    dmg = random.randint(2,6)
+    dmg = random.randint(15, 20)
+    dmgcounter = 0
     animation_reverse = False
-    weapon = weapon("Fist", dmg, 7, 40, 30)
+    weapon = weapon("Fist", dmg, 7, 40, 120)
     attack_cooldown = 30
     dash_speed = 60
     damage_cooldown = 0
     regen_cooldown = 300
-
     speed = 3
+    playsound = False
     health = 100
     hunger = 100 
     player_x = 340
@@ -41,8 +43,9 @@ class Player:
     burn_cooldown = 0
     burn_dmg = 0
     poison_dmg = 0
+    weaponcooldown = 30
     particlesp = particlePlayer(player_x, player_y, (255, 165, 0))
-    
+
     def attack():
         Player.attacking = True   
     def damage_check():
@@ -102,6 +105,7 @@ class Player:
             GameLogic.clear_enemies() 
             Player.poison_cooldown = 0
             Player.burn_cooldown = 0
+            Player.dmgcounter = 0
             return True
         else:
             return False
@@ -139,8 +143,19 @@ class Player:
         Player.Render(screen)
         Player.spellangle()
         Player.itemCheck()
+        if Player.weaponcooldown != 0:
+                Player.weaponcooldown -= 1
         if pygame.mouse.get_pressed()[0]:
-            Player.attack()
+            if Player.weaponcooldown <= 0:
+                Player.attack()
+                if Player.weapon.attack() == True:
+                    Player.dmgcounter += Player.weapon.damage
+                    if Player.dmgcounter >= 300:
+                        if Player.playsound == False:
+                            Player.playsound = True
+                            GameLogic.playSound("achievement")
+                        Player.dmgcounter = 300
+                Player.weaponcooldown = 30
         if Player.attacking == True:
             if Player.animation_reverse == True:
                 Player.animation_counter -= 1

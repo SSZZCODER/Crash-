@@ -30,3 +30,12 @@ class healthbar(bar):
     def render(self, screen):
          super().render(screen)
          pygame.draw.rect(screen, self.color, pygame.Rect(self.rect.x, self.rect.y, int((Player.health/100)*self.rect.width), self.rect.height))
+         
+class spell(bar):
+     def __init__(self, x, y, width, height):
+        super().__init__(x, y, width, height)
+        self.color = (255, 171, 0)
+
+     def render(self, screen):
+         super().render(screen)
+         pygame.draw.rect(screen, self.color, pygame.Rect(self.rect.x, self.rect.y, int((Player.dmgcounter/300)*self.rect.width), self.rect.height))

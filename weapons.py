@@ -12,7 +12,7 @@ class weapon():
         self.cooldown = cooldown
         self.timer = self.cooldown
 
-    def attack(self, screen):
+    def attack(self):
         player_x, player_y = GameLogic.playerPos
         mouse_x, mouse_y = pygame.mouse.get_pos()
         rel_x, rel_y = mouse_x - player_x, mouse_y - player_y
@@ -29,13 +29,11 @@ class weapon():
         for enemy in GameLogic.enemyList[GameLogic.current_chunk]:
             if hitbox.colliderect(enemy.image.get_rect(center=(enemy.xPos, enemy.yPos))):
                 enemy.takeDamage(self.damage)
+                return True
+        return False
 
     def update(self, screen):
-        if self.timer != 0:
-            self.timer -= 1
-        if pygame.mouse.get_pressed()[0] and self.timer <= 0:
-            self.attack(screen) 
-            self.timer = self.cooldown
+        pass
 
     def render():
         pass
