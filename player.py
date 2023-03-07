@@ -90,12 +90,15 @@ class Player:
     def itemCheck():
         for items in GameLogic.itemlist[GameLogic.current_chunk]:
             if items.image.get_rect(center = (items.xPos, items.yPos)).colliderect(Player.imageload.get_rect(center = Player.playercenter)):
+
                     print("Picked up item")
                     items.spawner.itemcount -= 1
                     GameLogic.itemlist[GameLogic.current_chunk].remove(items)
                     Player.playerInventory.addItem(items)
-
-
+            if items.image.get_rect(center = (items.xPos, items.yPos)).colliderect(Player.imageload.get_rect(center = Player.playercenter)):
+                if items.name == "Bandages":
+                    Player.health += 5
+                    
     def MoveBy(x, y):
         Player.player_x += x
         Player.player_y += y
