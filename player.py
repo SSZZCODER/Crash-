@@ -98,6 +98,11 @@ class Player:
             if items.image.get_rect(center = (items.xPos, items.yPos)).colliderect(Player.imageload.get_rect(center = Player.playercenter)):
                 if items.name == "Bandages":
                     Player.health += 5
+                elif items.name == "Coin": 
+                    print("picked up c")    
+                    GameLogic.playSound("coin")
+                    
+
                     
     def MoveBy(x, y):
         Player.player_x += x
