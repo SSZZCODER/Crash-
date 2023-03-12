@@ -28,7 +28,8 @@ class Player:
     speed = 3
     playsound = False
     health = 100
-    hunger = 100 
+    newspell = False
+    hunger = 100    
     player_x = 340
     player_y = 340
     dash_cooldown = 600
@@ -41,13 +42,12 @@ class Player:
     playerhotbar = Hotbar()
     poison_cooldown = 0
     burn_cooldown = 0
+    spellreset = 120
     burn_dmg = 0
     poison_dmg = 0
     weaponcooldown = 30
     particlesp = particlePlayer(player_x, player_y, (255, 165, 0))
 
-    
-    
     def attack():
         Player.attacking = True   
     def damage_check():
@@ -215,18 +215,26 @@ class Player:
        
        GameLogic.playerPos = [Player.player_x, Player.player_y]
     def spellangle():
-        if pygame.key.get_pressed()[pygame.K_e]:
-            mouse_x, mouse_y = pygame.mouse.get_pos()
-            rel_x, rel_y = mouse_x - Player.playercenter[0], mouse_y - Player.playercenter[1]
-            angle = math.atan2(rel_x,rel_y) *(180/math.pi)
-            distance = math.sqrt(rel_x**2+rel_y**2)
-            if distance > 0:
-                rel_x /= distance
-                rel_y /= distance
-           
-            GameLogic.spellList.append(Fire(angle - 90, 55, [rel_x, rel_y],Player.playercenter[0], Player.playercenter[1]))
- 
+        if Player.spellreset != 0 and Player.dmgcounter >= 300 and Player.newspell == True:
             
+            Player.spellreset -= 1
+        elif Player.spellreset <= 0 and Player.dmgcounter >= 300:
+            Player.newspell = False
+            Player.dmgcounter = 0
+            Player.spellreset = 120
+        if Player.dmgcounter >= 300:
+            if pygame.key.get_pressed()[pygame.K_e]:
+                if Player.spellreset >= 0:
+                    Player.newspell = True
+                    mouse_x, mouse_y = pygame.mouse.get_pos()
+                    rel_x, rel_y = mouse_x - Player.playercenter[0], mouse_y - Player.playercenter[1]
+                    angle = math.atan2(rel_x,rel_y) *(180/math.pi)
+                    distance = math.sqrt(rel_x**2+rel_y**2)
+                    if distance > 0:
+                        rel_x /= distance
+                        rel_y /= distance
+
+                    GameLogic.spellList.append(Fire(angle - 90, 55, [rel_x, rel_y],Player.playercenter[0], Player.playercenter[1]))
     def Rotate():
         mouse_x, mouse_y = pygame.mouse.get_pos()
         rel_x, rel_y = mouse_x - Player.playercenter[0], mouse_y - Player.playercenter[1]

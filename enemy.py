@@ -119,7 +119,7 @@ class spawner:
                 x = random.randint(50, 650)
                 y = random.randint(50, 650)
                 speed = random.randint(1,2)
-                health =random.randint(100, 150)
+                health =random.randint(100, 110)
                 damage = random.randint(5, 6)
                 GameLogic.enemyList[GameLogic.current_chunk].append( zombie(x, y, speed, health, damage, 30, 30, 200))
                 self.enemycount += 1
@@ -137,7 +137,7 @@ class spawner:
                 x = random.randint(50, 650)
                 y = random.randint(50, 650)
                 speed = random.randint(1,2)
-                health =random.randint(100, 150)
+                health =random.randint(100, 110)
                 damage = random.randint(5, 6)
                 GameLogic.enemyList[GameLogic.current_chunk].append( magma(x, y, speed, health, damage, 30, 30, 200))
                 self.enemycount += 1
