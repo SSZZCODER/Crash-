@@ -1,4 +1,5 @@
 from telnetlib import GA
+from turtle import title
 import pygame
 import math
 from enemy import enemy
@@ -12,6 +13,10 @@ from items import *
 from spells import Fire
 
 class Player:
+    pygame.font.init()
+    font = pygame.font.Font('font/arial.ttf', 45)  
+    title = font.render(str(""), True, (244, 44, 4))  
+    timer = 120
     animations = pygame.image.load("animations/animation1.png"),pygame.image.load("animations/animation2.png"),pygame.image.load("animations/animation3.png"),pygame.image.load("animations/animation4.png"),pygame.image.load("animations/animation5.png"),pygame.image.load("animations/animation6.png"),pygame.image.load("animations/animation7.png"),pygame.image.load("animations/animation8.png"),pygame.image.load("animations/animation9.png"),pygame.image.load("animations/animation10.png")
     rainbowanimation = pygame.image.load("animations2/rainbow1.png"),pygame.image.load("animations2/rainbow2.png"),pygame.image.load("animations2/rainbow3.png"),pygame.image.load("animations2/rainbow4.png"),pygame.image.load("animations2/rainbow5.png"),pygame.image.load("animations2/rainbow6.png"),pygame.image.load("animations2/rainbow7.png"),pygame.image.load("animations2/rainbow8.png"),pygame.image.load("animations2/rainbow9.png"),pygame.image.load("animations2/rainbow10.png")
     direction = [0, 0]
@@ -94,13 +99,18 @@ class Player:
                     print("Picked up item")
                     items.spawner.itemcount -= 1
                     GameLogic.itemlist[GameLogic.current_chunk].remove(items)
-                    Player.playerInventory.addItem(items)
-            if items.image.get_rect(center = (items.xPos, items.yPos)).colliderect(Player.imageload.get_rect(center = Player.playercenter)):
-                if items.name == "Bandages":
-                    Player.health += 5
-                elif items.name == "Coin": 
-                    print("picked up c")    
-                    GameLogic.playSound("coin")
+                    amount = Player.playerInventory.addItem(items)
+
+                    Player.title = Player.font.render(str(amount), True, (244, 44, 4))
+                    Player.timer = 120
+
+
+
+                    if items.name == "Bandages":
+                        Player.health += 5
+                    elif items.name == "Coin": 
+                        print("picked up c")    
+                        GameLogic.playSound("coin")
                     
 
                     
@@ -126,6 +136,8 @@ class Player:
 
         Player.player_x = 340
         Player.player_y = 340
+
+        Player.title = Player.font.render(str(""), True, (244, 44, 4))
 
     def dash():
         if Player.dash_cooldown != 0:
@@ -177,7 +189,10 @@ class Player:
                 Player.attacking = False
                 Player.animation_reverse = False
                 Player.animation_counter = 0
-
+        if Player.timer>0:
+            Player.timer-=1
+        else:
+            Player.title = Player.font.render(str(""), True, (244, 44, 4))
         return Player.zero()
         
     def Check():
@@ -257,5 +272,5 @@ class Player:
         if Player.inventoryShow:
             Player.playerInventory.Draw(screen)
         Player.playerhotbar.Render(screen)
-        
+        screen.blit(Player.title, (250,250))
    

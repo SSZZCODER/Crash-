@@ -7,11 +7,12 @@ from hotbar import Hotbar
 from enemy import *
 from bars import *
 from enemy import zombie
+from spells import Fire
 from warp import Warp
 import time
 from gamelogic import GameLogic
 from data import saveData
-
+from boss import Boss
 from particle import ParticleSystem, particlePlayer
 
 def main():
@@ -55,7 +56,7 @@ def main():
             if event.type == pygame.QUIT:
                 return -1
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_m:
+                if event.key == pygame.K_m: 
                     return 0
 
         screen.blit(background, (0,0))
@@ -64,7 +65,6 @@ def main():
         spawner3.spawncoin()
         spawner4.spawnbandage()
         spawner1.spawn()
-        
         GameLogic.Update(screen)
         if Player.Update(screen) == True:
             return 3

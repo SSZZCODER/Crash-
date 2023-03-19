@@ -5,6 +5,7 @@ import pygame
 
 class Inventory:
     def __init__(self, slots):
+        self.slots = slots
         self.items = [None]*slots
         self.positions = [(175,295),(315,295),(455,295)]
         self.amount = 0
@@ -26,10 +27,10 @@ class Inventory:
             if self.items[i] == None:
                 self.items[i] = thing
                 self.amount += 1
-                return
+                return 1
             if self.items[i].name == thing.name:    
                 self.items[i].amount += thing.amount
-                return
+                return self.items[i].amount
             
             
     def removeItem(self, thing):
@@ -49,6 +50,6 @@ class Inventory:
                     self.items.remove(item)
                 return item
     def clearInventory(self):
-        self.items=[]
+        self.items= [None]* self.slots
         self.amount = 0 
             
