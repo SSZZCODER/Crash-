@@ -97,7 +97,11 @@ class Player:
                     Player.playerInventory.addItem(items)
             if items.image.get_rect(center = (items.xPos, items.yPos)).colliderect(Player.imageload.get_rect(center = Player.playercenter)):
                 if items.name == "Bandages":
-                    Player.health += 5
+                    if Player.health < 100 and Player.health + 5 < 100:
+                        Player.health += 5
+                        GameLogic.playSound("heal")
+                    else:
+                        print("cant heal")
                 elif items.name == "Coin": 
                     print("picked up c")    
                     GameLogic.playSound("coin")
@@ -206,8 +210,8 @@ class Player:
             c = math.sqrt(c)
             Player.direction = [Player.direction[0]/c, Player.direction[1]/c]
 
-       Player.player_x += Player.direction[0] * Player.speed
-       Player.player_y += Player.direction[1] * Player.speed
+       Player.player_x += Player.direction[0] * Player.speed * GameLogic.playerspeedmulti
+       Player.player_y += Player.direction[1] * Player.speed * GameLogic.playerspeedmulti
 
        if Player.player_x > 695:
                 Player.player_x = 695
