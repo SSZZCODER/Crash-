@@ -6,7 +6,12 @@ class GameLogic:
     up = False
     enemyList = {"grass":[], "lava":[]}
     itemlist = {"grass":[], "lava":[]}
-    soundlist = {"zombie": pygame.mixer.Sound("sounds/Zombie Sound.wav"), "achievement": pygame.mixer.Sound("sounds/Achievement Sound Effect.mp3"), "coin": pygame.mixer.Sound("sounds/Pickup_Coin.wav"), "heal": pygame.mixer.Sound("sounds/Cure1.wav")}
+    objects = {"grass":[], "lava":[]}
+    soundlist = {"zombie": pygame.mixer.Sound("sounds/Zombie Sound.wav"), 
+                "achievement": pygame.mixer.Sound("sounds/Achievement Sound Effect.mp3"), 
+                "coin": pygame.mixer.Sound("sounds/Pickup_Coin.wav"), 
+                "heal": pygame.mixer.Sound("sounds/Cure1.wav")
+                }
     spellList = []
     current_chunk = "grass"
     playerPos = [0, 0]
@@ -27,6 +32,8 @@ class GameLogic:
         for enemy in GameLogic.enemyList[GameLogic.current_chunk]:
 
             enemy.update(screen)
+        for object in GameLogic.objects[GameLogic.current_chunk]:
+            object.update(screen)
         for spell in GameLogic.spellList:
             spell.update(screen)
     def playSound(name):

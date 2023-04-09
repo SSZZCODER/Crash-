@@ -14,6 +14,8 @@ from gamelogic import GameLogic
 from data import saveData
 from boss import Boss
 from particle import ParticleSystem, particlePlayer
+from bushspawner import *
+import random
 
 def main():
     pygame.init()
@@ -26,10 +28,9 @@ def main():
     
     #enemy_z1 = zombie(250, 250, 1, 100, 5, 30, 30, 200)
     #GameLogic.enemyList.append(enemy_z1)
-
+    bushes = random.randint(4, 9)
     spawner3 = spawneritems(0,300,20)
     spawner4 = spawneritems(0,300,1)
-    
     spawner1 = spawner(0, 600, 10)
 
     StaminaBar = staminabar(30, 30, 115, 20)
@@ -43,7 +44,7 @@ def main():
     energy = pygame.image.load('images/energy.png')
     energy = pygame.transform.scale(energy, (65, 65))
     GameLogic.current_chunk = "grass"
-
+    bushspawner = objectspawner(bushes)
     particles = ParticleSystem(10,700, (250,5,5))
     while not exit:
         for event in pygame.event.get():
