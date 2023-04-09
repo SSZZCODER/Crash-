@@ -52,6 +52,8 @@ class Player:
     poison_dmg = 0
     weaponcooldown = 30
     particlesp = particlePlayer(player_x, player_y, (255, 165, 0))
+    t = 180
+    bcount = 0
 
     def attack():
         Player.attacking = True   
@@ -99,17 +101,22 @@ class Player:
                     print("Picked up item")
                     items.spawner.itemcount -= 1
                     GameLogic.itemlist[GameLogic.current_chunk].remove(items)
-                    Player.playerInventory.addItem(items)
-            if items.image.get_rect(center = (items.xPos, items.yPos)).colliderect(Player.imageload.get_rect(center = Player.playercenter)):
-                if items.name == "Bandages":
-                    if Player.health < 100 and Player.health + 5 < 100:
-                        Player.health += 5
-                        GameLogic.playSound("heal")
-                    else:
-                        print("cant heal")
-                elif items.name == "Coin": 
-                    print("picked up c")    
-                    GameLogic.playSound("coin")
+                    if items.name == "Coin":
+                        amount = Player.playerInventory.addItem(items)
+                        Player.title = Player.font.render(str(amount), True, (244, 44, 4))
+                        Player.timer = 120 
+                        print("picked up c")    
+                        GameLogic.playSound("coin")
+                    if items.name == "Bandages":
+                    
+                        if Player.health < 100:
+                            Player.t = 180
+                            Player.bcount +=1
+                        else:
+                            amount = Player.playerInventory.addItem(items)
+                            Player.title = Player.font.render(str(amount), True, (244, 44, 4))
+                            Player.timer = 120                         
+
                     
 
                     
@@ -192,8 +199,21 @@ class Player:
             Player.timer-=1
         else:
             Player.title = Player.font.render(str(""), True, (244, 44, 4))
+        if Player.t>0:
+            Player.t-=1
+        elif Player.bcount > 0:
+            if Player.health + 5 < 100:
+                Player.health += 5
+                GameLogic.playSound("heal")
+
+            else:
+                Player.health = 100
+                GameLogic.playSound("heal")
+            
+            Player.bcount -=  1
+            Player.t = 180
         return Player.zero()
-        
+
     def Check():
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
