@@ -7,10 +7,10 @@ class GameLogic:
     enemyList = {"grass":[], "lava":[]}
     itemlist = {"grass":[], "lava":[]}
     objects = {"grass":[], "lava":[]}
-    soundlist = {"zombie": pygame.mixer.Sound("sounds/Zombie Sound.wav"), 
-                "achievement": pygame.mixer.Sound("sounds/Achievement Sound Effect.mp3"), 
-                "coin": pygame.mixer.Sound("sounds/Pickup_Coin.wav"), 
-                "heal": pygame.mixer.Sound("sounds/Cure1.wav")
+    soundlist = {"zombie": pygame.mixer.Sound("sounds/hurt.wav"), 
+                "achievement": pygame.mixer.Sound("sounds/power.wav"), 
+                "coin": pygame.mixer.Sound("sounds/coin.wav"), 
+                "heal": pygame.mixer.Sound("sounds/heal.wav")
                 }
     spellList = []
     current_chunk = "grass"
