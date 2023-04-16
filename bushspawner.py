@@ -1,3 +1,4 @@
+from turtle import color
 import pygame
 import random
 from gamelogic import GameLogic
@@ -15,9 +16,15 @@ class bush:
     def __init__(self, xpos, ypos):
         self.xpos = xpos
         self.ypos = ypos
+
         self.image= pygame.image.load("images/bush.png")
         self.image = pygame.transform.scale(self.image, (200, 225))
+        self.rectangle = pygame.Rect(self.xpos, self.ypos, 115,85)
+        self.rectangle.center=(self.xpos, self.ypos)
+    def render(self, screen):
+        
+        screen.blit(self.image, self.image.get_rect(center = (self.xpos, self.ypos)))
+
     def update(self, screen):
         self.render(screen)
-    def render(self, screen):
-        screen.blit(self.image, self.image.get_rect(center = (self.xpos, self.ypos)))
+    

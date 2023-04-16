@@ -20,6 +20,8 @@ class GameLogic:
     pygame.mixer.Sound.set_volume(soundlist["achievement"],.05)
     pygame.mixer.Sound.set_volume(soundlist["coin"],.9)
     pygame.mixer.Sound.set_volume(soundlist["heal"],.6)    
+    #pygame.mixer.music.load(soundlist[""])
+    #pygame.mixer.music.set_volume(soundlist[""],.05)
     def clear_enemies():
         for enemies in GameLogic.enemyList:
             GameLogic.enemyList[enemies] = []

@@ -242,7 +242,12 @@ class Player:
 
        Player.player_x += Player.direction[0] * Player.speed * GameLogic.playerspeedmulti
        Player.player_y += Player.direction[1] * Player.speed * GameLogic.playerspeedmulti
-
+       hitbox = pygame.Rect(Player.player_x,Player.player_y, 50,55)
+       for bush in GameLogic.objects[GameLogic.current_chunk]:
+           if bush.rectangle.colliderect((hitbox)):
+               Player.player_x -= Player.direction[0] * Player.speed * GameLogic.playerspeedmulti
+               Player.player_y -= Player.direction[1] * Player.speed * GameLogic.playerspeedmulti
+               break
        if Player.player_x > 695:
                 Player.player_x = 695
        if Player.player_x < 0:
@@ -288,6 +293,7 @@ class Player:
     
     def Render(screen):
         screen.blit(Player.imageload,Player.imageload.get_rect(center = Player.playercenter)) 
+
         if Player.inventoryShow:
             Player.playerInventory.Draw(screen)
         Player.playerhotbar.Render(screen)
