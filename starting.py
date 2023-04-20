@@ -16,6 +16,7 @@ from boss import Boss
 from particle import ParticleSystem, particlePlayer
 from bushspawner import *
 import random
+from textbar import *
 
 def main():
     pygame.init()
@@ -32,7 +33,7 @@ def main():
     spawner3 = spawneritems(0,300,20)
     spawner4 = spawneritems(0,300,1)
     spawner1 = spawner(0, 600, 10)
-
+    textBar = textbar()
     StaminaBar = staminabar(30, 30, 115, 20)
     HealthBar = healthbar(30, 0, 115, 20)
     Spell = spell(320, 640, 115, 20)
@@ -69,6 +70,7 @@ def main():
         GameLogic.Update(screen)
         if Player.Update(screen) == True:
             return 3
+        textBar.render(screen)
         #enemy_z1.update(screen)
         StaminaBar.render(screen)
         Spell.render(screen)
