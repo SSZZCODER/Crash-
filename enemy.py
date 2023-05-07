@@ -14,6 +14,7 @@ class enemy():
         self.damage = damage
         self.damage_cooldown = 0
         self.move_cooldown = 0
+        self.movearound = False
         self.original_image = self.assignImage()
         self.image = self.original_image
         self.range = range
@@ -54,19 +55,29 @@ class enemy():
             n = math.sqrt(n)
             rel_x = rel_x/n
             rel_y = rel_y/n
-        if n<=self.range:
+        if n<=self.range and self.movearound == False:
             self.xPos += rel_x * self.speed
             self.yPos += rel_y * self.speed
             angle = math.atan2(rel_x, rel_y)   * (180/math.pi) 
             self.image = pygame.transform.rotate(self.original_image, angle-90)
-        '''
+        if self.movearound == True:
+            self.xPos += self.speed
+        
         hitbox = self.image.get_rect(center = (self.xPos, self.yPos))
+        l = 0
+        length = len(GameLogic.objects[GameLogic.current_chunk])
         for bush in GameLogic.objects[GameLogic.current_chunk]:
-           if bush.rectangle.colliderect((hitbox)):
+            if bush.rectangle.colliderect((hitbox)):
                self.xPos -=rel_x*self.speed
                self.yPos -=rel_y*self.speed
+               self.movearound = True
                break
-        '''
+            else:
+                l += 1
+        if l >= length:
+            self.movearound = False
+            
+        
 
     def update(self, screen):
         self.move()
