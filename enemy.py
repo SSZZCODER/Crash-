@@ -15,6 +15,9 @@ class enemy():
         self.damage_cooldown = 0
         self.move_cooldown = 0
         self.movearound = False
+        self.movearounddirection = random.randint(-1,1)
+        while self.movearounddirection == 0:
+            self.movearounddirection = random.randint(-1,1)
         self.original_image = self.assignImage()
         self.image = self.original_image
         self.range = range
@@ -61,7 +64,7 @@ class enemy():
             angle = math.atan2(rel_x, rel_y)   * (180/math.pi) 
             self.image = pygame.transform.rotate(self.original_image, angle-90)
         if self.movearound == True:
-            self.xPos += self.speed
+            self.xPos += self.movearounddirection*self.speed
         
         hitbox = self.image.get_rect(center = (self.xPos, self.yPos))
         l = 0
@@ -76,6 +79,11 @@ class enemy():
                 l += 1
         if l >= length:
             self.movearound = False
+            """
+            self.movearounddirection = random.randint(-1,1)
+            while self.movearounddirection == 0:
+                self.movearounddirection = random.randint(-1,1)
+                """
             
         
 
