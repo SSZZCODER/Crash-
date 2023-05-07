@@ -11,12 +11,13 @@ class objectspawner:
             for i in range(self.itemcount):
                 xpos = random.randint(50, 650)
                 ypos = random.randint(50, 650)
+                
                 GameLogic.objects[GameLogic.current_chunk].append(bush(xpos, ypos))
 class bush:
     def __init__(self, xpos, ypos):
         self.xpos = xpos
         self.ypos = ypos
-
+    
         self.image= pygame.image.load("images/bush (1).png")
         self.image = pygame.transform.scale(self.image, (80,80))
         self.rectangle = pygame.Rect(self.xpos, self.ypos, 85,50)
