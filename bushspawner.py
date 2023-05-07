@@ -11,6 +11,10 @@ class objectspawner:
             for i in range(self.itemcount):
                 xpos = random.randint(50, 650)
                 ypos = random.randint(50, 650)
+                while xpos == 340:
+                    xpos =random.randint(50, 650)
+                while ypos == 340:
+                    ypos = random.randint(50, 650)
                 GameLogic.objects[GameLogic.current_chunk].append(bush(xpos, ypos))
 class bush:
     def __init__(self, xpos, ypos):
