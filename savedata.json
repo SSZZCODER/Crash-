@@ -1,10 +1,13 @@
 {
     "position": [
-        0,
-        694.0472939388666
+        340,
+        340
     ],
-    "health": 100,
+    "health": 76,
     "inventory": [
-        {}
+        {
+            "Coin": 1,
+            "Bandages": 1
+        }
     ]
 }
