@@ -17,14 +17,14 @@ class bush:
         self.xpos = xpos
         self.ypos = ypos
 
-        self.image= pygame.image.load("images/bush.png")
-        self.image = pygame.transform.scale(self.image, (200, 225))
-        self.rectangle = pygame.Rect(self.xpos, self.ypos, 115,85)
-        self.rectangle.center=(self.xpos, self.ypos)
+        self.image= pygame.image.load("images/bush (1).png")
+        self.image = pygame.transform.scale(self.image, (80,80))
+        self.rectangle = pygame.Rect(self.xpos, self.ypos, 85,50)
+        self.rectangle.center= self.image.get_rect(center = (self.xpos, self.ypos)).center
     def render(self, screen):
         
         screen.blit(self.image, self.image.get_rect(center = (self.xpos, self.ypos)))
-
+    #    pygame.draw.rect(screen, (0,0,0), self.rectangle)
     def update(self, screen):
         self.render(screen)
     

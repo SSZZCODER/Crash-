@@ -17,19 +17,39 @@ class enemy():
         self.original_image = self.assignImage()
         self.image = self.original_image
         self.range = range
-        self.max_health = health
-    
+        self.max_health = health    
+        self.h = self.image.get_rect(center=(self.xPos, self.yPos)).h
+        self.w = self.image.get_rect(center=(self.xPos, self.yPos)).w
+        self.rect1 = pygame.Rect(int(self.w/2) + self.xPos, self.yPos, 2, int(self.h))
+        self.rect2 = pygame.Rect(self.xPos - int(self.w/2), self.yPos, 2, int(self.h) )
+        self.rect3 = pygame.Rect( self.xPos, self.yPos + int(self.h/2), int(self.w), 2)
+        self.rect4 = pygame.Rect( self.xPos, self.yPos - int(self.h/2), int(self.w), 2)
     def assignImage(self):
         pass
     def render(self, screen):   
         screen.blit(self.image, (self.xPos, self.yPos))
-        
+        pygame.draw.rect(screen, (0,255,0), self.rect1)
+        pygame.draw.rect(screen, (0,255,0), self.rect2)
+        pygame.draw.rect(screen, (0,255,0), self.rect3)
+        pygame.draw.rect(screen, (0,255,0), self.rect4)
         #pygame.draw.rect(screen, (250, 28, 0), pygame.Rect(self.xPos,self.yPos-20, int((self.health/100)*57), 10))
 
     def move(self): 
+        self.h=self.image.get_rect(center=(self.xPos, self.yPos)).h
+        self.w=self.image.get_rect(center=(self.xPos, self.yPos)).w
+        
+        self.rect1 = pygame.Rect(int(self.w/2) + self.xPos, self.yPos, 2, int(self.h))
+        self.rect1.center = (int(self.w/2) + self.xPos, self.yPos)
+        self.rect2 = pygame.Rect(self.xPos - int(self.w/2), self.yPos, 2, int(self.h) )
+        self.rect2.center = (self.xPos - int(self.w/2), self.yPos)
+        self.rect3 = pygame.Rect( self.xPos, self.yPos + int(self.h/2), int(self.w), 2)
+        self.rect3.center = (self.xPos, self.yPos + int(self.h/2))
+        self.rect4 = pygame.Rect( self.xPos, self.yPos - int(self.h/2), int(self.w), 2)
+        self.rect4.center = (self.xPos, self.yPos - int(self.h/2))
         player_x, player_y = GameLogic.playerPos
         rel_x, rel_y = player_x - self.xPos, player_y - self.yPos 
         n = rel_x**2 + rel_y**2
+
         if n>0:
             n = math.sqrt(n)
             rel_x = rel_x/n
@@ -39,7 +59,14 @@ class enemy():
             self.yPos += rel_y * self.speed
             angle = math.atan2(rel_x, rel_y)   * (180/math.pi) 
             self.image = pygame.transform.rotate(self.original_image, angle-90)
-
+        '''
+        hitbox = self.image.get_rect(center = (self.xPos, self.yPos))
+        for bush in GameLogic.objects[GameLogic.current_chunk]:
+           if bush.rectangle.colliderect((hitbox)):
+               self.xPos -=rel_x*self.speed
+               self.yPos -=rel_y*self.speed
+               break
+        '''
 
     def update(self, screen):
         self.move()
@@ -65,10 +92,13 @@ class zombie(enemy):
             return pygame.transform.scale(pygame.image.load('images/zombie.png'),(57, 40))
     
         def render(self, screen):
-             screen.blit(self.image, (self.xPos, self.yPos))
+             screen.blit(self.image, self.image.get_rect(center = (self.xPos, self.yPos)))
              pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(self.xPos+15,self.yPos-20, 40, 10))
              pygame.draw.rect(screen, (250, 2 , 0), pygame.Rect(self.xPos+15,self.yPos-20, int((self.health/self.max_health)*40), 10))
-    
+             pygame.draw.rect(screen, (0,255,0), self.rect1)
+             pygame.draw.rect(screen, (0,255,0), self.rect2)
+             pygame.draw.rect(screen, (0,255,0), self.rect3)
+             pygame.draw.rect(screen, (0,255,0), self.rect4)    
         def attack(self):
             attack_choice = random.randint(1,5)
             if attack_choice == 3:
