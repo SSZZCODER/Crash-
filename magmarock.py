@@ -18,6 +18,8 @@ class magmarock:
         self.ypos = ypos
         self.image= pygame.image.load("images/magma.png")
         self.image = pygame.transform.scale(self.image, (200, 225))
+        self.rectangle = pygame.Rect(self.xpos, self.ypos, 85,50)
+        self.rectangle.center= self.image.get_rect(center = (self.xpos, self.ypos)).center
     def update(self, screen):
         self.render(screen)
     def render(self, screen):
