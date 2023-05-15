@@ -19,7 +19,7 @@ def main():
     background = pygame.image.load('images/17.png')
     background = pygame.transform.scale(background, (750,750))
     corals = random.randint(4, 9)
-    coralspawner = objectspawner(coral)
+    coralspawner = objectspawner(corals)
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
 
@@ -36,6 +36,7 @@ def main():
     energy = pygame.image.load('images/energy.png')
     energy = pygame.transform.scale(energy, (65, 65))
     GameLogic.current_chunk = "ocean"
+    coralspawner.spawncoral()
     clock = pygame.time.Clock()
     exit = False
 
@@ -45,12 +46,12 @@ def main():
                 exit=True
                 return -1
         screen.blit(background,[0,0])
+        GameLogic.Update(screen)
         Spell.render(screen)
         StaminaBar.render(screen)
         HealthBar.render(screen)
         screen.blit(heart, (-29, -45))
         screen.blit(energy, (-9, 10))
-        coral.spawncoral()
         pygame.display.update()
         clock.tick(60)
 
