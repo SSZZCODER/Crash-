@@ -93,7 +93,9 @@ class Player:
                         Player.burn_dmg = eattack[1]
                         Player.particlesp.showEffect = True
                         Player.burn_cooldown = eattack[2]
-                    
+                    if eattack[0] == 3:
+                        Player.bubble_dmg = eattack[1]
+                        Player.bubble_cooldown = eattack[2]
                         
     def itemCheck():
         for items in GameLogic.itemlist[GameLogic.current_chunk]:
