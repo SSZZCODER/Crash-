@@ -13,10 +13,13 @@ class objectspawner:
                 ypos = random.randint(50, 650)
                 GameLogic.objects[GameLogic.current_chunk].append(coral(xpos, ypos))
 class coral:
+    coralImage = pygame.image.load('images/coral.png')
+    coralImage = pygame.transform.scale(coralImage, (20,20))            
     def __init__(self, xpos, ypos):
+
         self.xpos = xpos
         self.ypos = ypos
-        self.image= pygame.image.load("images/coral.png")
+        self.image= pygame.image.load(coralImage)
         self.image = pygame.transform.scale(self.image, (200, 225))
         self.rectangle = pygame.Rect(self.xpos, self.ypos, 85,50)
         self.rectangle.center= self.image.get_rect(center = (self.xpos, self.ypos)).center
