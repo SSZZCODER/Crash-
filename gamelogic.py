@@ -4,9 +4,9 @@ class GameLogic:
 
     pygame.mixer.init()
     up = False
-    enemyList = {"grass":[], "lava":[]}
-    itemlist = {"grass":[], "lava":[]}
-    objects = {"grass":[], "lava":[]}
+    enemyList = {"grass":[], "lava":[], "ocean":[]}
+    itemlist = {"grass":[], "lava":[], "ocean":[]}
+    objects = {"grass":[], "lava":[], "ocean":[]}
     soundlist = {"zombie": pygame.mixer.Sound("sounds/hurt.wav"), 
                 "achievement": pygame.mixer.Sound("sounds/power.wav"), 
                 "coin": pygame.mixer.Sound("sounds/coin.wav"), 
