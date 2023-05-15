@@ -155,6 +155,7 @@ class fish(enemy):
             self.move_cooldown = 30
             self.bubble_dmg = random.choice([4, 5])
             self.bubble_duration = random.choice([120, 240])
+            self.bubbles = {"image":[],"pos": [],"player_pos": []}
 
         def assignImage(self):
             return pygame.transform.scale(pygame.image.load('images/fish.png'),(57, 40))
@@ -163,6 +164,23 @@ class fish(enemy):
              screen.blit(self.image, (self.xPos, self.yPos)) 
              pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(self.xPos+15,self.yPos-20, 40, 10))
              pygame.draw.rect(screen, (250, 28, 0), pygame.Rect(self.xPos+15,self.yPos-20, int((self.health/self.max_health)*40), 10))
+             attack_choice = random.randint(1,10)
+             if attack_choice == 3:
+                self.bubbles["image"].append(pygame.image.load("images/bubble.png"))
+                self.bubbles["pos"].append([self.xPos,self.yPos])
+                self.bubbles["player_pos"].append(GameLogic.playerPos)
+             if len(self.bubbles["image"]) > 0:
+                for i in range(len(self.bubbles["image"])):
+                    screen.blit(self.bubbles["image"][i],self.bubbles["pos"][i])
+                    if self.bubbles["pos"][i][0] > self.bubbles["player_pos"][i][0]:
+                        self.bubbles["pos"][i][0] -= 1
+                    if self.bubbles["pos"][i][0] < self.bubbles["player_pos"][i][0]:
+                        self.bubbles["pos"][i][0] += 1
+                    if self.bubbles["pos"][i][1] > self.bubbles["player_pos"][i][1]:
+                        self.bubbles["pos"][i][1] -= 1
+                    if self.bubbles["pos"][i][1] < self.bubbles["player_pos"][i][1]:
+                        self.bubbles["pos"][i][1] += 1
+
 
         def attack(self):
             attack_choice = random.randint(1,5)
@@ -170,6 +188,7 @@ class fish(enemy):
                 return[3, self.bubble_dmg, self.bubble_duration]
             else:
                 return [0, self.damage]
+            
 
 class spawner:
     def __init__(self, enemycount, spawn_cooldown, max_enemycount):
