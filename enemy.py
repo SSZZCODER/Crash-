@@ -148,6 +148,24 @@ class magma(enemy):
                 return [2, self.fire_dmg, self.burn_duration]
             else:
                 return [0, self.damage]
+class fish(enemy):
+        def __init__(self, xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range):
+            super().__init__(xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range)
+            self.damage_cooldown = 30
+            self.move_cooldown = 30
+            self.water_dmg = random.choice([4, 5])
+         
+
+        def assignImage(self):
+            return pygame.transform.scale(pygame.image.load('images/fish.png'),(57, 40))
+
+        def render(self, screen):
+             screen.blit(self.image, (self.xPos, self.yPos)) 
+             pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(self.xPos+15,self.yPos-20, 40, 10))
+             pygame.draw.rect(screen, (250, 28, 0), pygame.Rect(self.xPos+15,self.yPos-20, int((self.health/self.max_health)*40), 10))
+
+        def attack(self):
+            return self.water_dmg
 
 class spawner:
     def __init__(self, enemycount, spawn_cooldown, max_enemycount):
@@ -189,5 +207,22 @@ class spawner:
                 health =random.randint(100, 110)
                 damage = random.randint(5, 6)
                 GameLogic.enemyList[GameLogic.current_chunk].append( magma(x, y, speed, health, damage, 30, 30, 200))
+                self.enemycount += 1
+                self.life = self.spawn_cooldown         
+    def spawn_fish(self):
+        if self.life > 0:
+            self.life -= 1
+        else:
+          if self.enemycount <= self.max_enemycount:
+            enemies = random.randint(2,3)
+            if self.max_enemycount - self.enemycount < enemies:
+                enemies = self.max_enemycount - self.enemycount
+            for i in range(enemies):
+                x = random.randint(50, 650)
+                y = random.randint(50, 650)
+                speed = random.randint(1,2)
+                health =random.randint(100, 110)
+                damage = random.randint(5, 6)
+                GameLogic.enemyList[GameLogic.current_chunk].append(fish(x, y, speed, health, damage, 30, 30, 200))
                 self.enemycount += 1
                 self.life = self.spawn_cooldown         

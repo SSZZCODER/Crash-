@@ -22,7 +22,7 @@ def main():
     coralspawner = objectspawner(corals)
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
-
+    spawner3 = spawner(0, 600, 11)
     energy = pygame.image.load('images/energy.png')
     energy = pygame.transform.scale(energy, (65, 65))
 
@@ -47,7 +47,10 @@ def main():
                 return -1
         screen.blit(background,[0,0])
         GameLogic.Update(screen)
+        if Player.Update(screen) == True:
+            return 3
         Spell.render(screen)
+        spawner3.spawn_fish()
         StaminaBar.render(screen)
         HealthBar.render(screen)
         screen.blit(heart, (-29, -45))
