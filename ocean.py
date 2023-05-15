@@ -13,3 +13,9 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:   
                 exit=True
+                return -1
+        screen.blit(background,[0,0])
+        pygame.display.update()
+        clock.tick(60)
+    
+

@@ -2,11 +2,12 @@ import menu
 import starting
 import pygame
 import lava
+import ocean
 import deathscreen  
 import skinsmenu
 from data import saveData
 
-level = 0
+level = 5
 
 while level != -1:
     if level == 0:
@@ -19,6 +20,8 @@ while level != -1:
         level = deathscreen.menu()
     if level == 4:
         level = skinsmenu.main()
+    if level == 5:
+        level = ocean.main()
         
     print(level) 
     
