@@ -153,7 +153,8 @@ class fish(enemy):
             super().__init__(xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range)
             self.damage_cooldown = 30
             self.move_cooldown = 30
-         
+            self.bubble_dmg = random.choice([4, 5])
+            self.bubble_duration = random.choice([120, 240])
 
         def assignImage(self):
             return pygame.transform.scale(pygame.image.load('images/fish.png'),(57, 40))
@@ -164,7 +165,11 @@ class fish(enemy):
              pygame.draw.rect(screen, (250, 28, 0), pygame.Rect(self.xPos+15,self.yPos-20, int((self.health/self.max_health)*40), 10))
 
         def attack(self):
-            return [0, self.damage]
+            attack_choice = random.randint(1,5)
+            if attack_choice == 3:
+                return[3, self.bubble_dmg, self.bubble_duration]
+            else:
+                return [0, self.damage]
 
 class spawner:
     def __init__(self, enemycount, spawn_cooldown, max_enemycount):
