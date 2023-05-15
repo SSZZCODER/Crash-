@@ -18,7 +18,7 @@ class coral:
         self.xpos = xpos
         self.ypos = ypos
         self.image= pygame.image.load('images/coral.png')
-        self.image = pygame.transform.scale(self.image, (20, 20))
+        self.image = pygame.transform.scale(self.image, (80, 80))
         self.rectangle = pygame.Rect(self.xpos, self.ypos, 85,50)
         self.rectangle.center= self.image.get_rect(center = (self.xpos, self.ypos)).center
     def update(self, screen):
