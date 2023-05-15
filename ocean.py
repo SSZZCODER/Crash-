@@ -47,6 +47,8 @@ def main():
                 return -1
         screen.blit(background,[0,0])
         GameLogic.Update(screen)
+        if Player.Update(screen) == True:
+            return 3
         Spell.render(screen)
         spawner3.spawn_fish()
         StaminaBar.render(screen)
