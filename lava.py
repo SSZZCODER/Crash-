@@ -36,6 +36,7 @@ def main():
     spawner6 = spawneritems(0,300,1)
     spawner2 = spawner(0, 600, 11)
     startingwarp = Warp(0,650, 35,100, (5,5,255), 50,0)
+    oceanwarp = Warp(715,650, 35,100, (0, 128, 0), -50 , 0)
 
     StaminaBar = staminabar(30, 30, 115, 20)
     HealthBar = healthbar(30, 0, 115, 20)
@@ -49,6 +50,7 @@ def main():
     GameLogic.current_chunk = "lava"
     magmaspawner = objectspawner(magmarocks)
     particlelava = ParticleSystem(10,700,(5,5,250))
+    particleocean = ParticleSystem(725, 700, (0, 128, 0))
     while not exit:
         
         for event in pygame.event.get():
@@ -59,6 +61,11 @@ def main():
                 Player.MoveBy(startingwarp.offset_x, startingwarp.offset_y)
                 GameLogic.spellList = []
                 return 1
+            if oceanwarp.Touched() == True:
+                Player.MoveBy(oceanwarp.offset_x, oceanwarp.offset_y)
+                GameLogic.spellList = []
+                return 5
+
             if event.type == pygame.QUIT:
                 return -1
             if event.type == pygame.KEYDOWN:
@@ -66,7 +73,9 @@ def main():
                     return 0
         screen.blit(lavaImage, (0,0))
         particlelava.Update(screen)
+        particleocean.Update(screen)
         startingwarp.Update(screen)
+        oceanwarp.Update(screen)
         spawner2.spawn_magma()
         spawner5.spawncoin()
         spawner5.spawnbandage()

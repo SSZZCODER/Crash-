@@ -7,7 +7,8 @@ import deathscreen
 import skinsmenu
 from data import saveData
 
-level = 5
+level = 2
+
 
 while level != -1:
     if level == 0:
