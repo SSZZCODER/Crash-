@@ -11,6 +11,10 @@ class objectspawner:
             for i in range(self.itemcount):
                 xpos = random.randint(50, 650)
                 ypos = random.randint(50, 650)
+                while xpos> 320 and xpos <400: 
+                    xpos =random.randint(50, 650)
+                while ypos> 320 and ypos<410:
+                    ypos = random.randint(50, 650)
                 GameLogic.objects[GameLogic.current_chunk].append(coral(xpos, ypos))
 class coral:     
     def __init__(self, xpos, ypos):

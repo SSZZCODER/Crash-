@@ -153,7 +153,6 @@ class fish(enemy):
             super().__init__(xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range)
             self.damage_cooldown = 30
             self.move_cooldown = 30
-            self.water_dmg = random.choice([4, 5])
          
 
         def assignImage(self):
@@ -165,7 +164,7 @@ class fish(enemy):
              pygame.draw.rect(screen, (250, 28, 0), pygame.Rect(self.xPos+15,self.yPos-20, int((self.health/self.max_health)*40), 10))
 
         def attack(self):
-            return self.water_dmg
+            return [0, self.damage]
 
 class spawner:
     def __init__(self, enemycount, spawn_cooldown, max_enemycount):
