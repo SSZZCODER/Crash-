@@ -29,7 +29,7 @@ def main():
     StaminaBar = staminabar(30, 30, 115, 20)
     HealthBar = healthbar(30, 0, 115, 20)
     Spell = spell(320, 640, 115, 20)
-
+    
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
     warp2 = Warp(715,650, 35,100, (128, 0, 128), -50,0)
@@ -38,6 +38,7 @@ def main():
     energy = pygame.transform.scale(energy, (65, 65))
     GameLogic.current_chunk = "ocean"
     coralspawner.spawncoral()
+
     clock = pygame.time.Clock()
     exit = False
 
@@ -45,7 +46,6 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:   
                 exit=True
-
             if  warp2.Touched() == True:
                 Player.MoveBy(warp2.offset_x, warp2.offset_y)
                 GameLogic.spellList = []
