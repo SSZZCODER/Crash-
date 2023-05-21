@@ -4,7 +4,6 @@ from gamelogic import GameLogic
 import math
 
 
-
 class enemy():
     def __init__(self, xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range):
         self.xPos = xPos
@@ -148,6 +147,7 @@ class magma(enemy):
                 return [2, self.fire_dmg, self.burn_duration]
             else:
                 return [0, self.damage]
+
 class fish(enemy):
         def __init__(self, xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range):
             super().__init__(xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range)
@@ -180,7 +180,9 @@ class fish(enemy):
                         self.bubbles["pos"][i][1] -= 1
                     if self.bubbles["pos"][i][1] < self.bubbles["player_pos"][i][1]:
                         self.bubbles["pos"][i][1] += 1
-
+                self.bubbles["pos"][i][0] += (self.bubbles["player_pos"][i][0] - self.bubbles["pos"][i][0])/10
+                self.bubbles["pos"][i][1] += (self.bubbles["player_pos"][i][1] - self.bubbles["pos"][i][1])/10
+                
 
         def attack(self):
             attack_choice = random.randint(1,5)
@@ -188,7 +190,6 @@ class fish(enemy):
                 return[3, self.bubble_dmg, self.bubble_duration]
             else:
                 return [0, self.damage]
-            
 
 class spawner:
     def __init__(self, enemycount, spawn_cooldown, max_enemycount):

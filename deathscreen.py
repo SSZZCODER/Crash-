@@ -48,4 +48,3 @@ def menu():
         screen.blit(again, (140, 130))
         pygame.display.flip()
         clock.tick(60)
-
