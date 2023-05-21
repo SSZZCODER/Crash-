@@ -166,11 +166,7 @@ class fish(enemy):
             screen.blit(self.image, (self.xPos, self.yPos)) 
             pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(self.xPos+15,self.yPos-20, 40, 10))
             pygame.draw.rect(screen, (250, 28, 0), pygame.Rect(self.xPos+15,self.yPos-20, int((self.health/self.max_health)*40), 10))
-            player_x, player_y = GameLogic.playerPos
-            rel_x, rel_y = player_x - self.xPos, player_y - self.yPos 
-            n = rel_x**2 + rel_y**2
-            if n <= self.range:
-                self.shoot()
+            self.shoot()
 
             if len(self.bubbles["image"]) > 0:
                 for i in range(len(self.bubbles["image"])):
@@ -186,15 +182,21 @@ class fish(enemy):
             else:
                 return [0, self.damage]
         def shoot(self):
-            self.bubbles["image"].append(pygame.image.load("images/bubble.png"))
-            pos = Vector2(self.xPos,self.yPos)
-            self.bubbles["pos"].append(pos)
-            ppos = Vector2(GameLogic.playerPos)
-            self.bubbles["player_pos"].append(ppos)
-            vel = ppos - pos
-            vel = vel.normalize()
-            vel*= self.bubble_speed
-            self.bubbles["velocity"].append(vel)
+            player_x, player_y = GameLogic.playerPos
+            rel_x, rel_y = player_x - self.xPos, player_y - self.yPos 
+            n = rel_x**2 + rel_y**2
+            if n>0:
+                n = math.sqrt(n)
+            if n <= self.range:
+                self.bubbles["image"].append(pygame.image.load("images/bubble.png"))
+                pos = Vector2(self.xPos,self.yPos)
+                self.bubbles["pos"].append(pos)
+                ppos = Vector2(GameLogic.playerPos)
+                self.bubbles["player_pos"].append(ppos)
+                vel = ppos - pos
+                vel = vel.normalize()
+                vel*= self.bubble_speed
+                self.bubbles["velocity"].append(vel)
 class spawner:
     def __init__(self, enemycount, spawn_cooldown, max_enemycount):
         self.enemycount = enemycount
