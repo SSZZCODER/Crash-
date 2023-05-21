@@ -37,7 +37,10 @@ def main():
     energy = pygame.image.load('images/energy.png')
     energy = pygame.transform.scale(energy, (65, 65))
     GameLogic.current_chunk = "ocean"
-    coralspawner.spawncoral()
+    if len(GameLogic.objects[GameLogic.current_chunk])==0:
+    #    GameLogic.objects[GameLogic.current_chunk] = []
+        coralspawner.spawncoral()
+
 
     clock = pygame.time.Clock()
     exit = False
