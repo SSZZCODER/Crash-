@@ -1,8 +1,9 @@
+from turtle import Vec2D
 import pygame
 import random 
 from gamelogic import GameLogic
 import math
-
+from pygame.math import Vector2
 
 class enemy():
     def __init__(self, xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range):
@@ -155,7 +156,8 @@ class fish(enemy):
             self.move_cooldown = 30
             self.bubble_dmg = random.choice([4, 5])
             self.bubble_duration = random.choice([120, 240])
-            self.bubbles = {"image":[],"pos": [],"player_pos": []}
+            self.bubbles = {"image":[],"pos": [],"player_pos": [], "velocity":[]}
+            self.bubble_speed = 3
 
         def assignImage(self):
             return pygame.transform.scale(pygame.image.load('images/fish.png'),(57, 40))
@@ -167,21 +169,19 @@ class fish(enemy):
              attack_choice = random.randint(1,10)
              if attack_choice == 3:
                 self.bubbles["image"].append(pygame.image.load("images/bubble.png"))
-                self.bubbles["pos"].append([self.xPos,self.yPos])
-                self.bubbles["player_pos"].append(GameLogic.playerPos)
+                pos = Vector2(self.xPos,self.yPos)
+                self.bubbles["pos"].append(pos)
+                ppos = Vector2(GameLogic.playerPos)
+                self.bubbles["player_pos"].append(ppos)
+                vel = ppos - pos
+                vel = vel.normalize()
+                vel*= self.bubble_speed
+                self.bubbles["velocity"].append(vel)
              if len(self.bubbles["image"]) > 0:
                 for i in range(len(self.bubbles["image"])):
                     screen.blit(self.bubbles["image"][i],self.bubbles["pos"][i])
-                    if self.bubbles["pos"][i][0] > self.bubbles["player_pos"][i][0]:
-                        self.bubbles["pos"][i][0] -= 1
-                    if self.bubbles["pos"][i][0] < self.bubbles["player_pos"][i][0]:
-                        self.bubbles["pos"][i][0] += 1
-                    if self.bubbles["pos"][i][1] > self.bubbles["player_pos"][i][1]:
-                        self.bubbles["pos"][i][1] -= 1
-                    if self.bubbles["pos"][i][1] < self.bubbles["player_pos"][i][1]:
-                        self.bubbles["pos"][i][1] += 1
-                self.bubbles["pos"][i][0] += (self.bubbles["player_pos"][i][0] - self.bubbles["pos"][i][0])/10
-                self.bubbles["pos"][i][1] += (self.bubbles["player_pos"][i][1] - self.bubbles["pos"][i][1])/10
+                    self.bubbles["pos"][i]+= self.bubbles["velocity"][i]
+
                 
 
         def attack(self):
