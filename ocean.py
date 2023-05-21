@@ -25,7 +25,7 @@ def main():
     spawner3 = spawner(0, 600, 11)
     energy = pygame.image.load('images/energy.png')
     energy = pygame.transform.scale(energy, (65, 65))
-
+    spawner4 = spawneritems(0,300,20)
     StaminaBar = staminabar(30, 30, 115, 20)
     HealthBar = healthbar(30, 0, 115, 20)
     Spell = spell(320, 640, 115, 20)
@@ -63,6 +63,8 @@ def main():
         warp2.Update(screen)
         oceanpart.Update(screen)
         GameLogic.Update(screen)
+        spawner4.spawnbandage()
+        spawner4.spawncoin()
         if Player.Update(screen) == True:
             return 3
         Spell.render(screen)
