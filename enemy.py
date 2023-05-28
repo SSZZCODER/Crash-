@@ -175,28 +175,42 @@ class fish(enemy):
                 n = math.sqrt(n)
                 rel_x = rel_x/n
                 rel_y = rel_y/n
-            if n < self.range:
-                self.bubbles.append(Bubble(self.xPos, self.yPos, self.bubble_speed,1, self.bubble_dmg, 30, 200, ))
-           
-            if len(self.bubbles["image"]) > 0:
-                for i in range(len(self.bubbles["image"])):
-                    screen.blit(self.bubbles["image"][i],self.bubbles["pos"][i])
-                    self.bubbles["pos"][i]+= self.bubbles["velocity"][i]
+            if n < self.range and self.bubble_cooldown <= 0:
+                bubble = Bubble(self.xPos, self.yPos, self.bubble_speed,1, self.bubble_dmg, 30, 200)
+                self.bubbles.append(bubble)
+                GameLogic.enemyList[GameLogic.current_chunk].append(bubble)
+                self.bubble_cooldown = 30
+            elif self.bubble_cooldown > 0:
+                self.bubble_cooldown -= 1
+
+            """
+            if len(self.bubbles) > 0:
+                for i in GameLogic.enemyList[GameLogic.current_chunk]:
+                    self.bubbles[i].render(screen)
+                    self.bubbles[i].shoot()
+                    if type(i) == Bubble:
+                        i.render(screen)
+                        i.shoot()
+            """
 
         def attack(self):
             return[0, self.damage]
             
 class Bubble:
-    def __init__(self, xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range):
+    def __init__(self, xPos, yPos, speed, health, damage,bubble_cooldown, range):
         self.xPos = xPos
         self.yPos = yPos
         self.speed = speed
         self.health = health
         self.damage = damage
-        self.damage_cooldown = damage_cooldown
-        self.move_cooldown = move_cooldown
+        self.bubble_cooldown = bubble_cooldown
         self.range = range
         self.image = pygame.image.load('images/bubble.png')
+        self.pos = Vector2(self.xPos,self.yPos)
+        self.ppos = Vector2(GameLogic.playerPos)
+        self.vel = self.ppos - self.pos
+        self.vel = self.vel.normalize()
+        self.vel*= self.speed
     def render(self, screen):
         screen.blit(self.image, (self.xPos, self.yPos)) 
 
@@ -206,21 +220,14 @@ class Bubble:
         
 
     def shoot(self):
-        if self.bubble_cooldown != 0:
-            self.bubble_cooldown -= 1
-        if self.bubble_cooldown <= 0:
-            
-            pos = Vector2(self.xPos,self.yPos)
-            
-            ppos = Vector2(GameLogic.playerPos)
-            
-            vel = ppos - pos
-            vel = vel.normalize()
-            vel*= self.speed
-            self.xPos += vel[0]
-            self.yPos += vel[1]
+        self.xPos += self.vel[0]
+        self.yPos += self.vel[1]
+        
+    def update(self,screen):
+        self.render(screen)
+        self.shoot()
 
-            self.bubble_cooldown = 30
+
 class spawner:
     def __init__(self, enemycount, spawn_cooldown, max_enemycount):
         self.enemycount = enemycount

@@ -32,7 +32,6 @@ class GameLogic:
             
             Item.Render(screen)
         for enemy in GameLogic.enemyList[GameLogic.current_chunk]:
-
             enemy.update(screen)
         for object in GameLogic.objects[GameLogic.current_chunk]:
             object.update(screen)
