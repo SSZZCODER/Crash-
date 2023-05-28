@@ -216,7 +216,7 @@ class Bubble:
 
 
     def attack(self):
-        return[0, self.damage]
+        return[3, self.damage]
         
 
     def shoot(self):

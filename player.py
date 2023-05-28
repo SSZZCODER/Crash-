@@ -94,9 +94,8 @@ class Player:
                         Player.particlesp.showEffect = True
                         Player.burn_cooldown = eattack[2]
                     if eattack[0] == 3:
-                        Player.bubble_dmg = eattack[1]
-                        Player.bubble_cooldown = eattack[2]
-                        
+                        Player.health -= eattack[1]
+                        e.health = 0
     def itemCheck():
         for items in GameLogic.itemlist[GameLogic.current_chunk]:
             if items.image.get_rect(center = (items.xPos, items.yPos)).colliderect(Player.imageload.get_rect(center = Player.playercenter)):
