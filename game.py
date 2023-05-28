@@ -19,6 +19,7 @@ while level != -1:
     if level == 2:
         level = lava.main()
     if level == 3:
+
         level = deathscreen.menu()
     if level == 4:
         level = skinsmenu.main()
