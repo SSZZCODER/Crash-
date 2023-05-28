@@ -96,6 +96,7 @@ class Player:
                     if eattack[0] == 3:
                         Player.health -= eattack[1]
                         e.health = 0
+                        Player.damage_cooldown = 60
     def itemCheck():
         for items in GameLogic.itemlist[GameLogic.current_chunk]:
             if items.image.get_rect(center = (items.xPos, items.yPos)).colliderect(Player.imageload.get_rect(center = Player.playercenter)):

@@ -222,10 +222,15 @@ class Bubble:
     def shoot(self):
         self.xPos += self.vel[0]
         self.yPos += self.vel[1]
+
+    def takeDamage(self,damage):
+        pass
         
     def update(self,screen):
         self.render(screen)
         self.shoot()
+        if self.health <= 0:
+            GameLogic.enemyList[GameLogic.current_chunk].remove(self)
 
 
 class spawner:
