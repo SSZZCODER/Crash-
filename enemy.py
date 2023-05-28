@@ -156,7 +156,7 @@ class fish(enemy):
             self.move_cooldown = 30
             self.bubble_dmg = random.choice([4, 5])
             self.bubble_duration = random.choice([120, 240])
-            self.bubbles = {"image":[],"pos": [],"player_pos": [], "velocity":[]}
+            self.bubbles = []
             self.bubble_speed = 5
             self.bubble_cooldown  = 30
             self.melee_range = 10
@@ -167,8 +167,17 @@ class fish(enemy):
             screen.blit(self.image, (self.xPos, self.yPos)) 
             pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(self.xPos+15,self.yPos-20, 40, 10))
             pygame.draw.rect(screen, (250, 28, 0), pygame.Rect(self.xPos+15,self.yPos-20, int((self.health/self.max_health)*40), 10))
-            self.shoot()
+            player_x, player_y = GameLogic.playerPos
+            rel_x, rel_y = player_x - self.xPos, player_y - self.yPos 
+            n = rel_x**2 + rel_y**2
 
+            if n>0:
+                n = math.sqrt(n)
+                rel_x = rel_x/n
+                rel_y = rel_y/n
+            if n < self.range:
+                self.bubbles.append(Bubble(self.xPos, self.yPos, self.bubble_speed,1, self.bubble_dmg, 30, 200, ))
+           
             if len(self.bubbles["image"]) > 0:
                 for i in range(len(self.bubbles["image"])):
                     screen.blit(self.bubbles["image"][i],self.bubbles["pos"][i])
@@ -177,21 +186,41 @@ class fish(enemy):
         def attack(self):
             return[0, self.damage]
             
+class Bubble:
+    def __init__(self, xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range):
+        self.xPos = xPos
+        self.yPos = yPos
+        self.speed = speed
+        self.health = health
+        self.damage = damage
+        self.damage_cooldown = damage_cooldown
+        self.move_cooldown = move_cooldown
+        self.range = range
+        self.image = pygame.image.load('images/bubble.png')
+    def render(self, screen):
+        screen.blit(self.image, (self.xPos, self.yPos)) 
 
-        def shoot(self):
-            if self.bubble_cooldown != 0:
-                self.bubble_cooldown -= 1
-            if self.bubble_cooldown <= 0:
-                self.bubbles["image"].append(pygame.image.load("images/bubble.png"))
-                pos = Vector2(self.xPos,self.yPos)
-                self.bubbles["pos"].append(pos)
-                ppos = Vector2(GameLogic.playerPos)
-                self.bubbles["player_pos"].append(ppos)
-                vel = ppos - pos
-                vel = vel.normalize()
-                vel*= self.bubble_speed
-                self.bubbles["velocity"].append(vel)
-                self.bubble_cooldown = 30
+
+    def attack(self):
+        return[0, self.damage]
+        
+
+    def shoot(self):
+        if self.bubble_cooldown != 0:
+            self.bubble_cooldown -= 1
+        if self.bubble_cooldown <= 0:
+            
+            pos = Vector2(self.xPos,self.yPos)
+            
+            ppos = Vector2(GameLogic.playerPos)
+            
+            vel = ppos - pos
+            vel = vel.normalize()
+            vel*= self.speed
+            self.xPos += vel[0]
+            self.yPos += vel[1]
+
+            self.bubble_cooldown = 30
 class spawner:
     def __init__(self, enemycount, spawn_cooldown, max_enemycount):
         self.enemycount = enemycount
