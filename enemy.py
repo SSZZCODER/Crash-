@@ -174,22 +174,9 @@ class fish(enemy):
                     screen.blit(self.bubbles["image"][i],self.bubbles["pos"][i])
                     self.bubbles["pos"][i]+= self.bubbles["velocity"][i]
 
-                
-
         def attack(self):
-            player_x, player_y = GameLogic.playerPos
-            rel_x, rel_y = player_x - self.xPos, player_y - self.yPos 
-            n = rel_x**2 + rel_y**2
-            if n>0:
-                n = math.sqrt(n)
-            if  n <= self.range and n > self.melee_range:
-                self.shoot()
-            if n <= self.melee_range:
-                return[0, self.damage]
-            if len(self.bubbles['image'])>0:
-                for i in range (self.bubbles['image']):
-                    rect = i.get_bounding_rect()
-                    if rect.colliderect((pygame.Rect(Player.player_x, Player.player_y, 70, 70))
+            return[0, self.damage]
+            
 
         def shoot(self):
             if self.bubble_cooldown != 0:
