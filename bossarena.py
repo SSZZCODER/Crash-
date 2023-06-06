@@ -9,12 +9,13 @@ from enemy import zombie
 import time
 from gamelogic import GameLogic
 from items import spawneritems
-
+from boss import Boss
 import random
+
 def main():
     pygame.init()
     screen = pygame.display.set_mode((750,750))
-    background = pygame.image.load('images/17.png')
+    background = pygame.image.load('images/bossmap.png')
     background = pygame.transform.scale(background, (750,750))
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
@@ -29,6 +30,7 @@ def main():
     energy = pygame.image.load('images/energy.png')
     energy = pygame.transform.scale(energy, (65, 65))
     GameLogic.current_chunk = "Boss1"
+    GameLogic.enemyList[GameLogic.current_chunk].append(Boss(7, 350 ,95))
 
 
     clock = pygame.time.Clock()
