@@ -35,7 +35,7 @@ class Boss:
             self.curse_cooldown -= 1
         else:
             GameLogic.playerspeedmulti = 1
-    def attack():
+    def attack(self):
         return [0, 0]
     def render(self, screen):
         screen.blit(self.image, self.image.get_rect(center = (self.xPos, self.yPos)))
@@ -65,7 +65,12 @@ class Boss:
             if self.xPos == self.newcenter.x and self.yPos == self.newcenter.y:
                 self.moving = False
                 
-            
+    def takeDamage(self, damage):
+        self.health -= damage
+        if self.health <= 0:
+            GameLogic.enemyList[GameLogic.current_chunk].remove(self)
+
+        print("taken damage")
     def update(self, screen):
         self.move()
         print([self.xPos,self.yPos])
