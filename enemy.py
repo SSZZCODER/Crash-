@@ -193,8 +193,7 @@ class fish(enemy):
             """
 
         def attack(self):
-            return[0, self.damage]
-            
+                return [0, self.damage]
 class Bubble:
     def __init__(self, xPos, yPos, speed, health, damage,bubble_cooldown, range):
         self.xPos = xPos
