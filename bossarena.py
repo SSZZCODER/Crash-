@@ -3,14 +3,15 @@ from inventory import Inventory
 from particle import ParticleSystem
 from player import Player
 from hotbar import Hotbar
-from enemy import *
+
 from bars import *
-from enemy import zombie
+from enemy import *
 import time
 from gamelogic import GameLogic
 from items import spawneritems
 from boss import Boss
 import random
+
 
 def main():
     pygame.init()
@@ -25,6 +26,7 @@ def main():
     HealthBar = healthbar(30, 0, 115, 20)
     Spell = spell(320, 640, 115, 20)
     
+    spawner1 = spawner(0, 600, 10)
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
     energy = pygame.image.load('images/energy.png')
@@ -48,8 +50,10 @@ def main():
             
         screen.blit(background,[0,0])
         GameLogic.Update(screen)
+        spawner1.spawn()
         if Player.Update(screen) == True:
             return 3
+   
         Spell.render(screen)
         StaminaBar.render(screen)
         HealthBar.render(screen)

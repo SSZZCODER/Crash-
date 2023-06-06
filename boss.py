@@ -87,8 +87,8 @@ class Acid:
         self.yPos = yPos
 class Rocks:
         def __init__(self, angle, direction, xPos, yPos):
-            self.image = pygame.image.load("images/New Piskel (6) (1).png")
-            self.image2 = pygame.image.load("images/New Piskel (7) (1).png")
+            self.image = pygame.image.load("images/acidtrail.png")
+            self.image2 = pygame.image.load("images/acidpuddle.png")
             self.angle = angle
             self.damage = 5
             self.speed = 2
