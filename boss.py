@@ -35,30 +35,45 @@ class Boss:
             self.curse_cooldown -= 1
         else:
             GameLogic.playerspeedmulti = 1
+    def attack(self):
+        return [0, 0]
     def render(self, screen):
         screen.blit(self.image, self.image.get_rect(center = (self.xPos, self.yPos)))
+        pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(245, 10, 300, 50))
+        pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(245, 10, int((self.health/1000)*300), 50))
     def move(self):
         if self.moving == False and self.movetimer == 0:
             self.newcenter.x = random.randint(0,750)
             self.newcenter.y = random.randint(0,750)
             self.velocity =  self.newcenter - Vector2(self.xPos, self.yPos)
             self.velocity.normalize()
-            self.velocity = self.velocity * self.speed
-            self.moving == True
+            #self.velocity = self.velocity * self.speed
+            self.moving = True
+            self.movetimer = 30
     
         elif self.moving == False and self.movetimer > 0:
             self.movetimer -=1
         if self.moving == True:
-            if self.xPos != self.newcenter.x:
-                self.xPos += self.velocity.x
-            if self.yPos != self.newcenter.y:
-                self.yPos += self.velocity.y
+            if self.xPos > self.newcenter.x:
+                self.xPos -= 1
+            if self.yPos > self.newcenter.y:
+                self.yPos -= 1
+            if self.xPos < self.newcenter.x:
+                self.xPos += 1
+            if self.yPos < self.newcenter.y:
+                self.yPos += 1
             if self.xPos == self.newcenter.x and self.yPos == self.newcenter.y:
                 self.moving = False
-                self.movetimer = 30
-            
+                
+    def takeDamage(self, damage):
+        self.health -= damage
+        if self.health <= 0:
+            GameLogic.enemyList[GameLogic.current_chunk].remove(self)
+
+        print("taken damage")
     def update(self, screen):
         self.move()
+        print([self.xPos,self.yPos])
         self.render(screen)
 class Acid:
     def __init__(self, angle, direction, xPos, yPos):
