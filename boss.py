@@ -15,7 +15,7 @@ class Boss:
     def curse(self):
         self.cooldown = self.timer["curse"]
         GameLogic.playerspeedmulti = .5
-    def update(self):
+    def updatecurse(self):
         if self.curse_cooldown != 0:
             self.curse_cooldown -= 1
         else:
