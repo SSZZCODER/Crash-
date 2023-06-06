@@ -35,8 +35,12 @@ class Boss:
             self.curse_cooldown -= 1
         else:
             GameLogic.playerspeedmulti = 1
+    def attack():
+        return [0, 0]
     def render(self, screen):
         screen.blit(self.image, self.image.get_rect(center = (self.xPos, self.yPos)))
+        pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(245, 10, 300, 50))
+        pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(245, 10, int((self.health/1000)*300), 50))
     def move(self):
         if self.moving == False and self.movetimer == 0:
             self.newcenter.x = random.randint(0,750)
