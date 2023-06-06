@@ -159,7 +159,7 @@ class fish(enemy):
             self.bubbles = []
             self.bubble_speed = 5
             self.bubble_cooldown  = 30
-            self.melee_range = 10
+            self.melee_range = 100
         def assignImage(self):
             return pygame.transform.scale(pygame.image.load('images/fish.png'),(57, 40))
 
@@ -175,13 +175,15 @@ class fish(enemy):
                 n = math.sqrt(n)
                 rel_x = rel_x/n
                 rel_y = rel_y/n
-            if n < self.range and self.bubble_cooldown <= 0:
-                bubble = Bubble(self.xPos, self.yPos, self.bubble_speed,1, self.bubble_dmg, 30, 200)
-                self.bubbles.append(bubble)
-                GameLogic.enemyList[GameLogic.current_chunk].append(bubble)
-                self.bubble_cooldown = 30
+            if n < self.range and n > self.melee_range:
+                if self.bubble_cooldown == 0:
+                    bubble = Bubble(self.xPos, self.yPos, self.bubble_speed,1, self.bubble_dmg, 30, 200)
+                    self.bubbles.append(bubble)
+                    GameLogic.enemyList[GameLogic.current_chunk].append(bubble)
+                    self.bubble_cooldown = 30
             elif self.bubble_cooldown > 0:
                 self.bubble_cooldown -= 1
+            print(n)
 
             """
             if len(self.bubbles) > 0:
