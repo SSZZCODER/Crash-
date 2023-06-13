@@ -34,6 +34,8 @@ class Boss:
         if len(self.acids) > 0:
             for acid in self.acids:
                 acid.update(screen)
+                if acid.lifetime <= 0:
+                    self.acids.remove(acid)
     def move(self):
         pass
     def summon(self):
@@ -100,8 +102,12 @@ class Acid:
         self.xPos = xPos 
         self.yPos = yPos
         self.throwing = True
+        self.lifetime = 500
         
         self.playerpos = playerpos
+        self.direction = Vector2(self.playerpos) - Vector2([self.xPos, self.yPos])
+        self.direction = self.direction.normalize()
+
 
     def render(self, screen):
         if self.throwing == True:
@@ -111,6 +117,7 @@ class Acid:
     
     def move(self):
         if self.throwing == True:
+            """
             if self.xPos > self.playerpos[0]:
                 self.xPos -= self.speed
             if self.xPos < self.playerpos[0]:
@@ -122,10 +129,29 @@ class Acid:
             if self.xPos > self.playerpos[0]-self.speed and self.xPos< self.playerpos[0]+self.speed:
                 if self.yPos > self.playerpos[1] -  self.speed and self.yPos < self.playerpos[1]+self.speed:
                     self.throwing = False
+             """
+            self.xPos += self.direction[0] * self.speed
+            self.yPos += self.direction[1] * self.speed
+            if self.direction[0] < 0 and self.direction[1] < 0:
+                if self.xPos < self.playerpos[0] and self.yPos < self.playerpos[1]:
+                    self.throwing = False
+            if self.direction[0] > 0 and self.direction[1] < 0:
+                if self.xPos > self.playerpos[0] and self.yPos < self.playerpos[1]:
+                    self.throwing = False
+            if self.direction[0] > 0 and self.direction[1] > 0:
+                if self.xPos > self.playerpos[0] and self.yPos > self.playerpos[1]:
+                    self.throwing = False
+            if self.direction[0] < 0 and self.direction[1] > 0:
+                if self.xPos < self.playerpos[0] and self.yPos > self.playerpos[1]:
+                    self.throwing = False
+            
     def update(self, screen):
         self.move()
         self.render(screen)
-            
+        if self.lifetime != 0:
+            self.lifetime -= 1
+
+  
             
     
 class Rocks:
