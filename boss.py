@@ -1,5 +1,7 @@
+from turtle import Screen, speed
 import pygame
 import random
+
 from gamelogic import GameLogic
 from pygame.math import Vector2
 
@@ -19,10 +21,18 @@ class Boss:
         self.newcenter = Vector2(0)
         self.velocity = Vector2(0)
         self.speed = 3
+        self.acids = []
+        self.acidtimer = 0
 
-
-    def acid(self):
-        pass
+    def acid(self, screen):
+        if self.acidtimer <= 0:
+            self.acids.append(Acid(0,0,self.xPos, self.yPos, GameLogic.playerPos))
+            self.acidtimer = 100
+        elif self.acidtimer > 0:
+            self.acidtimer -= 1
+        if len(self.acids) > 0:
+            for acid in self.acids:
+                acid.update(screen)
     def move(self):
         pass
     def summon(self):
@@ -75,16 +85,48 @@ class Boss:
         self.move()
         print([self.xPos,self.yPos])
         self.render(screen)
+        self.acid(screen)
 class Acid:
-    def __init__(self, angle, direction, xPos, yPos):
-        self.image = pygame.image.load("images/New Piskel (6) (1).png")
-        self.image2 = pygame.image.load("images/New Piskel (7) (1).png")
+    def __init__(self, angle, direction, xPos, yPos, playerpos):
+        self.imagepuddle = pygame.image.load("images/acidpuddle.png")
+        self.imagepuddle = pygame.transform.scale(self.imagepuddle, (75,75))
+        self.imagethrow = pygame.image.load("images/acidtrail.png")
+        self.imagethrow = pygame.transform.scale(self.imagethrow, (60,30))
         self.angle = angle
         self.damage = 5
         self.speed = 2
         self.direction = direction
         self.xPos = xPos 
         self.yPos = yPos
+        self.throwing = True
+        
+        self.playerpos = playerpos
+
+    def render(self, screen):
+        if self.throwing == True:
+            screen.blit(self.imagethrow, [self.xPos, self.yPos])
+        else:
+            screen.blit(self.imagepuddle, [self.xPos, self.yPos])
+    
+    def move(self):
+        if self.throwing == True:
+            if self.xPos > self.playerpos[0]:
+                self.xPos -= self.speed
+            if self.xPos < self.playerpos[0]:
+                self.xPos += self.speed
+            if self.yPos > self.playerpos[1]:
+                self.yPos -= self.speed
+            if self.xPos < self.playerpos[1]:
+                self.yPos += self.speed
+            if self.xPos > self.playerpos[0]-self.speed and self.xPos< self.playerpos[0]+self.speed:
+                if self.yPos > self.playerpos[1] -  self.speed and self.yPos < self.playerpos[1]+self.speed:
+                    self.throwing = False
+    def update(self, screen):
+        self.move()
+        self.render(screen)
+            
+            
+    
 class Rocks:
         def __init__(self, angle, direction, xPos, yPos):
             self.image = pygame.image.load("images/acidtrail.png")
