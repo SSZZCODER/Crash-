@@ -114,10 +114,7 @@ class zombie(enemy):
              screen.blit(self.image, self.image.get_rect(center = (self.xPos, self.yPos)))
              pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(self.xPos+15,self.yPos-20, 40, 10))
              pygame.draw.rect(screen, (250, 2 , 0), pygame.Rect(self.xPos+15,self.yPos-20, int((self.health/self.max_health)*40), 10))
-             pygame.draw.rect(screen, (0,255,0), self.rect1)
-             pygame.draw.rect(screen, (0,255,0), self.rect2)
-             pygame.draw.rect(screen, (0,255,0), self.rect3)
-             pygame.draw.rect(screen, (0,255,0), self.rect4)    
+         
         def attack(self):
             attack_choice = random.randint(1,5)
             if attack_choice == 3:
