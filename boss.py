@@ -2,10 +2,11 @@ import pygame
 import random
 from gamelogic import GameLogic
 from pygame.math import Vector2
+from player import Player
 
 class Boss:
     def __init__(self, damage, xPos, yPos):
-        self.health = 1000
+        self.health = 10000
         self.damage = damage
         self.xPos = xPos
         self.yPos = yPos
@@ -22,7 +23,8 @@ class Boss:
 
 
     def acid(self):
-        pass
+        for Player in GameLogic.playerList:
+            Player.take_damage(self.damage)
     def move(self):
         pass
     def summon(self):
@@ -40,7 +42,7 @@ class Boss:
     def render(self, screen):
         screen.blit(self.image, self.image.get_rect(center = (self.xPos, self.yPos)))
         pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(245, 10, 300, 50))
-        pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(245, 10, int((self.health/1000)*300), 50))
+        pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(245, 10, int((self.health/10000)*300), 50))
     def move(self):
         if self.moving == False and self.movetimer == 0:
             self.newcenter.x = random.randint(0,750)
