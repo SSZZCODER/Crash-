@@ -21,7 +21,7 @@ class Boss:
         self.velocity = Vector2(0)
         self.speed = 3
         self.acids = []
-        self.acidtimer = 0
+        self.acidtimer = 100
     def acid(self, screen):
         if self.acidtimer <= 0:
             self.acids.append(Acid(0,0,self.xPos, self.yPos, GameLogic.playerPos))
@@ -97,7 +97,7 @@ class Acid:
         self.throw_rect = self.imagethrow.get_bounding_rect()
         self.angle = angle
         self.damage = 5
-        self.speed = 2
+        self.speed = 7
         self.direction = direction
         self.xPos = xPos 
         self.yPos = yPos
@@ -146,6 +146,8 @@ class Acid:
             if pygame.Rect(GameLogic.playerPos,[50,55]).colliderect(self.throw_rect):
                 print("hit player")
                 Player.health -= self.throw_dmg
+                Player.poison_dmg = 0.5
+                Player.poison_cooldown = 60
                 self.destroyed = True
         else:
             if pygame.Rect(GameLogic.playerPos, [50, 50]).colliderect(self.puddle_rect):
