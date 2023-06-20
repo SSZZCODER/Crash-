@@ -26,6 +26,8 @@ def main():
     HealthBar = healthbar(30, 0, 115, 20)
     Spell = spell(320, 640, 115, 20)
     
+    spawner3 = spawneritems(0,300,20)
+    spawner4 = spawneritems(0,300,1)
     spawner1 = spawner(0, 600, 10)
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
@@ -50,6 +52,8 @@ def main():
             
         screen.blit(background,[0,0])
         GameLogic.Update(screen)
+        spawner3.spawncoin()
+        spawner4.spawnbandage()
         spawner1.spawn()
         if Player.Update(screen) == True:
             return 3

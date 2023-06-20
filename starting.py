@@ -23,6 +23,14 @@ def main():
     screen = pygame.display.set_mode((750,750))
     background = pygame.image.load('images/Pixel_art_grass_image (2).png')
     background = pygame.transform.scale(background, (750,750))
+    portal = pygame.image.load('images/bossportal.png')
+    portal = pygame.transform.scale(portal, (250,300))
+    key = pygame.image.load('images/key.png')
+    key_rect = key.get_bounding_rect()
+    droppedkey = False
+    global keypos 
+    keypos = [0,0]
+    haskey = False
 
     clock = pygame.time.Clock()
     exit = False
@@ -39,7 +47,7 @@ def main():
     HealthBar = healthbar(30, 0, 115, 20)
     Spell = spell(320, 640, 115, 20)
     lavawarp = Warp(0,650,35,100,(255,5,10), 50,0)
-    bossportal = Warp(200,500,100,50,(0,0,0), 50,0)
+    bossportal = Warp(550,500,200,400,(0,0,0), 50,0)
 
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
@@ -57,7 +65,7 @@ def main():
                 Player.MoveBy(lavawarp.offset_x, lavawarp.offset_y)
                 GameLogic.spellList = []
                 return 2   
-            if bossportal.Touched() == True:
+            if bossportal.Touched() == True and haskey == True:
                 Player.MoveBy(bossportal.offset_x, bossportal.offset_y)
                 GameLogic.spellList = []
                 return 6
@@ -73,14 +81,23 @@ def main():
         particles.Update(screen)
         lavawarp.Update(screen)
         bossportal.Update(screen)
+        screen.blit(portal, [525,500])
         spawner3.spawncoin()
         spawner4.spawnbandage()
         spawner1.spawn()
+        for enemy in GameLogic.enemyList[GameLogic.current_chunk]:
+            if enemy.health <= 0 and droppedkey == False:
+                droppedkey = True
+                keypos = [enemy.xPos, enemy.yPos]
+
         GameLogic.Update(screen)
         if Player.Update(screen) == True:
             return 3
         if textBaron == True:
             textBar.render(screen)
+        if droppedkey == True:
+            screen.blit(key, keypos)
+            key_rect.center = keypos
         #enemy_z1.update(screen)
         StaminaBar.render(screen)
         Spell.render(screen)
