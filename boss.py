@@ -150,7 +150,7 @@ class Acid:
                 print("hit player")
                 Player.health -= self.throw_dmg
                 Player.poison_dmg = 0.5
-                Player.poison_cooldown = 60
+                Player.poison_cooldown = 240
                 self.destroyed = True
         else:
             if pygame.Rect(GameLogic.playerPos, [50, 50]).colliderect(self.puddle_rect):
