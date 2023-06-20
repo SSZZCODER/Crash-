@@ -147,6 +147,9 @@ class Acid:
                 print("hit player")
                 Player.health -= self.throw_dmg
                 self.destroyed = True
+        else:
+            if pygame.Rect(GameLogic.playerPos, [50, 50]).colliderect(self.puddle_rect):
+                Player.health  -=  self.puddle_dmg     
             
     def update(self, screen):
         self.move()
