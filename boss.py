@@ -151,6 +151,7 @@ class Acid:
     def update(self, screen):
         self.move()
         self.render(screen)
+        self.attack()
         if self.lifetime > 0:
             self.lifetime -= 1
         elif self.lifetime <= 0:
