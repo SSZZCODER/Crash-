@@ -39,6 +39,7 @@ def main():
     HealthBar = healthbar(30, 0, 115, 20)
     Spell = spell(320, 640, 115, 20)
     lavawarp = Warp(0,650,35,100,(255,5,10), 50,0)
+    bossportal = Warp(200,500,100,50,(0,0,0), 50,0)
 
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
@@ -56,6 +57,10 @@ def main():
                 Player.MoveBy(lavawarp.offset_x, lavawarp.offset_y)
                 GameLogic.spellList = []
                 return 2   
+            if bossportal.Touched() == True:
+                Player.MoveBy(bossportal.offset_x, bossportal.offset_y)
+                GameLogic.spellList = []
+                return 6
             if event.type == pygame.QUIT:
                 return -1
             if event.type == pygame.KEYDOWN:
@@ -67,6 +72,7 @@ def main():
         screen.blit(background, (0,0))
         particles.Update(screen)
         lavawarp.Update(screen)
+        bossportal.Update(screen)
         spawner3.spawncoin()
         spawner4.spawnbandage()
         spawner1.spawn()
