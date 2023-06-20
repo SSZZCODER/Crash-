@@ -12,11 +12,12 @@ class Boss:
         self.yPos = yPos
         self.cooldown = 0
         self.curse_cooldown = 0
-        self.timer = {"curse": 240}
+        self.timer = {}
         self.image = pygame.image.load('images/New Piskel (5) (1).png')
         self.image = pygame.transform.scale(self.image,(175, 200))
         self.aura_image = pygame.image.load("images/aura.png")
         self.aura_image = pygame.transform.scale(self.aura_image, (240, 290))
+        self.aura_rect = self.aura_image.get_bounding_rect()
         self.movetimer = 0
         self.moving = False
         self.newcenter = Vector2(0)
@@ -40,18 +41,18 @@ class Boss:
     def summon(self):
         pass
     def curse(self):
-        self.cooldown = self.timer["curse"]
-        GameLogic.playerspeedmulti = .5
-    def updatecurse(self):
-        if self.curse_cooldown != 0:
-            self.curse_cooldown -= 1
+        if self.aura_rect.colliderect(pygame.Rect(GameLogic.playerPos, [50, 55])):
+            Player.speed = 1.5
+            Player.health -= .25
         else:
-            GameLogic.playerspeedmulti = 1
+            Player.speed = 3
     def attack(self):
         return [0, 0]
     def render(self, screen):
         screen.blit(self.image, self.image.get_rect(center = (self.xPos, self.yPos)))
         screen.blit(self.aura_image, self.aura_image.get_rect(center = (self.xPos, self.yPos)))
+        self.aura_rect.center = (self.xPos, self.yPos)
+      # pygame.draw.rect(screen, (0, 255, 0), self.aura_rect)
         pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(245, 10, 300, 50))
         pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(245, 10, int((self.health/10000)*300), 50))
     def move(self):
