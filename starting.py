@@ -77,6 +77,11 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if textBar.rect.collidepoint(event.pos):
                     textBaron = False
+        for enemy in GameLogic.enemyList[GameLogic.current_chunk]:
+            if enemy.dropKey == True and droppedkey == False:
+                print("drop key")
+                keypos = [enemy.xPos, enemy.yPos]
+                droppedkey = True
         screen.blit(background, (0,0))
         particles.Update(screen)
         lavawarp.Update(screen)
@@ -85,11 +90,6 @@ def main():
         spawner3.spawncoin()
         spawner4.spawnbandage()
         spawner1.spawn()
-        for enemy in GameLogic.enemyList[GameLogic.current_chunk]:
-            if enemy.health <= 0 and droppedkey == False:
-                droppedkey = True
-                keypos = [enemy.xPos, enemy.yPos]
-
         GameLogic.Update(screen)
         if Player.Update(screen) == True:
             return 3
