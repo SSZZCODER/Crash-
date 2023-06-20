@@ -15,6 +15,8 @@ class Boss:
         self.timer = {"curse": 240}
         self.image = pygame.image.load('images/New Piskel (5) (1).png')
         self.image = pygame.transform.scale(self.image,(175, 200))
+        self.aura_image = pygame.image.load("images/aura.png")
+        self.aura_image = pygame.transform.scale(self.aura_image, (240, 290))
         self.movetimer = 0
         self.moving = False
         self.newcenter = Vector2(0)
@@ -49,6 +51,7 @@ class Boss:
         return [0, 0]
     def render(self, screen):
         screen.blit(self.image, self.image.get_rect(center = (self.xPos, self.yPos)))
+        screen.blit(self.aura_image, self.aura_image.get_rect(center = (self.xPos, self.yPos)))
         pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(245, 10, 300, 50))
         pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(245, 10, int((self.health/10000)*300), 50))
     def move(self):
@@ -112,7 +115,7 @@ class Acid:
             screen.blit(self.imagethrow, [self.xPos, self.yPos])
             self.throw_rect.x = self.xPos
             self.throw_rect.y = self.yPos
-            pygame.draw.rect(screen,(255,0,0),self.throw_rect)
+            #pygame.draw.rect(screen,(255,0,0),self.throw_rect)
         else:
             screen.blit(self.imagepuddle, [self.xPos, self.yPos])
             self.puddle_rect.x = self.xPos
