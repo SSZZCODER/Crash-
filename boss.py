@@ -31,7 +31,7 @@ class Boss:
         if len(self.acids) > 0:
             for acid in self.acids:
                 acid.update(screen)
-                if acid.lifetime <= 0:
+                if acid.destroyed == True:
                     self.acids.remove(acid)
     def move(self):
         pass
@@ -79,10 +79,10 @@ class Boss:
         self.health -= damage
         if self.health <= 0:
             GameLogic.enemyList[GameLogic.current_chunk].remove(self)
-        print("taken damage")
+
     def update(self, screen):
         self.move()
-        print([self.xPos,self.yPos])
+
         self.render(screen)
         self.acid(screen)
 class Acid:
@@ -91,6 +91,10 @@ class Acid:
         self.imagepuddle = pygame.transform.scale(self.imagepuddle, (75,75))
         self.imagethrow = pygame.image.load("images/acidtrail.png")
         self.imagethrow = pygame.transform.scale(self.imagethrow, (60,30))
+        self.throw_dmg = 25
+        self.puddle_dmg = .5
+        self.puddle_rect = self.imagepuddle.get_bounding_rect()
+        self.throw_rect = self.imagethrow.get_bounding_rect()
         self.angle = angle
         self.damage = 5
         self.speed = 2
@@ -99,15 +103,20 @@ class Acid:
         self.yPos = yPos
         self.throwing = True
         self.lifetime = 500
-        
+        self.destroyed = False
         self.playerpos = playerpos
         self.direction = Vector2(self.playerpos) - Vector2([self.xPos, self.yPos])
         self.direction = self.direction.normalize()
     def render(self, screen):
         if self.throwing == True:
             screen.blit(self.imagethrow, [self.xPos, self.yPos])
+            self.throw_rect.x = self.xPos
+            self.throw_rect.y = self.yPos
+            pygame.draw.rect(screen,(255,0,0),self.throw_rect)
         else:
             screen.blit(self.imagepuddle, [self.xPos, self.yPos])
+            self.puddle_rect.x = self.xPos
+            self.puddle_rect.y = self.yPos
     def move(self):
         if self.throwing == True:
             """
@@ -132,9 +141,17 @@ class Acid:
             if self.direction[0] < 0 and self.direction[1] > 0:
                 if self.xPos < self.playerpos[0] and self.yPos > self.playerpos[1]:
                     self.throwing = False
+    def attack(self):
+        if self.throwing == True:
+            if pygame.Rect(GameLogic.playerPos,[50,55]).colliderect(self.throw_rect):
+                print("hit player")
+                Player.health -= self.throw_dmg
+                self.destroyed = True
             
     def update(self, screen):
         self.move()
         self.render(screen)
-        if self.lifetime != 0:
+        if self.lifetime > 0:
             self.lifetime -= 1
+        elif self.lifetime <= 0:
+            self.destroyed = True
