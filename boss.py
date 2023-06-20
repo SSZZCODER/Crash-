@@ -89,6 +89,7 @@ class Boss:
 
         self.render(screen)
         self.acid(screen)
+        self.curse()
 class Acid:
     def __init__(self, angle, direction, xPos, yPos, playerpos):
         self.imagepuddle = pygame.image.load("images/acidpuddle.png")
