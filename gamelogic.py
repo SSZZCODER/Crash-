@@ -24,9 +24,9 @@ class GameLogic:
     pygame.mixer.Sound.set_volume(soundlist["achievement"],.05)
     pygame.mixer.Sound.set_volume(soundlist["coin"],.9)
     pygame.mixer.Sound.set_volume(soundlist["heal"],.6)    
-    pygame.mixer.Sound.set_volume(soundlist["bossdmg"],.6)  
-    pygame.mixer.Sound.set_volume(soundlist["curse"],.6)  
-    pygame.mixer.Sound.set_volume(soundlist["acid"],.6)  
+    pygame.mixer.Sound.set_volume(soundlistboss["bossdmg"],.6)  
+    pygame.mixer.Sound.set_volume(soundlistboss["curse"],.6)  
+    pygame.mixer.Sound.set_volume(soundlistboss["acid"],.6)  
     #pygame.mixer.music.load(soundlist[""])
     #pygame.mixer.music.set_volume(soundlist[""],.05)
     def clear_enemies():

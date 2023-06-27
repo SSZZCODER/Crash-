@@ -47,6 +47,7 @@ class Boss:
             Player.speed = 1.5
             Player.health -= .25 
             screen.blit(self.skull, (GameLogic.playerPos[0], GameLogic.playerPos[1]-50))
+            GameLogic.playSound(GameLogic.soundlistboss["curse"])
         else:
             Player.speed = 3
     def attack(self):
