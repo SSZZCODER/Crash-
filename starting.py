@@ -23,10 +23,12 @@ def main():
     screen = pygame.display.set_mode((750,750))
     background = pygame.image.load('images/Pixel_art_grass_image (2).png')
     background = pygame.transform.scale(background, (750,750))
-    portal = pygame.image.load('images/bossportal.png')
-    portal = pygame.transform.scale(portal, (250,300))
+    portal = pygame.image.load('images/transparent portal.png')
+    portal = pygame.transform.scale(portal, (150,200))
     key = pygame.image.load('images/key.png')
     key_rect = key.get_bounding_rect()
+    shopkeeper = pygame.image.load('images/shopkeeper.png')
+    shopkeeper = pygame.transform.scale(shopkeeper, (100,100))
     droppedkey = False
     global keypos 
     keypos = [0,0]
@@ -47,8 +49,9 @@ def main():
     StaminaBar = staminabar(30, 30, 115, 20)
     HealthBar = healthbar(30, 0, 115, 20)
     Spell = spell(320, 640, 115, 20)
+    
     lavawarp = Warp(0,650,35,100,(255,5,10), 50,0)
-    bossportal = Warp(550,500,200,400,(0,0,0), 50,0)
+    bossportal = Warp(625,625,100,175,(0,0,0), 50,0)
 
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
@@ -58,6 +61,7 @@ def main():
     GameLogic.current_chunk = "grass"
     bushspawner = objectspawner(bushes)
     particles = ParticleSystem(10,700, (250,5,5))
+ 
     while not exit:
         enemylength = len(GameLogic.enemyList[GameLogic.current_chunk])
 
@@ -91,7 +95,8 @@ def main():
         lavawarp.Update(screen)
         bossportal.Update(screen)
 
-        screen.blit(portal, [525,500])
+        screen.blit(portal, [600,600])
+        screen.blit(shopkeeper, [650,0])
         spawner3.spawncoin()
         spawner4.spawnbandage()
         spawner1.spawn()
@@ -116,6 +121,9 @@ def main():
             screen.blit(key, keypos)
             key_rect.center = keypos
         if haskey == True:
+            bossportal = Warp(625,625,100,175,(0, 0, 108), 50,0)
+
+          
             print("picked up key")
         #enemy_z1.update(screen)
         StaminaBar.render(screen)
