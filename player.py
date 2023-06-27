@@ -32,7 +32,7 @@ class Player:
     regen_cooldown = 300
     speed = 3
     playsound = False
-    health = 100
+    health = 250
     newspell = False
     hunger = 100    
     player_x = 340
