@@ -107,7 +107,7 @@ def main():
                 keypos = [375, 375]
             else:
                 killsforkey +=1
-        print(killsforkey)
+     
 
         if droppedkey == True:
             screen.blit(key, keypos)
