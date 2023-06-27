@@ -8,7 +8,7 @@ import skinsmenu
 import bossarena
 from data import saveData
 
-level = 0
+level = 6
 
 
 

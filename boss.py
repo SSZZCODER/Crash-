@@ -13,6 +13,8 @@ class Boss:
         self.cooldown = 0
         self.curse_cooldown = 0
         self.timer = {}
+        self.skull = pygame.image.load('images/skull.png')
+        self.skull = pygame.transform.scale(self.skull,(70, 80))
         self.image = pygame.image.load('images/New Piskel (5) (1).png')
         self.image = pygame.transform.scale(self.image,(175, 200))
         self.aura_image = pygame.image.load("images/aura.png")
@@ -40,10 +42,11 @@ class Boss:
         pass
     def summon(self):
         pass
-    def curse(self):
+    def curse(self, screen):
         if self.aura_rect.colliderect(pygame.Rect(GameLogic.playerPos, [50, 55])):
             Player.speed = 1.5
-            Player.health -= .25
+            Player.health -= .25 
+            screen.blit(self.skull, (GameLogic.playerPos[0], GameLogic.playerPos[1]-50))
         else:
             Player.speed = 3
     def attack(self):
@@ -89,7 +92,7 @@ class Boss:
 
         self.render(screen)
         self.acid(screen)
-        self.curse()
+        self.curse(screen)
 class Acid:
     def __init__(self, angle, direction, xPos, yPos, playerpos):
         self.imagepuddle = pygame.image.load("images/acidpuddle.png")

@@ -139,7 +139,7 @@ class Player:
         else:
             return False
     def reset_player():
-        Player.health = 100
+        Player.health = 250
         Player.dash_cooldown = 600
         Player.playerInventory.clearInventory()
 

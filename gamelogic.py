@@ -10,8 +10,12 @@ class GameLogic:
     soundlist = {"zombie": pygame.mixer.Sound("sounds/hurt.wav"), 
                 "achievement": pygame.mixer.Sound("sounds/power.wav"), 
                 "coin": pygame.mixer.Sound("sounds/coin.wav"), 
-                "heal": pygame.mixer.Sound("sounds/heal.wav")
+                "heal": pygame.mixer.Sound("sounds/heal.wav"),
                 }
+    soundlistboss = {"bossdmg": pygame.mixer.Sound("sounds/bossdmg.wav"),
+                      "curse": pygame.mixer.Sound("sounds/curse.wav"),
+                      "acid": pygame.mixer.Sound("sounds/acid.wav")
+    }
     spellList = []
     current_chunk = "grass"
     playerPos = [0, 0]
@@ -20,6 +24,9 @@ class GameLogic:
     pygame.mixer.Sound.set_volume(soundlist["achievement"],.05)
     pygame.mixer.Sound.set_volume(soundlist["coin"],.9)
     pygame.mixer.Sound.set_volume(soundlist["heal"],.6)    
+    pygame.mixer.Sound.set_volume(soundlist["bossdmg"],.6)  
+    pygame.mixer.Sound.set_volume(soundlist["curse"],.6)  
+    pygame.mixer.Sound.set_volume(soundlist["acid"],.6)  
     #pygame.mixer.music.load(soundlist[""])
     #pygame.mixer.music.set_volume(soundlist[""],.05)
     def clear_enemies():
