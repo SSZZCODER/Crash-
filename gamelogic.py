@@ -44,4 +44,7 @@ class GameLogic:
         for spell in GameLogic.spellList:
             spell.update(screen)
     def playSound(name):
-        pygame.mixer.Sound.play(GameLogic.soundlist[name])  
+        pygame.mixer.Sound.play(GameLogic.soundlist[name])
+
+    def playSoundBoss(name):
+          pygame.mixer.Sound.play(GameLogic.soundlistboss[name])
