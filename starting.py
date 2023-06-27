@@ -102,16 +102,21 @@ def main():
             textBar.render(screen)
            
         if len(GameLogic.enemyList[GameLogic.current_chunk])<enemylength:
-            if killsforkey >= 2:
+            if killsforkey >= 2 and haskey == False:
                 droppedkey = True
                 keypos = [375, 375]
             else:
                 killsforkey +=1
-     
+        if haskey == False:
+            if pygame.Rect(GameLogic.playerPos, [50, 55]).colliderect(pygame.Rect(keypos, [36, 15])):
+                haskey = True
+                droppedkey = False
 
         if droppedkey == True:
             screen.blit(key, keypos)
             key_rect.center = keypos
+        if haskey == True:
+            print("picked up key")
         #enemy_z1.update(screen)
         StaminaBar.render(screen)
         Spell.render(screen)
