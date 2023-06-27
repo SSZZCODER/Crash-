@@ -6,7 +6,7 @@ from pygame.math import Vector2
 from player import Player
 class Boss:
     def __init__(self, damage, xPos, yPos):
-        self.health = 10000
+        self.health = 2500
         self.damage = damage
         self.xPos = xPos
         self.yPos = yPos
@@ -58,7 +58,7 @@ class Boss:
         self.aura_rect.center = (self.xPos, self.yPos)
       # pygame.draw.rect(screen, (0, 255, 0), self.aura_rect)
         pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(245, 10, 300, 50))
-        pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(245, 10, int((self.health/10000)*300), 50))
+        pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(245, 10, int((self.health/2500)*300), 50))
     def move(self):
         if self.moving == False and self.movetimer == 0:
             self.newcenter.x = random.randint(0,750)
@@ -85,6 +85,7 @@ class Boss:
                 
     def takeDamage(self, damage):
         self.health -= damage
+        GameLogic.playSoundBoss("bossdmg")
         if self.health <= 0:
             GameLogic.enemyList[GameLogic.current_chunk].remove(self)
 
@@ -157,6 +158,7 @@ class Acid:
                 Player.health -= self.throw_dmg
                 Player.poison_dmg = 0.5
                 Player.poison_cooldown = 240
+                GameLogic.playSoundBoss("acid")
                 self.destroyed = True
         else:
             if pygame.Rect(GameLogic.playerPos, [50, 50]).colliderect(self.puddle_rect):
