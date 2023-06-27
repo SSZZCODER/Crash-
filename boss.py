@@ -6,13 +6,15 @@ from pygame.math import Vector2
 from player import Player
 class Boss:
     def __init__(self, damage, xPos, yPos):
-        self.health = 10000
+        self.health = 2500
         self.damage = damage
         self.xPos = xPos
         self.yPos = yPos
         self.cooldown = 0
         self.curse_cooldown = 0
         self.timer = {}
+        self.skull = pygame.image.load('images/skull.png')
+        self.skull = pygame.transform.scale(self.skull,(70, 80))
         self.image = pygame.image.load('images/New Piskel (5) (1).png')
         self.image = pygame.transform.scale(self.image,(175, 200))
         self.aura_image = pygame.image.load("images/aura.png")
@@ -40,10 +42,12 @@ class Boss:
         pass
     def summon(self):
         pass
-    def curse(self):
+    def curse(self, screen):
         if self.aura_rect.colliderect(pygame.Rect(GameLogic.playerPos, [50, 55])):
             Player.speed = 1.5
-            Player.health -= .25
+            Player.health -= .25 
+            screen.blit(self.skull, (GameLogic.playerPos[0], GameLogic.playerPos[1]-50))
+            GameLogic.playSoundBoss("curse")
         else:
             Player.speed = 3
     def attack(self):
@@ -54,7 +58,7 @@ class Boss:
         self.aura_rect.center = (self.xPos, self.yPos)
       # pygame.draw.rect(screen, (0, 255, 0), self.aura_rect)
         pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(245, 10, 300, 50))
-        pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(245, 10, int((self.health/10000)*300), 50))
+        pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(245, 10, int((self.health/2500)*300), 50))
     def move(self):
         if self.moving == False and self.movetimer == 0:
             self.newcenter.x = random.randint(0,750)
@@ -81,6 +85,7 @@ class Boss:
                 
     def takeDamage(self, damage):
         self.health -= damage
+        GameLogic.playSoundBoss("bossdmg")
         if self.health <= 0:
             GameLogic.enemyList[GameLogic.current_chunk].remove(self)
 
@@ -89,7 +94,7 @@ class Boss:
 
         self.render(screen)
         self.acid(screen)
-        self.curse()
+        self.curse(screen)
 class Acid:
     def __init__(self, angle, direction, xPos, yPos, playerpos):
         self.imagepuddle = pygame.image.load("images/acidpuddle.png")
@@ -153,6 +158,7 @@ class Acid:
                 Player.health -= self.throw_dmg
                 Player.poison_dmg = 0.5
                 Player.poison_cooldown = 240
+                GameLogic.playSoundBoss("acid")
                 self.destroyed = True
         else:
             if pygame.Rect(GameLogic.playerPos, [50, 50]).colliderect(self.puddle_rect):

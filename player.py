@@ -112,7 +112,7 @@ class Player:
                         GameLogic.playSound("coin")
                     if items.name == "Bandages":
                     
-                        if Player.health < 100:
+                        if Player.health < 250:
                             Player.t = 180
                             Player.bcount +=1
                         else:
@@ -139,7 +139,7 @@ class Player:
         else:
             return False
     def reset_player():
-        Player.health = 100
+        Player.health = 250
         Player.dash_cooldown = 600
         Player.playerInventory.clearInventory()
 
@@ -205,12 +205,12 @@ class Player:
         if Player.t>0:
             Player.t-=1
         elif Player.bcount > 0:
-            if Player.health + 10 < 100:
+            if Player.health + 10 < 250:
                 Player.health += 10
                 GameLogic.playSound("heal")
 
             else:
-                Player.health = 100
+                Player.health = 250
                 GameLogic.playSound("heal")
             
             Player.bcount -=  1
