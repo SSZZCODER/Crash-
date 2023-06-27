@@ -107,6 +107,7 @@ class zombie(enemy):
             self.move_cooldown = 30
             self.poison_dmg = random.choice([4, 5])
             self.poison_duration = random.choice([120, 240])
+            self.dropKey = False
 
         def assignImage(self):
             return pygame.transform.scale(pygame.image.load('images/zombie.png'),(57, 40))
@@ -124,6 +125,13 @@ class zombie(enemy):
             else:
                 GameLogic.playSound("zombie")
                 return [0, self.damage]
+            
+        def takeDamage(self, damage):
+            self.health -= damage
+            if self.health <= 0:
+                self.dropKey = True
+                GameLogic.enemyList[GameLogic.current_chunk].remove(self)
+            print("taken damage")
 class magma(enemy):
         def __init__(self, xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range):
             super().__init__(xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range)

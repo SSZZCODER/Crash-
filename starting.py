@@ -30,6 +30,7 @@ def main():
     droppedkey = False
     global keypos 
     keypos = [0,0]
+    killsforkey = 0
     haskey = False
 
     clock = pygame.time.Clock()
@@ -58,6 +59,9 @@ def main():
     bushspawner = objectspawner(bushes)
     particles = ParticleSystem(10,700, (250,5,5))
     while not exit:
+        enemylength = len(GameLogic.enemyList[GameLogic.current_chunk])
+
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:   
                 exit=True
@@ -77,24 +81,34 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if textBar.rect.collidepoint(event.pos):
                     textBaron = False
+        for enemy in GameLogic.enemyList[GameLogic.current_chunk]:
+            if enemy.dropKey == True and droppedkey == False:
+                print("drop key")
+                keypos = [enemy.xPos, enemy.yPos]
+                droppedkey = True
         screen.blit(background, (0,0))
         particles.Update(screen)
         lavawarp.Update(screen)
         bossportal.Update(screen)
+
         screen.blit(portal, [525,500])
         spawner3.spawncoin()
         spawner4.spawnbandage()
         spawner1.spawn()
-        for enemy in GameLogic.enemyList[GameLogic.current_chunk]:
-            if enemy.health <= 0 and droppedkey == False:
-                droppedkey = True
-                keypos = [enemy.xPos, enemy.yPos]
-
         GameLogic.Update(screen)
         if Player.Update(screen) == True:
             return 3
         if textBaron == True:
             textBar.render(screen)
+           
+        if len(GameLogic.enemyList[GameLogic.current_chunk])<enemylength:
+            if killsforkey >= 2:
+                droppedkey = True
+                keypos = [375, 375]
+            else:
+                killsforkey +=1
+        print(killsforkey)
+
         if droppedkey == True:
             screen.blit(key, keypos)
             key_rect.center = keypos
