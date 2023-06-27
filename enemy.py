@@ -94,6 +94,7 @@ class enemy():
         self.health -= damage
         if self.health <= 0:
             GameLogic.enemyList[GameLogic.current_chunk].remove(self)
+            
 
         print("taken damage")
     def attack(self):

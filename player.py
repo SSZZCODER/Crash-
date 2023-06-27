@@ -205,8 +205,8 @@ class Player:
         if Player.t>0:
             Player.t-=1
         elif Player.bcount > 0:
-            if Player.health + 5 < 100:
-                Player.health += 5
+            if Player.health + 10 < 100:
+                Player.health += 10
                 GameLogic.playSound("heal")
 
             else:
