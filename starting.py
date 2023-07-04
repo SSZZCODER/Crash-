@@ -16,7 +16,9 @@ from boss import Boss
 from particle import ParticleSystem, particlePlayer
 from bushspawner import *
 import random
+from shop import Shop
 from textbar import *
+import pygame.font
 
 def main():
     pygame.init()
@@ -29,6 +31,7 @@ def main():
     key_rect = key.get_bounding_rect()
     shopkeeper = pygame.image.load('images/shopkeeper.png')
     shopkeeper = pygame.transform.scale(shopkeeper, (100,100))
+    shopkeeperrect= pygame.Rect([650,0], [100,100])
     droppedkey = False
     global keypos 
     keypos = [0,0]
@@ -62,10 +65,12 @@ def main():
     GameLogic.current_chunk = "grass"
     bushspawner = objectspawner(bushes)
     particles = ParticleSystem(10,700, (250,5,5))
+    shopui = Shop(0,50)
  
     while not exit:
         enemylength = len(GameLogic.enemyList[GameLogic.current_chunk])
-
+        mousepos = pygame.mouse.get_pos()
+        print(mousepos)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:   
@@ -98,6 +103,7 @@ def main():
 
         screen.blit(portal, [600,600])
         screen.blit(shopkeeper, [650,0])
+
         spawner3.spawncoin()
         spawner4.spawnbandage()
         spawner1.spawn()
@@ -127,6 +133,8 @@ def main():
           
             print("picked up key")
         #enemy_z1.update(screen)
+        if shopkeeperrect.collidepoint(Player.player_x, Player.player_y):
+            shopui.update(screen)
         StaminaBar.render(screen)
         Spell.render(screen)
         HealthBar.render(screen)
