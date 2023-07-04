@@ -55,6 +55,9 @@ def main():
 
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
+    
+    coin = pygame.image.load('images/New Piskel (37) (1).png')
+    coin = pygame.transform.scale(coin, (25, 25))
 
     energy = pygame.image.load('images/energy.png')
     energy = pygame.transform.scale(energy, (65, 65))
@@ -131,6 +134,7 @@ def main():
         HealthBar.render(screen)
         screen.blit(heart, (-29, -45))
         screen.blit(energy, (-9, 10))
+        screen.blit(coin, (5, 55))
         saveData.save()
         pygame.display.flip()
         clock.tick(60)

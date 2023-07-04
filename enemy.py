@@ -4,7 +4,7 @@ import random
 from gamelogic import GameLogic
 import math
 from pygame.math import Vector2
-
+from items import Coin
 class enemy():
     def __init__(self, xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range):
         self.xPos = xPos
@@ -108,6 +108,7 @@ class zombie(enemy):
             self.poison_dmg = random.choice([4, 5])
             self.poison_duration = random.choice([120, 240])
             self.dropKey = False
+            self.itemcount = 10
 
         def assignImage(self):
             return pygame.transform.scale(pygame.image.load('images/zombie.png'),(57, 40))
@@ -130,6 +131,7 @@ class zombie(enemy):
             self.health -= damage
             if self.health <= 0:
                 self.dropKey = True
+                GameLogic.itemlist[GameLogic.current_chunk].append( Coin(1, self.xPos, self.yPos,self))
                 GameLogic.enemyList[GameLogic.current_chunk].remove(self)
             print("taken damage")
 class magma(enemy):
