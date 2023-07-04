@@ -45,6 +45,8 @@ class spawneritems:
         self.maxitemcount = maxitemcount
 
     def spawncoin(self):
+        
+        """
         if self.life > 0:
             self.life -= 1
         else:
@@ -58,8 +60,7 @@ class spawneritems:
                 GameLogic.itemlist[GameLogic.current_chunk].append( Coin(1, self.xPos, self.yPos,self))
                 self.itemcount += 1
                 self.life = self.spawn_cooldown
-                
-
+        """
     def spawnbandage(self):
         if self.life > 0:
             self.life -= 1

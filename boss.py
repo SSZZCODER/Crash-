@@ -38,10 +38,7 @@ class Boss:
                 acid.update(screen)
                 if acid.destroyed == True:
                     self.acids.remove(acid)
-    def move(self):
-        pass
-    def summon(self):
-        pass
+
     def curse(self, screen):
         if self.aura_rect.colliderect(pygame.Rect(GameLogic.playerPos, [50, 55])):
             Player.speed = 1.5
@@ -172,3 +169,41 @@ class Acid:
             self.lifetime -= 1
         elif self.lifetime <= 0:
             self.destroyed = True
+
+class Boss2:
+     def __init__(self, damage, xPos, yPos):
+        self.health = 2500
+        self.damage = damage
+        self.xPos = xPos
+        self.yPos = yPos
+        self.movetimer = 0
+        self.moving = False
+        self.newcenter = Vector2(0)
+        self.velocity = Vector2(0)
+        self.speed = 3
+        self.image = pygame.image.load('images/magmaboss (1).png')
+        self.image = pygame.transform.scale(self.image,(175, 200))
+    
+     def move(self):
+        if self.moving == False and self.movetimer == 0:
+            self.newcenter.x = random.randint(0,750)
+            self.newcenter.y = random.randint(0,750)
+            self.velocity =  self.newcenter - Vector2(self.xPos, self.yPos)
+            self.velocity.normalize()
+            self.moving = True
+            self.movetimer = 30
+    
+        elif self.moving == False and self.movetimer > 0:
+            self.movetimer -=1
+        if self.moving == True:
+            if self.xPos > self.newcenter.x:
+                self.xPos -= 1
+            if self.yPos > self.newcenter.y:
+                self.yPos -= 1
+            if self.xPos < self.newcenter.x:
+                self.xPos += 1
+            if self.yPos < self.newcenter.y:
+                self.yPos += 1
+            if self.xPos == self.newcenter.x and self.yPos == self.newcenter.y:
+                self.moving = False
+                
