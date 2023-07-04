@@ -1,6 +1,8 @@
 from re import S
 from turtle import Screen, update
 import pygame
+import pygame.font
+pygame.font.init
 
 
 class Inventory:
@@ -9,6 +11,7 @@ class Inventory:
         self.items = [None]*slots
         self.positions = [(175,295),(315,295),(455,295)]
         self.amount = 0
+        self.font = pygame.font.Font(None, 32)
     def Draw(self, screen):
 
         pygame.draw.rect(screen, (0,0,0), (160,286.5, 430,90))
@@ -20,7 +23,8 @@ class Inventory:
             if self.items[i] == None:
                 continue
             screen.blit(self.items[i].inventoryimage,self.positions[i])
-
+            itemtext = self.font.render(str(self.items[i].amount), True, (0, 0, 0))
+            screen.blit(itemtext, self.positions[i])
     
     def addItem(self, thing):
         for i in range(len(self.items)):
