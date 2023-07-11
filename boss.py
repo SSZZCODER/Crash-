@@ -181,9 +181,21 @@ class Boss2:
         self.newcenter = Vector2(0)
         self.velocity = Vector2(0)
         self.speed = 3
+        self.fireballtimer = 100
         self.image = pygame.image.load('images/magmaboss (1).png')
         self.image = pygame.transform.scale(self.image,(175, 200))
-
+        self.fireballs = []
+    def fireball(self, screen):
+        if self.fireballtimer <= 0:
+            self.fireballs.append(Fireball(0,0,self.xPos, self.yPos, GameLogic.playerPos))
+            self.fireballtimer = 100
+        elif self.fireballtimer > 0:
+            self.fireballtimer -= 1
+        if len(self.fireballs) > 0:
+            for fireball in self.fireballs:
+                fireball.update(screen)
+                if fireball.destroyed == True:
+                    self.fireballs.remove(fireball)
 
     def move(self):
         if self.moving == False and self.movetimer == 0:
@@ -221,52 +233,54 @@ class Boss2:
     def update(self, screen):
         self.move()            
         self.render(screen)
-        self.fireball()
-    class fireball:
-        def __init__(self, angle, direction, xPos, yPos, playerpos):
-            self.imagethrow = pygame.image.load("images/fireball.png")
-            self.imagethrow = pygame.transform.scale(self.imagethrow, (60,30))
-            self.throw_dmg = 25
-            self.throw_rect = self.imagethrow.get_bounding_rect()
-            self.angle = angle
-            self.damage = 5
-            self.speed = 7
-            self.direction = direction
-            self.xPos = xPos 
-            self.yPos = yPos
-            self.throwing = True
-            self.playerpos = playerpos
-            self.direction = Vector2(self.playerpos) - Vector2([self.xPos, self.yPos])
-            self.direction = self.direction.normalize()
-        def render(self, screen):
-            if self.throwing == True:
-                screen.blit(self.imagethrow, [self.xPos, self.yPos])
-                self.throw_rect.x = self.xPos
-                self.throw_rect.y = self.yPos 
-        def move(self):
-            if self.throwing == True:
-                self.xPos += self.direction[0] * self.speed
-                self.yPos += self.direction[1] * self.speed
-                if self.direction[0] < 0 and self.direction[1] < 0:
-                    if self.xPos < self.playerpos[0] and self.yPos < self.playerpos[1]:
-                        self.throwing = False
-                if self.direction[0] > 0 and self.direction[1] < 0:
-                    if self.xPos > self.playerpos[0] and self.yPos < self.playerpos[1]:
-                        self.throwing = False
-                if self.direction[0] > 0 and self.direction[1] > 0:
-                    if self.xPos > self.playerpos[0] and self.yPos > self.playerpos[1]:
-                        self.throwing = False
-                if self.direction[0] < 0 and self.direction[1] > 0:
-                    if self.xPos < self.playerpos[0] and self.yPos > self.playerpos[1]:
-                        self.throwing = False
-        def attack(self):
-            if self.throwing == True:
-                if pygame.Rect(GameLogic.playerPos,[50,55]).colliderect(self.throw_rect):
-                    print("hit player")
-                    Player.health -= self.throw_dmg
-        def update(self, screen):
-            self.move()
-            self.render(screen)
-            self.attack()
-                    
-        
+        self.fireball(screen)
+class Fireball:
+    def __init__(self, angle, direction, xPos, yPos, playerpos):
+        self.imagethrow = pygame.image.load("images/fireball.png")
+        self.imagethrow = pygame.transform.scale(self.imagethrow, (60,30))
+        self.throw_dmg = 25
+        self.throw_rect = self.imagethrow.get_bounding_rect()
+        self.angle = angle
+        self.damage = 5
+        self.speed = 7
+        self.direction = direction
+        self.xPos = xPos 
+        self.yPos = yPos
+        self.throwing = True
+        self.destroyed = False
+        self.playerpos = playerpos
+        self.direction = Vector2(self.playerpos) - Vector2([self.xPos, self.yPos])
+        self.direction = self.direction.normalize()
+    def render(self, screen):
+        if self.throwing == True:
+            screen.blit(self.imagethrow, [self.xPos, self.yPos])
+            self.throw_rect.x = self.xPos
+            self.throw_rect.y = self.yPos 
+    def move(self):
+        if self.throwing == True:
+            self.xPos += self.direction[0] * self.speed
+            self.yPos += self.direction[1] * self.speed
+            if self.direction[0] < 0 and self.direction[1] < 0:
+                if self.xPos < self.playerpos[0] and self.yPos < self.playerpos[1]:
+                    self.throwing = False
+            if self.direction[0] > 0 and self.direction[1] < 0:
+                if self.xPos > self.playerpos[0] and self.yPos < self.playerpos[1]:
+                    self.throwing = False
+            if self.direction[0] > 0 and self.direction[1] > 0:
+                if self.xPos > self.playerpos[0] and self.yPos > self.playerpos[1]:
+                    self.throwing = False
+            if self.direction[0] < 0 and self.direction[1] > 0:
+                if self.xPos < self.playerpos[0] and self.yPos > self.playerpos[1]:
+                    self.throwing = False
+    def attack(self):
+        if self.throwing == True:
+            if pygame.Rect(GameLogic.playerPos,[50,55]).colliderect(self.throw_rect):
+                print("hit player")
+                Player.health -= self.throw_dmg
+                self.destroyed = True
+    def update(self, screen):
+        self.move()
+        self.render(screen)
+        self.attack()
+                
+    
