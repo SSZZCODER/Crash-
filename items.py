@@ -83,3 +83,22 @@ class inventoryItem():
          self.amount = amount
          self.name =  name
          self.image = image
+
+class Rifle():
+    def __init__(self):
+        self.amount = 1
+        self.name = "Rifle"
+        self.inventoryimage = pygame.image.load("images/rifle.png")
+
+
+class Sword():
+    def __init__(self):
+        self.amount = 1
+        self.name = "Sword"
+        self.inventoryimage = pygame.image.load("images/sword.png")
+ 
+class Bomb():
+    def __init__(self):
+        self.amount = 1
+        self.name = "Bomb"
+        self.inventoryimage = pygame.image.load("images/bomb.png")
