@@ -70,9 +70,9 @@ def main():
     while not exit:
         enemylength = len(GameLogic.enemyList[GameLogic.current_chunk])
         mousepos = pygame.mouse.get_pos()
-        print(mousepos)
-
-        for event in pygame.event.get():
+     
+        events = pygame.event.get()
+        for event in events:
             if event.type == pygame.QUIT:   
                 exit=True
             if  lavawarp.Touched() == True:
@@ -134,7 +134,7 @@ def main():
             print("picked up key")
         #enemy_z1.update(screen)
         if shopkeeperrect.collidepoint(Player.player_x, Player.player_y):
-            shopui.update(screen)
+            shopui.update(screen, events)
         StaminaBar.render(screen)
         Spell.render(screen)
         HealthBar.render(screen)

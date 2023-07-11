@@ -36,7 +36,17 @@ class Inventory:
                 self.items[i].amount += thing.amount
                 return self.items[i].amount
             
-            
+    def addObject(self, thing):
+        for i in range(len(self.items)):
+            if self.items[i]== None:
+                self.items[i] = thing
+                return 1
+            elif self.items[i].name == thing.name:
+                print("item already in inventory")
+        
+
+
+
     def removeItem(self, thing):
         for i in range(len(self.items)):
             if self.items[i].name == thing.name:
