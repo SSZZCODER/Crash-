@@ -43,6 +43,7 @@ class Inventory:
                 return 1
             elif self.items[i].name == thing.name:
                 print("item already in inventory")
+                break
         
 
 
