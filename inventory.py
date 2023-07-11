@@ -9,13 +9,14 @@ class Inventory:
     def __init__(self, slots):
         self.slots = slots
         self.items = [None]*slots
-        self.positions = [(175,295),(315,295),(455,295),(595, 295), (735, 295)]
+        self.positions = [(60,295),(175,295),(315,295),(455,295),(595, 295), (735, 295)]
         self.amount = 0
         self.font = pygame.font.Font(None, 32)
     def Draw(self, screen):
 
-        pygame.draw.rect(screen, (0,0,0), (160,286.5, 430,90))
-        pygame.draw.rect(screen, (135, 135, 135),   (165,290, 420, 82))
+        pygame.draw.rect(screen, (0,0,0), (50,286.5, 630,90))
+        pygame.draw.rect(screen, (135, 135, 135),   (55,290, 620, 82))
+
 #        pygame.draw.rect(screen, (0,0,0), (175,295, 125,80))
  #       pygame.draw.rect(screen, (0,0,0), (315,295, 125,80))
   #      pygame.draw.rect(screen, (0,0,0), (455,295, 125,80))
