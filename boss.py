@@ -185,7 +185,14 @@ class Boss2:
         self.fireballtimer = 100
         self.image = pygame.image.load('images/magmaboss (1).png')
         self.image = pygame.transform.scale(self.image,(175, 200))
+        self.aura_image = pygame.image.load("images/fireaura.png")
+        self.aura_image = pygame.transform.scale(self.aura_image, (500, 290))
+        self.aura_rect = self.aura_image.get_bounding_rect()
         self.fireballs = []
+    def fire_curse(self):
+        if self.aura_rect.colliderect(pygame.Rect(GameLogic.playerPos, [50, 55])):
+            Player.health -= .25 
+            GameLogic.playSoundBoss("curse")
     def fireball(self, screen):
         if self.fireballtimer <= 0:
             self.fireballs.append(Fireball(0,0,self.xPos, self.yPos, GameLogic.playerPos))
@@ -236,6 +243,7 @@ class Boss2:
         self.move()            
         self.render(screen)
         self.fireball(screen)
+        self.fire_curse()
 class Fireball:
     def __init__(self, angle, direction, xPos, yPos, playerpos):
         self.imagethrow = pygame.image.load("images/fireball.png")
