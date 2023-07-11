@@ -6,9 +6,10 @@ import ocean
 import deathscreen  
 import skinsmenu
 import bossarena
+import magmaarena
 from data import saveData
 
-level = 0
+level = 7
 
 
 
@@ -28,7 +29,8 @@ while level != -1:
         level = ocean.main()
     if level == 6:
         level = bossarena.main()
-        
+    if level == 7:
+        level = magmaarena.main()
     print(level) 
 
     
