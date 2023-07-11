@@ -4,6 +4,7 @@ import random
 from gamelogic import GameLogic
 from pygame.math import Vector2
 from player import Player
+import math
 class Boss:
     def __init__(self, damage, xPos, yPos):
         self.health = 2500
@@ -196,6 +197,7 @@ class Boss2:
                 fireball.update(screen)
                 if fireball.destroyed == True:
                     self.fireballs.remove(fireball)
+        print(len(self.fireballs))
 
     def move(self):
         if self.moving == False and self.movetimer == 0:
@@ -251,6 +253,8 @@ class Fireball:
         self.playerpos = playerpos
         self.direction = Vector2(self.playerpos) - Vector2([self.xPos, self.yPos])
         self.direction = self.direction.normalize()
+        self.rel_x = 0
+        self.true_ypos = yPos
     def render(self, screen):
         if self.throwing == True:
             screen.blit(self.imagethrow, [self.xPos, self.yPos])
@@ -259,19 +263,13 @@ class Fireball:
     def move(self):
         if self.throwing == True:
             self.xPos += self.direction[0] * self.speed
-            self.yPos += self.direction[1] * self.speed
-            if self.direction[0] < 0 and self.direction[1] < 0:
-                if self.xPos < self.playerpos[0] and self.yPos < self.playerpos[1]:
-                    self.throwing = False
-            if self.direction[0] > 0 and self.direction[1] < 0:
-                if self.xPos > self.playerpos[0] and self.yPos < self.playerpos[1]:
-                    self.throwing = False
-            if self.direction[0] > 0 and self.direction[1] > 0:
-                if self.xPos > self.playerpos[0] and self.yPos > self.playerpos[1]:
-                    self.throwing = False
-            if self.direction[0] < 0 and self.direction[1] > 0:
-                if self.xPos < self.playerpos[0] and self.yPos > self.playerpos[1]:
-                    self.throwing = False
+            self.true_ypos += self.direction[1] * self.speed
+            self.yPos = self.true_ypos+(50*math.sin((self.rel_x)*math.pi+10))
+        if self.xPos > 750 or self.xPos < 0:
+            self.destroyed = True
+        if self.yPos > 750 or self.yPos < 0:
+            self.destroyed = True
+        self.rel_x += 0.1
     def attack(self):
         if self.throwing == True:
             if pygame.Rect(GameLogic.playerPos,[50,55]).colliderect(self.throw_rect):
