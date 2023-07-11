@@ -9,7 +9,7 @@ class Inventory:
     def __init__(self, slots):
         self.slots = slots
         self.items = [None]*slots
-        self.positions = [(175,295),(315,295),(455,295)]
+        self.positions = [(175,295),(315,295),(455,295),(595, 295), (735, 295)]
         self.amount = 0
         self.font = pygame.font.Font(None, 32)
     def Draw(self, screen):

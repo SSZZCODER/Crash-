@@ -35,8 +35,10 @@ class Shop:
                     Player.playerInventory.addObject(items.Rifle())
                 elif self.buy2.collidepoint(event.pos):
                     print("Bought Bomb")
+                    Player.playerInventory.addItem(items.Bomb())
                 else: 
                     print("Bought Sword")
+                    Player.playerInventory.addObject(items.Sword())
         
 
     def update(self, screen, events):

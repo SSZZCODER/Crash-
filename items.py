@@ -101,4 +101,5 @@ class Bomb():
     def __init__(self):
         self.amount = 1
         self.name = "Bomb"
-        self.inventoryimage = pygame.image.load("images/bomb.png")
+        self.image = pygame.image.load("images/bomb.png")
+        self.inventoryimage = pygame.transform.scale(self.image, (60,70))

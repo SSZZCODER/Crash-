@@ -42,7 +42,7 @@ class Player:
     playerimage = pygame.transform.scale(playerimage,(50, 55))
     imageload = playerimage
     playercenter = [300, 300]
-    playerInventory = Inventory(3)
+    playerInventory = Inventory(5)
     inventoryShow = False
     playerhotbar = Hotbar()
     poison_cooldown = 0
