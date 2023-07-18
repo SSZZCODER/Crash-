@@ -7,7 +7,7 @@ from inventory import Inventory
 import random
 from gamelogic import GameLogic
 from hotbar import Hotbar
-from weapons import weapon
+from weapons import Bombweapon, Swordweapon, weapon, Rifleweapon
 from particle import *
 from items import *
 from spells import Fire
@@ -25,7 +25,10 @@ class Player:
     dmg = random.randint(15, 20)
     dmgcounter = 0
     animation_reverse = False
-    weapon = weapon("Fist", dmg, 7, 40, 120)
+    #weapon = weapon("Fist", dmg, 7, 40, 120)
+    weapon = Rifleweapon(0, 0, 5, 50)
+    #weapon = Swordweapon(0,0,2.5, 40)
+    #weapon = Bombweapon(0,0,10,100)
     attack_cooldown = 30
     dash_speed = 60
     damage_cooldown = 0
@@ -170,34 +173,55 @@ class Player:
         Player.dash()
         Player.damage_check()
         Player.particlesp.Update(screen)
-        Player.weapon.update(screen)
+        if Player.weapon.name == "Fist":
+            Player.weapon.update(screen)
+        elif Player.weapon.name == "Rifle":
+            Player.weapon.update(screen, Player.playercenter[0] , Player.playercenter[1])    
+        elif Player.weapon.name == "Sword":
+            Player.weapon.update(screen, Player.player_x, Player.player_y)       
+        elif Player.weapon.name == "Bomb":
+            Player.weapon.update(screen, Player.player_x, Player.player_y)   
         Player.Render(screen)
         Player.spellangle()
         Player.itemCheck()
         if Player.weaponcooldown != 0:
                 Player.weaponcooldown -= 1
         if pygame.mouse.get_pressed()[0]:
-            if Player.weaponcooldown <= 0:
-                Player.attack()
-                if Player.weapon.attack() == True:
-                    Player.dmgcounter += Player.weapon.damage
-                    if Player.dmgcounter >= 300:
-                        if Player.playsound == False:
-                            Player.playsound = True
-                            GameLogic.playSound("achievement")
-                        Player.dmgcounter = 300
-                Player.weaponcooldown = 30
+            if Player.weapon.name == "Fist":
+                if Player.weaponcooldown <= 0:
+                    Player.attack()
+                    if Player.weapon.attack() == True:
+                        Player.dmgcounter += Player.weapon.damage
+                        if Player.dmgcounter >= 300:
+                            if Player.playsound == False:
+                                Player.playsound = True
+                                GameLogic.playSound("achievement")
+                            Player.dmgcounter = 300
+                    Player.weaponcooldown = 30
+            elif Player.weapon.name == "Rifle":
+                pass
+            elif Player.weapon.name == "Sword":
+                pass
+            elif Player.weapon.name == "Bomb":
+                pass
         if Player.attacking == True:
-            if Player.animation_reverse == True:
-                Player.animation_counter -= 1
-            elif Player.animation_reverse == False:
-                Player.animation_counter +=1
-                if Player.animation_counter >= len(Player.animations)-1:
-                    Player.animation_reverse = True
-            if Player.animation_counter < 0:
-                Player.attacking = False
-                Player.animation_reverse = False
-                Player.animation_counter = 0
+            if Player.weapon.name == "Fist":
+                if Player.animation_reverse == True:
+                    Player.animation_counter -= 1
+                elif Player.animation_reverse == False:
+                    Player.animation_counter +=1
+                    if Player.animation_counter >= len(Player.animations)-1:
+                        Player.animation_reverse = True
+                if Player.animation_counter < 0:
+                    Player.attacking = False
+                    Player.animation_reverse = False
+                    Player.animation_counter = 0
+            elif Player.weapon.name == "Rifle":
+                pass
+            elif Player.weapon.name == "Sword":
+                pass            
+            elif Player.weapon.name == "Bomb":
+                pass      
         if Player.timer>0:
             Player.timer-=1
         else:

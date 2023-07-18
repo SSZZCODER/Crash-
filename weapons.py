@@ -38,5 +38,70 @@ class weapon():
     def render():
         pass
 
+class Rifleweapon:
+    def __init__(self, xpos, ypos, cooldown, damage):
+        self.xpos = xpos
+        self.ypos = ypos
+        self.cooldown = cooldown
+        self.damage = damage
+        self.image = pygame.image.load("images/topdownrifle.png")
+        self.image = pygame.transform.scale(self.image, (5*2,55*2))
+        self.rect = self.image.get_rect()
+
+        self.name = "Rifle"
+        self.bulletcount = 5
+
+    def render(self, screen):
+        mpos = pygame.mouse.get_pos()
+        x_dist = mpos[0] - self.xpos
+        y_dist = -(mpos[1] - self.ypos)
+        angle = math.degrees(math.atan2(y_dist, x_dist))
+        self.image_rot = pygame.transform.rotate(self.image, angle-90)
+        self.rect = self.image_rot.get_rect(center = (self.xpos, self.ypos))
+        screen.blit(self.image_rot,(self.xpos, self.ypos))
+
+    def update(self, screen, xpos, ypos):
+        self.xpos = xpos
+        self.ypos = ypos
+        self.render(screen)
+
+class Swordweapon:
+    def __init__(self, xpos, ypos, cooldown, damage):
+        self.xpos = xpos
+        self.ypos = ypos
+        self.cooldown = cooldown
+        self.damage = damage
+        self.image = pygame.image.load("images/sword.png")
+        self.name = "Sword"
+
+    def render(self, screen):
+        screen.blit(self.image,(self.xpos, self.ypos))
+
+    def update(self, screen, xpos, ypos):
+        self.xpos = xpos
+        self.ypos = ypos
+        self.render(screen)
+
+class Bombweapon:
+    def __init__(self, xpos, ypos, cooldown, damage):
+        self.xpos = xpos
+        self.ypos = ypos
+        self.cooldown = cooldown
+        self.damage = damage
+        self.image = pygame.image.load("images/bomb.png")
+        self.name = "Bomb"
+
+    def render(self, screen):
+        screen.blit(self.image,(self.xpos, self.ypos))
+
+    def update(self, screen, xpos, ypos):
+        self.xpos = xpos
+        self.ypos = ypos
+        self.render(screen)
+
+
+
+
+
             
 
