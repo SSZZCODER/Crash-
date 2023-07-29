@@ -62,7 +62,6 @@ def main():
     haskey = False
 
     while not exit:
-        print(haskey)
         enemylength = len(GameLogic.enemyList[GameLogic.current_chunk])
         for event in pygame.event.get():
             if event.type == pygame.QUIT:   
@@ -97,20 +96,12 @@ def main():
         oceanwarp.Update(screen)
         bossportal2.Update(screen)
         screen.blit(portal, [600, 10])
-        if len(GameLogic.enemyList[GameLogic.current_chunk])<enemylength:
-            if killsforkey >= 2 and haskey == False:
-                droppedkey = True
-                keypos = [150, 150]
-            else:
-                killsforkey +=1
-        if haskey == False:
+        if haskey == False and droppedkey == True:
             if pygame.Rect(GameLogic.playerPos, [50, 55]).colliderect(pygame.Rect(keypos, [36, 15])):
                 haskey = True
                 droppedkey = False
 
-        if droppedkey == True:
-            screen.blit(magmakey, keypos)
-            magmakey_rect.center = keypos
+        
         if haskey == True:
             bossportal2 = Warp(625, 35,100,175,(0,0,180), 50,0)
 
@@ -120,6 +111,12 @@ def main():
         GameLogic.Update(screen)
         if Player.Update(screen) == True:
             return 3
+        if len(GameLogic.enemyList[GameLogic.current_chunk])<enemylength:
+            if killsforkey >= 2 and haskey == False:
+                droppedkey = True
+                keypos = [375, 375]
+            else:
+                killsforkey +=1
 
        # enemy_z1.update(screen)
         Spell.render(screen)
@@ -127,5 +124,11 @@ def main():
         HealthBar.render(screen)
         screen.blit(heart, (-29, -45))
         screen.blit(energy, (-9, 10))
+        if droppedkey == True:
+            screen.blit(magmakey, keypos)
+            magmakey_rect.center = keypos
         pygame.display.flip()
         clock.tick(60)
+        print(enemylength)
+
+
