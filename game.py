@@ -9,7 +9,7 @@ import bossarena
 import magmaarena
 from data import saveData
 
-level = 1
+level = 2
 
 
 

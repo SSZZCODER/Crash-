@@ -25,8 +25,8 @@ class Player:
     dmg = random.randint(15, 20)
     dmgcounter = 0
     animation_reverse = False
-    #weapon = weapon("Fist", dmg, 7, 40, 120)
-    weapon = Rifleweapon(0, 0, 5, 50)
+    weapon = weapon("Fist", dmg, 7, 40, 120)
+    #weapon = Rifleweapon(0, 0, 5, 50)
     #weapon = Swordweapon(0,0,2.5, 40)
     #weapon = Bombweapon(0,0,10,100)
     attack_cooldown = 30

@@ -1,26 +1,10 @@
 {
     "position": [
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        340.0,
-        217.0
-=======
-        340,
-        340
->>>>>>> Stashed changes
+        595.2132034355966,
+        387.7867965644034
     ],
-    "health": 250,
+    "health": 42,
     "inventory": [
         {}
-=======
-        630.7867965644034,
-        646.3380951166259
-    ],
-    "health": 160,
-    "inventory": [
-        {
-            "Coin": 4
-        }
->>>>>>> Stashed changes
     ]
 }
