@@ -141,6 +141,8 @@ class magma(enemy):
             self.move_cooldown = 30
             self.fire_dmg = random.choice([4, 5])
             self.burn_duration = random.choice([120, 240])
+            self.dropKey = False
+            self.itemcount = 10
 
         def assignImage(self):
             return pygame.transform.scale(pygame.image.load('images/New Piskel (34) (1).png'),(57, 40))
@@ -156,7 +158,13 @@ class magma(enemy):
                 return [2, self.fire_dmg, self.burn_duration]
             else:
                 return [0, self.damage]
-
+        def takeDamage(self, damage):
+            self.health -= damage
+            if self.health <= 0:
+                self.dropKey = True
+                GameLogic.itemlist[GameLogic.current_chunk].append( Coin(1, self.xPos, self.yPos,self))
+                GameLogic.enemyList[GameLogic.current_chunk].remove(self)
+            print("taken damage")
 class fish(enemy):
         def __init__(self, xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range):
             super().__init__(xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range)

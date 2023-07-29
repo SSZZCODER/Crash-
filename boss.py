@@ -183,16 +183,19 @@ class Boss2:
         self.velocity = Vector2(0)
         self.speed = 3
         self.fireballtimer = 100
+        self.skull = pygame.image.load('images/skull.png')
+        self.skull = pygame.transform.scale(self.skull,(70, 80))
         self.image = pygame.image.load('images/magmaboss (1).png')
         self.image = pygame.transform.scale(self.image,(175, 200))
         self.aura_image = pygame.image.load("images/fireaura.png")
-        self.aura_image = pygame.transform.scale(self.aura_image, (500, 290))
+        self.aura_image = pygame.transform.scale(self.aura_image, (300, 290))
         self.aura_rect = self.aura_image.get_bounding_rect()
         self.fireballs = []
-    def fire_curse(self):
+    def fire_curse(self, screen):
         if self.aura_rect.colliderect(pygame.Rect(GameLogic.playerPos, [50, 55])):
             Player.health -= .25 
             GameLogic.playSoundBoss("curse")
+            screen.blit(self.skull, (GameLogic.playerPos[0], GameLogic.playerPos[1]-50))
     def fireball(self, screen):
         if self.fireballtimer <= 0:
             self.fireballs.append(Fireball(0,0,self.xPos, self.yPos, GameLogic.playerPos))
@@ -205,7 +208,8 @@ class Boss2:
                 if fireball.destroyed == True:
                     self.fireballs.remove(fireball)
         print(len(self.fireballs))
-
+    def attack(self):
+        return [0, 0]
     def move(self):
         if self.moving == False and self.movetimer == 0:
             self.newcenter.x = random.randint(0,750)
@@ -228,6 +232,7 @@ class Boss2:
                 self.yPos += 1
             if self.xPos == self.newcenter.x and self.yPos == self.newcenter.y:
                 self.moving = False
+    
     def takeDamage(self, damage):
         self.health -= damage
         GameLogic.playSoundBoss("bossdmg")
@@ -238,12 +243,13 @@ class Boss2:
         screen.blit(self.image, self.image.get_rect(center = (self.xPos, self.yPos)))
         pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(245, 10, 300, 50))
         pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(245, 10, int((self.health/2500)*300), 50))
-
+        screen.blit(self.aura_image, self.aura_image.get_rect(center = (self.xPos, self.yPos)))
+        self.aura_rect.center = (self.xPos, self.yPos)        
     def update(self, screen):
         self.move()            
         self.render(screen)
         self.fireball(screen)
-        self.fire_curse()
+        self.fire_curse(screen)
 class Fireball:
     def __init__(self, angle, direction, xPos, yPos, playerpos):
         self.imagethrow = pygame.image.load("images/fireball.png")
