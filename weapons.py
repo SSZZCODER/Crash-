@@ -59,8 +59,8 @@ class Rifleweapon:
         angle = math.atan2(x_dist, y_dist)   * (180/math.pi)
         pcenter = [playercenter[0],playercenter[1]]
         self.image_rot = pygame.transform.rotate(self.image, angle)
-        self.rect = self.image_rot.get_rect(topleft = pcenter)
-        screen.blit(self.image_rot,self.image_rot.get_rect(topleft = pcenter))
+        self.rect = self.image_rot.get_rect(center = pcenter)
+        screen.blit(self.image_rot,self.image_rot.get_rect(center = pcenter))
 
     def update(self, screen, xpos, ypos,playercenter):
         self.xpos = xpos

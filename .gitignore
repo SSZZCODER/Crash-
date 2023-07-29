@@ -132,3 +132,4 @@ dmypy.json
 images/.DS_Store
 savedata.json
 *.json
+savedata.json
