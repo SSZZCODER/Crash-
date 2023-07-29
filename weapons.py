@@ -46,24 +46,26 @@ class Rifleweapon:
         self.damage = damage
         self.image = pygame.image.load("images/topdownrifle.png")
         self.image = pygame.transform.scale(self.image, (5*2,55*2))
+        #self.image = pygame.transform.flip(self.image,False,True)
         self.rect = self.image.get_rect()
 
         self.name = "Rifle"
         self.bulletcount = 5
 
-    def render(self, screen):
+    def render(self, screen,playercenter):
         mpos = pygame.mouse.get_pos()
-        x_dist = mpos[0] - self.xpos
-        y_dist = -(mpos[1] - self.ypos)
-        angle = math.degrees(math.atan2(y_dist, x_dist))
-        self.image_rot = pygame.transform.rotate(self.image, angle-90)
-        self.rect = self.image_rot.get_rect(center = (self.xpos, self.ypos))
-        screen.blit(self.image_rot,(self.xpos, self.ypos))
+        x_dist = mpos[0] - playercenter[0]
+        y_dist = mpos[1] - playercenter[1]
+        angle = math.atan2(x_dist, y_dist)   * (180/math.pi)
+        pcenter = [playercenter[0],playercenter[1]]
+        self.image_rot = pygame.transform.rotate(self.image, angle)
+        self.rect = self.image_rot.get_rect(topleft = pcenter)
+        screen.blit(self.image_rot,self.image_rot.get_rect(topleft = pcenter))
 
-    def update(self, screen, xpos, ypos):
+    def update(self, screen, xpos, ypos,playercenter):
         self.xpos = xpos
         self.ypos = ypos
-        self.render(screen)
+        self.render(screen,playercenter)
 
 class Swordweapon:
     def __init__(self, xpos, ypos, cooldown, damage):

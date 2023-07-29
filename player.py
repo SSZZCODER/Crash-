@@ -176,7 +176,7 @@ class Player:
         if Player.weapon.name == "Fist":
             Player.weapon.update(screen)
         elif Player.weapon.name == "Rifle":
-            Player.weapon.update(screen, Player.playercenter[0] , Player.playercenter[1])    
+            Player.weapon.update(screen, Player.playercenter[0] , Player.playercenter[1],Player.playercenter)    
         elif Player.weapon.name == "Sword":
             Player.weapon.update(screen, Player.player_x, Player.player_y)       
         elif Player.weapon.name == "Bomb":
