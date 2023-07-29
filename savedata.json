@@ -1,8 +1,13 @@
 {
     "position": [
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         340.0,
         217.0
+=======
+        340,
+        340
+>>>>>>> Stashed changes
     ],
     "health": 250,
     "inventory": [
