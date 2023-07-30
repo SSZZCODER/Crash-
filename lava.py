@@ -103,7 +103,7 @@ def main():
 
         
         if haskey == True:
-            bossportal2 = Warp(625, 35,100,175,(0,0,180), 50,0)
+            bossportal2 = Warp(625, 35,100,175,(255,0,0), 50,0)
 
         spawner2.spawn_magma()
         spawner5.spawncoin()
