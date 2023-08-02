@@ -312,20 +312,46 @@ class Boss3:
             self.imageleft = pygame.transform.scale(self.imageleft,(175, 200))
             self.topimage = pygame.image.load('images/topdownviewsharkboss.png')
             self.topimage = pygame.transform.scale(self.topimage,(175, 200))
+            self.toprightimage = pygame.transform.rotate(self.topimage, -45)
+            self.toprightimage = pygame.transform.scale(self.toprightimage,(200, 225))
+            self.topleftimage = pygame.transform.rotate(self.topimage, 45)
+            self.topleftimage = pygame.transform.scale(self.topleftimage,(200,225))           
             self.bottomimage = pygame.transform.flip(self.topimage,False, True)
             self.bottomimage = pygame.transform.scale(self.bottomimage,(175, 200))
+            self.bottomrightimage = pygame.transform.rotate(self.topimage, -135)
+            self.bottomrightimage = pygame.transform.scale(self.bottomrightimage, (200,225))
+            self.bottomleftimage = pygame.transform.rotate(self.topimage, 135)
+            self.bottomleftimage = pygame.transform.scale(self.bottomleftimage, (200,225))
+            self.image = self.imageright
+            
         def move(self):
             if self.moving == False and self.movetimer == 0:
                 self.newcenter.x = random.randint(0,750)
                 self.newcenter.y = random.randint(0,750)
                 self.velocity =  self.newcenter - Vector2(self.xPos, self.yPos)
-                self.velocity.normalize()
+                self.velocity = self.velocity.normalize()
                 self.moving = True
                 self.movetimer = 30
 
             elif self.moving == False and self.movetimer > 0:
                 self.movetimer -=1
             if self.moving == True:
+                if self.xPos > self.newcenter.x and self.yPos == self.newcenter.y:
+                    self.image = self.imageleft
+                if self.xPos < self.newcenter.x and self.yPos == self.newcenter.y:
+                    self.image = self.imageright
+                if self.xPos > self.newcenter.x and self.yPos < self.newcenter.y:
+                    self.image = self.bottomleftimage
+                if self.xPos < self.newcenter.x and self.yPos > self.newcenter.y:
+                    self.image = self.toprightimage
+                if self.xPos > self.newcenter.x and self.yPos > self.newcenter.y:
+                    self.image = self.topleftimage
+                if self.xPos < self.newcenter.x and self.yPos < self.newcenter.y:
+                    self.image = self.bottomrightimage
+                if self.xPos == self.newcenter.x and self.yPos > self.newcenter.y:
+                    self.image = self.topimage
+                if self.xPos == self.newcenter.x and self.yPos < self.newcenter.y:
+                    self.image = self.bottomimage
                 if self.xPos > self.newcenter.x:
                     self.xPos -= 1
                 if self.yPos > self.newcenter.y:
@@ -334,6 +360,7 @@ class Boss3:
                     self.xPos += 1
                 if self.yPos < self.newcenter.y:
                     self.yPos += 1
+         
                 if self.xPos == self.newcenter.x and self.yPos == self.newcenter.y:
                     self.moving = False
         def attack(self):
@@ -345,7 +372,7 @@ class Boss3:
                 GameLogic.enemyList[GameLogic.current_chunk].remove(self)
 
         def render(self, screen):
-            screen.blit(self.imageright, self.imageright.get_rect(center = (self.xPos, self.yPos)))
+            screen.blit(self.image, self.image.get_rect(center = (self.xPos, self.yPos)))
             pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(245, 10, 300, 50))
             pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(245, 10, int((self.health/2500)*300), 50))
         def update(self, screen):
