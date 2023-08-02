@@ -44,8 +44,8 @@ class Rifleweapon:
         self.ypos = ypos
         self.cooldown = cooldown
         self.damage = damage
-        self.image = pygame.image.load("images/topdownrifle.png")
-        self.image = pygame.transform.scale(self.image, (5*2,55*2))
+        self.image = pygame.image.load("images/New Piskel (23).png")
+        self.image = pygame.transform.scale(self.image, (6*2,125*2))
         #self.image = pygame.transform.flip(self.image,False,True)
         self.rect = self.image.get_rect()
 
@@ -73,16 +73,27 @@ class Swordweapon:
         self.ypos = ypos
         self.cooldown = cooldown
         self.damage = damage
-        self.image = pygame.image.load("images/sword.png")
+        self.image = pygame.image.load("images/newswordv4.png")
+        self.image = pygame.transform.scale(self.image, (18, 165))
+        self.rect = self.image.get_rect()
         self.name = "Sword"
 
-    def render(self, screen):
-        screen.blit(self.image,(self.xpos, self.ypos))
+    def render(self, screen, playercenter):
+        mpos = pygame.mouse.get_pos()
+        x_dist = mpos[0] - playercenter[0]
+        y_dist = mpos[1] - playercenter[1]
+        angle = math.atan2(x_dist, y_dist)   * (180/math.pi)
+        pcenter = [playercenter[0],playercenter[1]]
+        self.image_rot = pygame.transform.rotate(self.image, angle)
+        self.rect = self.image_rot.get_rect(center = pcenter)
+        screen.blit(self.image_rot,self.image_rot.get_rect(center = pcenter))
 
-    def update(self, screen, xpos, ypos):
+        #screen.blit(self.image,(self.xpos, self.ypos))
+
+    def update(self, screen, xpos, ypos, playercenter):
         self.xpos = xpos
         self.ypos = ypos
-        self.render(screen)
+        self.render(screen, playercenter)
 
 class Bombweapon:
     def __init__(self, xpos, ypos, cooldown, damage):
@@ -90,16 +101,26 @@ class Bombweapon:
         self.ypos = ypos
         self.cooldown = cooldown
         self.damage = damage
-        self.image = pygame.image.load("images/bomb.png")
+        self.image = pygame.image.load("images/newbombv6.png")
+        self.image = pygame.transform.scale(self.image, (12*4, 37.5*4))
+        self.rect = self.image.get_rect()
         self.name = "Bomb"
 
-    def render(self, screen):
-        screen.blit(self.image,(self.xpos, self.ypos))
+    def render(self, screen, playercenter):
+        mpos = pygame.mouse.get_pos()
+        x_dist = mpos[0] - playercenter[0]
+        y_dist = mpos[1] - playercenter[1]
+        angle = math.atan2(x_dist, y_dist)   * (180/math.pi)
+        pcenter = [playercenter[0],playercenter[1]]
+        self.image_rot = pygame.transform.rotate(self.image, angle)
+        self.rect = self.image_rot.get_rect(center = pcenter)
+        screen.blit(self.image_rot,self.image_rot.get_rect(center = pcenter))
 
-    def update(self, screen, xpos, ypos):
+
+    def update(self, screen, xpos, ypos, playercenter):
         self.xpos = xpos
         self.ypos = ypos
-        self.render(screen)
+        self.render(screen, playercenter)
 
 
 
