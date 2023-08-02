@@ -314,8 +314,6 @@ class Boss3:
             self.topimage = pygame.transform.scale(self.topimage,(175, 200))
             self.bottomimage = pygame.transform.flip(self.topimage,False, True)
             self.bottomimage = pygame.transform.scale(self.bottomimage,(175, 200))
-        def attack(self):
-            return [0, 0]
         def move(self):
             if self.moving == False and self.movetimer == 0:
                 self.newcenter.x = random.randint(0,750)
@@ -338,7 +336,8 @@ class Boss3:
                     self.yPos += 1
                 if self.xPos == self.newcenter.x and self.yPos == self.newcenter.y:
                     self.moving = False
-        
+        def attack(self):
+            return [0, 0]
         def takeDamage(self, damage):
             self.health -= damage
             GameLogic.playSoundBoss("bossdmg")
@@ -346,7 +345,7 @@ class Boss3:
                 GameLogic.enemyList[GameLogic.current_chunk].remove(self)
 
         def render(self, screen):
-            screen.blit(self.image, self.image.get_rect(center = (self.xPos, self.yPos)))
+            screen.blit(self.imageright, self.imageright.get_rect(center = (self.xPos, self.yPos)))
             pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(245, 10, 300, 50))
             pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(245, 10, int((self.health/2500)*300), 50))
         def update(self, screen):

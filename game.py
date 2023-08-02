@@ -7,9 +7,10 @@ import deathscreen
 import skinsmenu
 import bossarena
 import magmaarena
+import sharkarena
 from data import saveData
 
-level = 2
+level = 8
 
 
 
@@ -31,6 +32,8 @@ while level != -1:
         level = bossarena.main()
     if level == 7:
         level = magmaarena.main()
+    if level == 8:
+        level = sharkarena.main()
     print(level) 
 
     
