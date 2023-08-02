@@ -325,7 +325,7 @@ class Boss3:
             self.image = self.imageright
             self.lungespeed = 5
             self.lunging = False
-            self.trackplayertime = 1000
+            self.trackplayertime = 150
             self.lungevelocity = Vector2(0)
             self.lungedistance = -1
             self.startlungepos = Vector2(0)
@@ -381,24 +381,30 @@ class Boss3:
                 y_dist = GameLogic.playerPos[1]-self.yPos
                 angle = math.atan2(x_dist, y_dist)   * (180/math.pi)
                 print(angle)
-                if angle > -30 and angle < 30:
+                if self.lungevelocity[0] > 0 and self.lungevelocity[1] == 0:
+                    self.image = self.imageright
+                if self.lungevelocity[0] < 0 and self.lungevelocity[1] == 0:
+                    self.image = self.imageleft
+                if self.lungevelocity[0] == 0 and self.lungevelocity[1] >0:
                     self.image = self.bottomimage
-                if angle > 30 and angle < 60:
-                    self.image = self.bottomrightimage
-                if angle > -30 and angle < -60:
-                    self.image = self.bottomleftimage
-                if angle < 30 and angle > 30:
+                if self.lungevelocity[0] == 0 and self.lungevelocity[1] <0:
                     self.image = self.topimage
-                if angle < -30 and angle > -60:
-                    self.image = self.toprightimage
-                if angle < 30 and angle > 60:
-                    self.image = self.topleftimage
-            
+                if self.lungevelocity[0] > 0 and self.lungevelocity[1] < 0:
+                    self.image = self.toprightimage             
+                if self.lungevelocity[0] < 0 and self.lungevelocity[1] < 0:
+                    self.image = self.topleftimage      
+                if self.lungevelocity[0] < 0 and self.lungevelocity[1] > 0:
+                    self.image = self.bottomleftimage      
+                if self.lungevelocity[0] > 0 and self.lungevelocity[1] > 0:
+                    self.image = self.bottomrightimage      
                 self.trackplayertime -= 1
             if self.trackplayertime <= 0 and self.startlungepos.distance_to(Vector2(self.xPos, self.yPos))<self.lungedistance:
                 self.xPos += self.lungevelocity[0]
                 self.yPos += self.lungevelocity[1]
                 distance = Vector2(self.xPos, self.yPos).distance_to(GameLogic.playerPos)
+            if self.trackplayertime <= 0 and self.startlungepos.distance_to(Vector2(self.xPos, self.yPos))>self.lungedistance:
+                self.trackplayertime = 150
+                self.lunging = False
 
         def takeDamage(self, damage):
             self.health -= damage
@@ -411,6 +417,13 @@ class Boss3:
             pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(245, 10, 300, 50))
             pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(245, 10, int((self.health/2500)*300), 50))
         def update(self, screen):
-            self.lunge()
-            #self.move()            
+            if self.moving == False and self.lunging == False:
+                chooseaction = random.randint(1,5)
+                if chooseaction == 2:
+                    self.lunging = True
+            if self.lunging == True:
+                self.lunge()
+            else:
+                self.move()
+                
             self.render(screen)
