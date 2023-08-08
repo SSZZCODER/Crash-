@@ -329,47 +329,36 @@ class Boss3:
             self.lungevelocity = Vector2(0)
             self.lungedistance = -1
             self.startlungepos = Vector2(0)
+            self.teethtimer = 100
+            self.tooths = []
         def move(self):
-            if self.moving == False and self.movetimer == 0:
-                self.newcenter.x = random.randint(0,750)
-                self.newcenter.y = random.randint(0,750)
-                self.velocity =  self.newcenter - Vector2(self.xPos, self.yPos)
-                self.velocity = self.velocity.normalize()
-                self.moving = True
-                self.movetimer = 30
-
-            elif self.moving == False and self.movetimer > 0:
-                self.movetimer -=1
-            if self.moving == True:
-                if self.xPos > self.newcenter.x and self.yPos == self.newcenter.y:
-                    self.image = self.imageleft
-                if self.xPos < self.newcenter.x and self.yPos == self.newcenter.y:
-                    self.image = self.imageright
-                if self.xPos > self.newcenter.x and self.yPos < self.newcenter.y:
-                    self.image = self.bottomleftimage
-                if self.xPos < self.newcenter.x and self.yPos > self.newcenter.y:
-                    self.image = self.toprightimage
-                if self.xPos > self.newcenter.x and self.yPos > self.newcenter.y:
-                    self.image = self.topleftimage
-                if self.xPos < self.newcenter.x and self.yPos < self.newcenter.y:
-                    self.image = self.bottomrightimage
-                if self.xPos == self.newcenter.x and self.yPos > self.newcenter.y:
-                    self.image = self.topimage
-                if self.xPos == self.newcenter.x and self.yPos < self.newcenter.y:
-                    self.image = self.bottomimage
-                if self.xPos > self.newcenter.x:
-                    self.xPos -= 1
-                if self.yPos > self.newcenter.y:
-                    self.yPos -= 1
-                if self.xPos < self.newcenter.x:
-                    self.xPos += 1
-                if self.yPos < self.newcenter.y:
-                    self.yPos += 1
-         
-                if self.xPos == self.newcenter.x and self.yPos == self.newcenter.y:
-                    self.moving = False
-        def attack(self):
-            return [0, 0]
+            if self.xPos > self.newcenter.x and self.yPos == self.newcenter.y:
+                self.image = self.imageleft
+            if self.xPos < self.newcenter.x and self.yPos == self.newcenter.y:
+                self.image = self.imageright
+            if self.xPos > self.newcenter.x and self.yPos < self.newcenter.y:
+                self.image = self.bottomleftimage
+            if self.xPos < self.newcenter.x and self.yPos > self.newcenter.y:
+                self.image = self.toprightimage
+            if self.xPos > self.newcenter.x and self.yPos > self.newcenter.y:
+                self.image = self.topleftimage
+            if self.xPos < self.newcenter.x and self.yPos < self.newcenter.y:
+                self.image = self.bottomrightimage
+            if self.xPos == self.newcenter.x and self.yPos > self.newcenter.y:
+                self.image = self.topimage
+            if self.xPos == self.newcenter.x and self.yPos < self.newcenter.y:
+                self.image = self.bottomimage
+            if self.xPos > self.newcenter.x:
+                self.xPos -= 1
+            if self.yPos > self.newcenter.y:
+                self.yPos -= 1
+            if self.xPos < self.newcenter.x:
+                self.xPos += 1
+            if self.yPos < self.newcenter.y:
+                self.yPos += 1
+        
+            if self.xPos == self.newcenter.x and self.yPos == self.newcenter.y:
+                self.moving = False
         def lunge(self):
             if self.trackplayertime > 0:
                 self.lungevelocity =  GameLogic.playerPos - Vector2(self.xPos, self.yPos)
@@ -380,7 +369,14 @@ class Boss3:
                 x_dist = GameLogic.playerPos[0]-self.xPos
                 y_dist = GameLogic.playerPos[1]-self.yPos
                 angle = math.atan2(x_dist, y_dist)   * (180/math.pi)
-                print(angle)
+                self.bleed_dmg = random.choice([4, 5])
+                self.bleed_duration = random.choice([120, 240])
+                lunge_image = pygame.image.load("images/lungeshark.png")
+                lunge_image = pygame.transform.scale(lunge_image,(175, 200))
+                image_rot = pygame.transform.rotate(lunge_image, angle-180)
+                self.rect = image_rot.get_rect(center = [self.xPos, self.yPos])
+                self.image = image_rot
+                '''
                 if self.lungevelocity[0] > 0 and self.lungevelocity[1] == 0:
                     self.image = self.imageright
                 if self.lungevelocity[0] < 0 and self.lungevelocity[1] == 0:
@@ -397,6 +393,7 @@ class Boss3:
                     self.image = self.bottomleftimage      
                 if self.lungevelocity[0] > 0 and self.lungevelocity[1] > 0:
                     self.image = self.bottomrightimage      
+                '''
                 self.trackplayertime -= 1
             if self.trackplayertime <= 0 and self.startlungepos.distance_to(Vector2(self.xPos, self.yPos))<self.lungedistance:
                 self.xPos += self.lungevelocity[0]
@@ -405,25 +402,94 @@ class Boss3:
             if self.trackplayertime <= 0 and self.startlungepos.distance_to(Vector2(self.xPos, self.yPos))>self.lungedistance:
                 self.trackplayertime = 150
                 self.lunging = False
-
+          #      return [4, self.bleed_dmg, self.bleed_duration]
+         
         def takeDamage(self, damage):
             self.health -= damage
             GameLogic.playSoundBoss("bossdmg")
             if self.health <= 0:
                 GameLogic.enemyList[GameLogic.current_chunk].remove(self)
-
+        def teeth(self, screen):
+            if self.teethtimer <= 0:
+                self.tooths.append(Tooth(0,0,self.xPos, self.yPos, GameLogic.playerPos))
+                self.teethtimer = 100
+            elif self.teethtimer > 0:
+                self.teethtimer -= 1
+            if len(self.tooths) > 0:
+                for tooth in self.tooths:
+                    tooth.update(screen)
+                    if tooth.destroyed == True:
+                        self.tooths.remove(tooth)
         def render(self, screen):
             screen.blit(self.image, self.image.get_rect(center = (self.xPos, self.yPos)))
             pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(245, 10, 300, 50))
             pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(245, 10, int((self.health/2500)*300), 50))
         def update(self, screen):
-            if self.moving == False and self.lunging == False:
-                chooseaction = random.randint(1,5)
-                if chooseaction == 2:
+            if self.moving == False and self.lunging  == False:
+                choose = random.randint(1, 5)
+                if choose == 1:
                     self.lunging = True
-            if self.lunging == True:
-                self.lunge()
-            else:
+
+                else:
+                    if self.moving == False and self.movetimer == 0:
+                        self.newcenter.x = random.randint(0,750)
+                        self.newcenter.y = random.randint(0,750)
+                        self.velocity =  self.newcenter - Vector2(self.xPos, self.yPos)
+                        self.velocity = self.velocity.normalize()
+                        self.moving = True
+                        self.movetimer = 30
+
+                    elif self.moving == False and self.movetimer > 0:
+                        self.movetimer -=1
+            if self.moving == True:                                 
                 self.move()
-                
+            if self.lunging == True:
+                self.lunge()                       
             self.render(screen)
+            print(self.lunging)
+            self.teeth(screen)
+class Tooth:
+    def __init__(self, angle, direction, xPos, yPos, playerpos):
+        self.image = pygame.image.load("images/sharktooth.png")
+        self.image = pygame.transform.scale(self.image, (60,30))
+        self.throw_dmg = 25
+        self.throw_rect = self.image.get_bounding_rect()
+        self.angle = angle
+        self.damage = 5
+        self.speed = 10
+        self.direction = direction
+        self.xPos = xPos 
+        self.yPos = yPos
+        self.throwing = True
+        self.destroyed = False
+        self.playerpos = playerpos
+        self.direction = Vector2(self.playerpos) - Vector2([self.xPos, self.yPos])
+        self.direction = self.direction.normalize()
+        self.rel_x = 0
+        self.true_ypos = yPos
+    def render(self, screen):
+        if self.throwing == True:
+            screen.blit(self.image, [self.xPos, self.yPos])
+            self.throw_rect.x = self.xPos
+            self.throw_rect.y = self.yPos 
+    def move(self):
+        if self.throwing == True:
+            self.xPos += self.direction[0] * self.speed
+            self.true_ypos += self.direction[1] * self.speed
+            self.yPos = self.true_ypos+(50*math.sin((self.rel_x)*math.pi+10))
+        if self.xPos > 750 or self.xPos < 0:
+            self.destroyed = True
+        if self.yPos > 750 or self.yPos < 0:
+            self.destroyed = True
+        self.rel_x += 0.1
+    def attack(self):
+        if self.throwing == True:
+            if pygame.Rect(GameLogic.playerPos,[50,55]).colliderect(self.throw_rect):
+                print("hit player")
+                Player.health -= self.throw_dmg
+                self.destroyed = True
+    def update(self, screen):
+        self.move()
+        self.render(screen)
+        self.attack()
+                

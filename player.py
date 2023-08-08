@@ -52,7 +52,9 @@ class Player:
     poison_cooldown = 0
     burn_cooldown = 0
     spellreset = 120
+    bleed_cooldown = 0
     burn_dmg = 0
+    bleed_dmg = 0
     poison_dmg = 0
     weaponcooldown = 30
     particlesp = particlePlayer(player_x, player_y, (255, 165, 0))
@@ -74,6 +76,12 @@ class Player:
         else:
              Player.particlesp.showEffect = False
 
+        if Player.bleed_cooldown != 0:
+            Player.bleed_cooldown -= 1 
+            if Player.bleed_cooldown % 60 == 0:
+                Player.health -= Player.bleed_dmg
+        else:
+            Player.particlesp.showEffect = False
         if Player.damage_cooldown != 0:
             Player.damage_cooldown -= 1
         if Player.damage_cooldown <= 0:
@@ -101,6 +109,10 @@ class Player:
                         Player.health -= eattack[1]
                         e.health = 0
                         Player.damage_cooldown = 60
+                    if eattack[0] == 4:
+                        Player.bleed_dmg = eattack[1]
+                        Player.particlesp.showEffect = True
+                        Player.bleed_cooldown = eattack[2]
     def itemCheck():
         for items in GameLogic.itemlist[GameLogic.current_chunk]:
             if items.image.get_rect(center = (items.xPos, items.yPos)).colliderect(Player.imageload.get_rect(center = Player.playercenter)):
