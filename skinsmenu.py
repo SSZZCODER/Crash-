@@ -13,6 +13,7 @@ def main():
     #skin = pygame.image.load("images/New_Piskel-3 (1).png")
     #skin = pygame.transform.scale(skin, (120, 120))  
     skin = "images/New_Piskel-3 (1).png"
+
     playerimage = pygame.image.load('images/New Piskel (28).png')
     playerimage = pygame.transform.scale(playerimage,(50, 55))
     back = font.render("Back", True, (0,0,0))
@@ -36,7 +37,7 @@ def main():
               
 
                 if pygame.Rect((10, 685 , 150,50)).collidepoint(pos):
-                    return 0              
+                    return 0    
 
         screen.fill((128,128,128))
         pygame.draw.rect(screen, (105,105,105), pygame.Rect(0, 150 , 140, 140))

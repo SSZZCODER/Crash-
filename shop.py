@@ -48,6 +48,7 @@ class Shop:
                     print("not enough money")
                 if self.buy2.collidepoint(event.pos) and self.playercoins >= self.bombcost:
                     print("Bought Bomb")
+                
                     Player.playerInventory.addItem(items.Bomb())
                     self.playercoins -= self.bombcost
                 elif self.buy2.collidepoint(event.pos) and self.playercoins< self.bombcost:   
