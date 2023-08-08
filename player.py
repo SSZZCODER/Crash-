@@ -1,3 +1,4 @@
+from email.mime import image
 from telnetlib import GA
 from turtle import title
 import pygame
@@ -27,8 +28,8 @@ class Player:
     animation_reverse = False
     #weapon = weapon("Fist", dmg, 7, 40, 120)
     
-    #weapon = Rifleweapon(0, 0, 5, 50)
-    weapon = Swordweapon(0,0,2.5, 40)
+    weapon = Rifleweapon(0, 0, 5, 50)
+    #weapon = Swordweapon(0,0,2.5, 40)
     #weapon = Bombweapon(0,0,10,100)
     attack_cooldown = 30
     dash_speed = 60
@@ -44,7 +45,8 @@ class Player:
     dash_cooldown = 600
     playerimage = pygame.image.load('images/New Piskel (28).png')
     playerimage = pygame.transform.scale(playerimage,(50, 55))
-    imageload = playerimage
+    skinnew = pygame.image.load('images/holdingweapon.png')
+    
     playercenter = [300, 300]
     playerInventory = Inventory(5)
     inventoryShow = False
@@ -56,6 +58,7 @@ class Player:
     poison_dmg = 0
     weaponcooldown = 30
     particlesp = particlePlayer(player_x, player_y, (255, 165, 0))
+    particlesbleed = particlePlayer(player_x, player_y, (128, 0, 0))
     t = 180
     bcount = 0
 
@@ -176,12 +179,18 @@ class Player:
         Player.particlesp.Update(screen)
         if Player.weapon.name == "Fist":
             Player.weapon.update(screen)
+            Player.playerimage = Player.playerimage
         elif Player.weapon.name == "Rifle":
-            Player.weapon.update(screen, Player.playercenter[0] , Player.playercenter[1],Player.playercenter)    
+            Player.weapon.update(screen, Player.playercenter[0] , Player.playercenter[1],Player.playercenter)   
+            Player.playerimage = Player.skinnew
+            
         elif Player.weapon.name == "Sword":
             Player.weapon.update(screen, Player.playercenter[0] , Player.playercenter[1],Player.playercenter)       
+
+            Player.playerimage = Player.skinnew
         elif Player.weapon.name == "Bomb":
-            Player.weapon.update(screen, Player.playercenter[0] , Player.playercenter[1],Player.playercenter)   
+            Player.weapon.update(screen, Player.playercenter[0] , Player.playercenter[1],Player.playercenter)
+            Player.playerimage = Player.skinnew   
         Player.Render(screen)
         Player.spellangle()
         Player.itemCheck()
