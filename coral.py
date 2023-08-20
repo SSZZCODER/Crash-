@@ -18,7 +18,6 @@ class objectspawner:
                 GameLogic.objects[GameLogic.current_chunk].append(coral(xpos, ypos))
 class coral:     
     def __init__(self, xpos, ypos):
-
         self.xpos = xpos
         self.ypos = ypos
         self.image= pygame.image.load('images/coral.png')
