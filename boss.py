@@ -69,7 +69,7 @@ class Boss:
     
         elif self.moving == False and self.movetimer > 0:
             self.movetimer -=1
-        if self.moving == True:
+        elif self.moving == True:
             if self.xPos > self.newcenter.x:
                 self.xPos -= 1
             if self.yPos > self.newcenter.y:
@@ -302,8 +302,8 @@ class Boss3:
             self.xPos = xPos
             self.yPos = yPos
             self.movetimer = 0
-            self.moving = False
-            self.newcenter = Vector2(0)
+            self.moving = True
+            self.newcenter = Vector2(random.randint(0,750),random.randint(0,750))
             self.velocity = Vector2(0)
             self.speed = 3
             self.imageright = pygame.image.load('images/sharkboss.png')
@@ -358,7 +358,9 @@ class Boss3:
                 self.yPos += 1
         
             if self.xPos == self.newcenter.x and self.yPos == self.newcenter.y:
+                self.newcenter = Vector2(random.randint(0,750),random.randint(0,750))
                 self.moving = False
+                self.lunging = True
         def lunge(self):
             if self.trackplayertime > 0:
                 self.lungevelocity =  GameLogic.playerPos - Vector2(self.xPos, self.yPos)
@@ -400,8 +402,11 @@ class Boss3:
                 self.yPos += self.lungevelocity[1]
                 distance = Vector2(self.xPos, self.yPos).distance_to(GameLogic.playerPos)
             if self.trackplayertime <= 0 and self.startlungepos.distance_to(Vector2(self.xPos, self.yPos))>self.lungedistance:
+                self.xPos = int(self.xPos)
+                self.yPos = int(self.yPos)
                 self.trackplayertime = 150
                 self.lunging = False
+                self.moving = True
           #      return [4, self.bleed_dmg, self.bleed_duration]
          
         def takeDamage(self, damage):
@@ -425,28 +430,14 @@ class Boss3:
             pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(245, 10, 300, 50))
             pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(245, 10, int((self.health/2500)*300), 50))
         def update(self, screen):
-            if self.moving == False and self.lunging  == False:
-                choose = random.randint(1, 5)
-                if choose == 1:
-                    self.lunging = True
-
-                else:
-                    if self.moving == False and self.movetimer == 0:
-                        self.newcenter.x = random.randint(0,750)
-                        self.newcenter.y = random.randint(0,750)
-                        self.velocity =  self.newcenter - Vector2(self.xPos, self.yPos)
-                        self.velocity = self.velocity.normalize()
-                        self.moving = True
-                        self.movetimer = 30
-
-                    elif self.moving == False and self.movetimer > 0:
-                        self.movetimer -=1
-            if self.moving == True:                                 
+            if self.moving == True:
                 self.move()
+                print("moving to " + str(self.newcenter.x) + " , " + str(self.newcenter.y))
+                print("currently at " + str(self.xPos) + " , " + str(self.yPos))
             if self.lunging == True:
-                self.lunge()                       
+                self.lunge()
+                print("lunging")   
             self.render(screen)
-            print(self.lunging)
             self.teeth(screen)
 class Tooth:
     def __init__(self, angle, direction, xPos, yPos, playerpos):
