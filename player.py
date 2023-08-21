@@ -26,11 +26,12 @@ class Player:
     dmg = random.randint(15, 20)
     dmgcounter = 0
     animation_reverse = False
-    #weapon = weapon("Fist", dmg, 7, 40, 120)
     
-    weapon = Rifleweapon(0, 0, 5, 50)
-    #weapon = Swordweapon(0,0,2.5, 40)
-    #weapon = Bombweapon(0,0,10,100)
+    weapon_fist = weapon("Fist", dmg, 7, 40, 120)
+    weapon_rifle = Rifleweapon(0, 0, 5, 50)
+    weapon_sword = Swordweapon(0,0,2.5, 40)
+    weapon_bomb = Bombweapon(0,0,10,100)
+    weapon = weapon_fist
     attack_cooldown = 30
     dash_speed = 60
     damage_cooldown = 0
@@ -198,11 +199,12 @@ class Player:
             
         elif Player.weapon.name == "Sword":
             Player.weapon.update(screen, Player.playercenter[0] , Player.playercenter[1],Player.playercenter)       
-
             Player.playerimage = Player.skinnew
+
         elif Player.weapon.name == "Bomb":
             Player.weapon.update(screen, Player.playercenter[0] , Player.playercenter[1],Player.playercenter)
             Player.playerimage = Player.skinnew   
+
         Player.Render(screen)
         Player.spellangle()
         Player.itemCheck()
@@ -340,11 +342,25 @@ class Player:
         else:
             Player.imageload = pygame.transform.rotate(pygame.transform.scale(Player.animations[Player.animation_counter], (50+Player.animation_counter*2,55) ), angle-90)
     
+    def showingInventory(screen):
+        Player.playerInventory.Draw(screen)
+        clicked = False
+        clickedpos = [0,0]
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                clicked = True
+                clickedpos = event.pos
+        if clicked == True:
+            for item in Player.playerInventory.items:
+                if item.inventoryrect.collidepoint(clickedpos):
+                    print("clicked on " + item.name)
+
+
     def Render(screen):
         screen.blit(Player.imageload,Player.imageload.get_rect(center = Player.playercenter)) 
 
         if Player.inventoryShow:
-            Player.playerInventory.Draw(screen)
+            Player.showingInventory(screen)
         Player.playerhotbar.Render(screen)
         screen.blit(Player.title, (250,250))
    

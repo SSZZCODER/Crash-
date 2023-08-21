@@ -11,6 +11,7 @@ class Item:
         self.image = self.assignImage()
         self.name = name
         self.inventoryimage = self.image
+        self.inventoryrect = self.inventoryimage.get_bounding_rect()
         self.spawner = spawner
     def assignImage(self):
         pass
@@ -89,14 +90,14 @@ class Rifle():
         self.amount = 1
         self.name = "Rifle"
         self.inventoryimage = pygame.image.load("images/rifle.png")
-
+        self.inventoryrect = self.inventoryimage.get_bounding_rect()
 
 class Sword():
     def __init__(self):
         self.amount = 1
         self.name = "Sword"
         self.inventoryimage = pygame.image.load("images/sword.png")
- 
+        self.inventoryrect = self.inventoryimage.get_bounding_rect()
 class Bomb():
     def __init__(self):
         self.amount = 1
