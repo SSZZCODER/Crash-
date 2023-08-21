@@ -407,7 +407,6 @@ class Boss3:
                 self.trackplayertime = 150
                 self.lunging = False
                 self.moving = True
-          #      return [4, self.bleed_dmg, self.bleed_duration]
          
         def takeDamage(self, damage):
             self.health -= damage
@@ -425,6 +424,8 @@ class Boss3:
                     tooth.update(screen)
                     if tooth.destroyed == True:
                         self.tooths.remove(tooth)
+        def attack(self):
+            return [4, 3, 60]
         def render(self, screen):
             screen.blit(self.image, self.image.get_rect(center = (self.xPos, self.yPos)))
             pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(245, 10, 300, 50))
@@ -439,6 +440,7 @@ class Boss3:
                 print("lunging")   
             self.render(screen)
             self.teeth(screen)
+            self.attack()
 class Tooth:
     def __init__(self, angle, direction, xPos, yPos, playerpos):
         self.image = pygame.image.load("images/sharktooth.png")
