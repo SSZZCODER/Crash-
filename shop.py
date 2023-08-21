@@ -12,7 +12,7 @@ class Shop:
         self.image = pygame.transform.scale(self.image, (98 *7.75,73 * 7.75))
         self.rifle = pygame.image.load("images/rifle.png")
         self.rifle = pygame.transform.scale(self.rifle, (90*2,18*2))
-        self.riflecost = 3
+        self.riflecost = 0
         self.bomb = pygame.image.load("images/bomb.png")
         self.bomb = pygame.transform.scale(self.bomb, (12*12,12*12))
         self.bombcost = 1
@@ -55,7 +55,7 @@ class Shop:
                     self.playercoins -= self.bombcost
                 elif self.buy2.collidepoint(event.pos) and self.playercoins< self.bombcost:   
                     print("not enough money")
-                    
+
                 if self.buy3.collidepoint(event.pos) and self.playercoins >= self.swordcost:
                     print("Bought Sword")
                     Player.playerInventory.addObject(items.Sword())
