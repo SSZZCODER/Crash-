@@ -59,8 +59,8 @@ class Player:
     bleed_dmg = 0
     poison_dmg = 0
     weaponcooldown = 30
-    particlesp = particlePlayer(player_x, player_y, (255, 165, 0))
-    particlesbleed = particlePlayer(player_x, player_y, (128, 0, 0))
+    particlesp = particlePlayer(player_x, player_y, (139, 0, 0))
+    #particlesbleed = particlePlayer(player_x, player_y, (255, 0, 0))
     t = 180
     bcount = 0
 
