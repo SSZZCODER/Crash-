@@ -344,16 +344,22 @@ class Player:
     
     def showingInventory(screen):
         Player.playerInventory.Draw(screen)
-        clicked = False
         clickedpos = [0,0]
-        for event in pygame.event.get():
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                clicked = True
-                clickedpos = event.pos
+        clicked = False
+
+        if pygame.mouse.get_pressed()[0]:
+            clicked = True
         if clicked == True:
+            clickedpos = pygame.mouse.get_pos()
             for item in Player.playerInventory.items:
-                if item.inventoryrect.collidepoint(clickedpos):
-                    print("clicked on " + item.name)
+                if item != None:
+                    if item.inventoryrect.collidepoint(clickedpos):
+                        print("clicked on " + item.name)
+                        if item.name == "Rifle":
+                            Player.weapon = Player.weapon_rifle
+                        clicked = False
+                        break
+
 
 
     def Render(screen):

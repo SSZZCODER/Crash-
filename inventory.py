@@ -27,7 +27,7 @@ class Inventory:
             self.items[i].inventoryrect.topleft = self.positions[i]
             self.items[i].inventoryrect.w = 50
             self.items[i].inventoryrect.h = 50
-            pygame.draw.rect(screen, (255,0,0), self.items[i].inventoryrect)
+            #pygame.draw.rect(screen, (255,0,0), self.items[i].inventoryrect)
             itemtext = self.font.render(str(self.items[i].amount), True, (0, 0, 0))
             screen.blit(itemtext, self.positions[i])
     

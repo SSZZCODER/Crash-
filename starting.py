@@ -143,5 +143,5 @@ def main():
         saveData.save()
         pygame.display.flip()
         clock.tick(60)
-        print(killsforkey)
+        
 
