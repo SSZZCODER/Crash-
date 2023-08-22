@@ -10,7 +10,7 @@ import magmaarena
 import sharkarena
 from data import saveData
 
-level = 1
+level = 5
 
 
 

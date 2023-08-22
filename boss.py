@@ -376,7 +376,7 @@ class Boss3:
                 lunge_image = pygame.image.load("images/lungeshark.png")
                 lunge_image = pygame.transform.scale(lunge_image,(175, 200))
                 image_rot = pygame.transform.rotate(lunge_image, angle-180)
-                self.rect = image_rot.get_rect(center = [self.xPos, self.yPos])
+                self.rect = image_rot.get_rect(center = [self.xPos, self.yPos]) 
                 self.image = image_rot
                 '''
                 if self.lungevelocity[0] > 0 and self.lungevelocity[1] == 0:

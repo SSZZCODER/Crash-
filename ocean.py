@@ -85,7 +85,7 @@ def main():
                 haskey = True
                 droppedkey = False
         if haskey == True:
-            bossportal3 = Warp(625, 35,100,175,(255,0,0), 50,0)
+            bossportal3 = Warp(625, 35,100,175,(144, 238, 144), 50,0)
         oceanpart.Update(screen)
         GameLogic.Update(screen)
         spawner4.spawnbandage()

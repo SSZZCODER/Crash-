@@ -176,6 +176,8 @@ class fish(enemy):
             self.bubble_speed = 5
             self.bubble_cooldown  = 30
             self.melee_range = 100
+            self.itemcount = 10
+
         def assignImage(self):
             return pygame.transform.scale(pygame.image.load('images/fish.png'),(57, 40))
 
@@ -213,7 +215,13 @@ class fish(enemy):
 
         def attack(self):
             return[0, self.damage]
-            
+        def takeDamage(self, damage):
+            self.health -= damage
+            if self.health <= 0:
+                self.dropKey = True
+                GameLogic.itemlist[GameLogic.current_chunk].append( Coin(1, self.xPos, self.yPos,self))
+                GameLogic.enemyList[GameLogic.current_chunk].remove(self)
+            print("taken damage")
 class Bubble:
     def __init__(self, xPos, yPos, speed, health, damage,bubble_cooldown, range):
         self.xPos = xPos
