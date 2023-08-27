@@ -10,7 +10,7 @@ import magmaarena
 import sharkarena
 from data import saveData
 
-level = 5
+level = 0
 
 
 
@@ -19,7 +19,7 @@ while level != -1:
     if level == 0:
         level = menu.menu()
     if level == 1:  
-        level = starting.main()     
+        level = starting.main()      
     if level == 2:
         level = lava.main()
     if level == 3: 
