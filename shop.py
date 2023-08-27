@@ -8,21 +8,21 @@ class Shop:
     def __init__(self, xPos, yPos):
         self.xPos = xPos    
         self.yPos = yPos
-        self.image = pygame.image.load("images/shop.png")
+        self.image = pygame.image.load("images/shopnew (1).gif")
         self.image = pygame.transform.scale(self.image, (98 *7.75,73 * 7.75))
         self.rifle = pygame.image.load("images/rifle.png")
         self.rifle = pygame.transform.scale(self.rifle, (90*2,18*2))
-        self.riflecost = 0
+        self.riflecost = 5
         self.bomb = pygame.image.load("images/bomb.png")
         self.bomb = pygame.transform.scale(self.bomb, (12*12,12*12))
-        self.bombcost = 0
+        self.bombcost = 3
         self.sword = pygame.image.load("images/sword.png")
         self.sword = pygame.transform.scale(self.sword, (17*2 ,64*2))
-        self.swordcost = 0
+        self.swordcost = 4
         self.buy1 = pygame.Rect([78,460], [195,65])
         self.buy2 = pygame.Rect([310, 460], [195,65])
         self.buy3 = pygame.Rect([543,460], [195,65])
-        self.playercoins = 0
+        self.playercoins = 1000
     def render(self, screen):
         screen.blit(self.image, (self.xPos, self.yPos))
         screen.blit(self.rifle, (88, 305))
