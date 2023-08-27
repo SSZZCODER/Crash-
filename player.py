@@ -357,6 +357,10 @@ class Player:
                         print("clicked on " + item.name)
                         if item.name == "Rifle":
                             Player.weapon = Player.weapon_rifle
+                        elif item.name == "Sword":
+                            Player.weapon = Player.weapon_sword
+                        elif item.name == "Bomb":
+                            Player.weapon = Player.weapon_bomb
                         clicked = False
                         break
 
