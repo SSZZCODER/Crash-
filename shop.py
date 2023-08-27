@@ -15,10 +15,10 @@ class Shop:
         self.riflecost = 0
         self.bomb = pygame.image.load("images/bomb.png")
         self.bomb = pygame.transform.scale(self.bomb, (12*12,12*12))
-        self.bombcost = 1
+        self.bombcost = 0
         self.sword = pygame.image.load("images/sword.png")
         self.sword = pygame.transform.scale(self.sword, (17*2 ,64*2))
-        self.swordcost = 2
+        self.swordcost = 0
         self.buy1 = pygame.Rect([78,460], [195,65])
         self.buy2 = pygame.Rect([310, 460], [195,65])
         self.buy3 = pygame.Rect([543,460], [195,65])

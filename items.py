@@ -104,3 +104,4 @@ class Bomb():
         self.name = "Bomb"
         self.image = pygame.image.load("images/bomb.png")
         self.inventoryimage = pygame.transform.scale(self.image, (60,70))
+        self.inventoryrect = self.inventoryimage.get_bounding_rect()
