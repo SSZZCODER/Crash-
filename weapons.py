@@ -1,6 +1,7 @@
 import pygame
 from gamelogic import GameLogic
 import math
+from pygame.math import Vector2
 from enemy import *
 
 class weapon():
@@ -51,6 +52,8 @@ class Rifleweapon:
 
         self.name = "Rifle"
         self.bulletcount = 5
+        self.bullets = []
+        self.bulletspeed = 10
 
     def render(self, screen,playercenter):
         mpos = pygame.mouse.get_pos()
@@ -62,11 +65,43 @@ class Rifleweapon:
         self.rect = self.image_rot.get_rect(center = pcenter)
         screen.blit(self.image_rot,self.image_rot.get_rect(center = pcenter))
 
+    def attack(self, screen, playercenter):
+        mpos = pygame.mouse.get_pos() 
+        x_dist = mpos[0] - playercenter[0]
+        y_dist = mpos[1] - playercenter[1]
+        attackvector = Vector2(x_dist, y_dist).normalize()
+        bulletpos = [self.rect.x, self.rect.y]
+        self.bullets.append(Bullet(self.bulletspeed, attackvector, bulletpos[0], bulletpos[1]))
+
+
     def update(self, screen, xpos, ypos,playercenter):
         self.xpos = xpos
         self.ypos = ypos
         self.render(screen,playercenter)
+        if len(self.bullets) > 0:
+            for bullet in self.bullets:
+                bullet.update(screen)
 
+class Bullet:
+    def __init__(self, speed, direction, xpos, ypos):
+        self.speed = speed
+        self.direction = direction
+        self.velocity = self.direction.scale_to_length(self.speed)
+        self.xpos = xpos
+        self.ypos = ypos
+    
+    def move(self):
+        self.xpos += self.direction[0]
+        self.ypos += self.direction[1]
+
+    def render(self, screen):
+        pygame.draw.circle(screen, (0,0,0), [self.xpos, self.ypos], 5)
+
+
+    def update(self, screen):
+        self.move()
+        self.render(screen)
+        
 class Swordweapon:
     def __init__(self, xpos, ypos, cooldown, damage):
         self.xpos = xpos

@@ -100,7 +100,7 @@ class Player:
                     eattack = e.attack()
                     if eattack[0] == 0:
                         Player.health  -= eattack[1]
-                        print(Player.health)
+                     
                         Player.damage_cooldown = 60
                     if eattack[0] == 1:
                         Player.poison_dmg = eattack[1]
@@ -162,12 +162,16 @@ class Player:
         Player.health = 250
         Player.dash_cooldown = 600
         Player.playerInventory.clearInventory()
+        Player.weapon = Player.weapon_fist
 
         Player.player_x = 340
         Player.player_y = 340
 
         Player.title = Player.font.render(str(""), True, (244, 44, 4))
-
+    
+        playerimage = pygame.image.load('images/New Piskel (28).png')
+        playerimage = pygame.transform.scale(playerimage,(50, 55))
+        Player.playerimage = playerimage
     def dash():
         if Player.dash_cooldown != 0:
             Player.dash_cooldown -= 1
@@ -223,7 +227,8 @@ class Player:
                             Player.dmgcounter = 300
                     Player.weaponcooldown = 30
             elif Player.weapon.name == "Rifle":
-                pass
+                print("shooting")
+                Player.weapon.attack(screen, GameLogic.playerPos)
             elif Player.weapon.name == "Sword":
                 pass
             elif Player.weapon.name == "Bomb":
@@ -241,7 +246,7 @@ class Player:
                     Player.animation_reverse = False
                     Player.animation_counter = 0
             elif Player.weapon.name == "Rifle":
-                pass
+               pass
             elif Player.weapon.name == "Sword":
                 pass            
             elif Player.weapon.name == "Bomb":
