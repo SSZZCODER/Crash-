@@ -8,9 +8,10 @@ import skinsmenu
 import bossarena
 import magmaarena
 import sharkarena
+import jungle
 from data import saveData
 
-level = 0
+level = 9
 
 
 
@@ -34,6 +35,8 @@ while level != -1:
         level = magmaarena.main()
     if level == 8:
         level = sharkarena.main()
+    if level == 9: 
+        level = jungle.main()
     print(level) 
 
         
