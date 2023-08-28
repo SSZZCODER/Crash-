@@ -23,6 +23,7 @@ def main():
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
     spawner3 = spawner(0, 600, 11)
+    spawner5 = spawner(0, 600, 11)
     energy = pygame.image.load('images/energy.png')
     energy = pygame.transform.scale(energy, (65, 65))
     spawner4 = spawneritems(0,300,20)
@@ -39,6 +40,8 @@ def main():
     heart = pygame.transform.scale(heart, (120, 120))
     warp2 = Warp(715,650, 35,100, (128, 0, 128), -50,0)
     oceanpart = ParticleSystem(725,700,(128, 0, 128))
+    warp3 = Warp(0,650, 35,100, (128, 0, 128), -50,0)
+    junglepart = ParticleSystem(0,650,(128, 0, 128))
     energy = pygame.image.load('images/energy.png')
     energy = pygame.transform.scale(energy, (65, 65))
     GameLogic.current_chunk = "ocean"
@@ -65,7 +68,10 @@ def main():
                 Player.MoveBy(warp2.offset_x, warp2.offset_y)
                 GameLogic.spellList = []
                 return 2
-            
+            if  warp3.Touched() == True:
+                Player.MoveBy(warp3.offset_x, warp3.offset_y)
+                GameLogic.spellList = []
+                return 9
             if bossportal3.Touched() == True and haskey == True:
                 Player.MoveBy(bossportal3.offset_x, bossportal3.offset_y)
                 GameLogic.spellList = []
@@ -78,6 +84,8 @@ def main():
             
         screen.blit(background,[0,0])
         warp2.Update(screen)
+        warp3.Update(screen)
+        junglepart.Update(screen)
         bossportal3.Update(screen)
         screen.blit(portal, [600, 10])
         if haskey == False and droppedkey == True:
@@ -94,6 +102,7 @@ def main():
             return 3
         Spell.render(screen)
         spawner3.spawn_fish()
+        spawner5.spawn_jellyfish()
         StaminaBar.render(screen)
         HealthBar.render(screen)
         if len(GameLogic.enemyList[GameLogic.current_chunk])<enemylength:
