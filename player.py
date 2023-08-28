@@ -227,7 +227,6 @@ class Player:
                             Player.dmgcounter = 300
                     Player.weaponcooldown = 30
             elif Player.weapon.name == "Rifle":
-                print("shooting")
                 Player.weapon.attack(screen, GameLogic.playerPos)
             elif Player.weapon.name == "Sword":
                 pass

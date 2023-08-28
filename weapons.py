@@ -63,14 +63,21 @@ class Rifleweapon:
         pcenter = [playercenter[0],playercenter[1]]
         self.image_rot = pygame.transform.rotate(self.image, angle)
         self.rect = self.image_rot.get_rect(center = pcenter)
+        print(angle)
+        pygame.draw.rect(screen,[255,0,0],self.rect)
         screen.blit(self.image_rot,self.image_rot.get_rect(center = pcenter))
 
     def attack(self, screen, playercenter):
         mpos = pygame.mouse.get_pos() 
         x_dist = mpos[0] - playercenter[0]
         y_dist = mpos[1] - playercenter[1]
+        angle = math.atan2(x_dist, y_dist)   * (180/math.pi)
         attackvector = Vector2(x_dist, y_dist).normalize()
-        bulletpos = [self.rect.x, self.rect.y]
+        bulletpos = [self.rect.x, self.rect.y + self.rect.w]
+        if angle < -90 and angle > -180:
+            bulletpos = [self.rect.x, self.rect.y]
+        if angle > 90 and angle < 180:
+            bulletpos = [self.rect.x + self.rect.w, self.rect.y]
         self.bullets.append(Bullet(self.bulletspeed, attackvector, bulletpos[0], bulletpos[1]))
 
 
