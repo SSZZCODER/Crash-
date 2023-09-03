@@ -107,6 +107,7 @@ def main():
         spawner3.spawncoin()
         spawner4.spawnbandage()
         spawner1.spawn()
+        
         GameLogic.Update(screen)
         if Player.Update(screen) == True:
             return 3
