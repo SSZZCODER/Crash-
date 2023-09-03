@@ -51,9 +51,17 @@ class Rifleweapon:
         self.rect = self.image.get_rect()
 
         self.name = "Rifle"
-        self.bulletcount = 5
+        self.bulletcapacity = 10
+        self.bulletcount = self.bulletcapacity
         self.bullets = []
         self.bulletspeed = 10
+        self.shoottimer = 0
+        self.shootcooldown = 35
+        self.reloading = False
+        self.reloadtimer = 0 
+        self.reloadcooldown = 150
+
+
 
     def render(self, screen,playercenter):
         mpos = pygame.mouse.get_pos()
@@ -64,7 +72,7 @@ class Rifleweapon:
         self.image_rot = pygame.transform.rotate(self.image, angle)
         self.rect = self.image_rot.get_rect(center = pcenter)
         print(angle)
-        pygame.draw.rect(screen,[255,0,0],self.rect)
+       
         screen.blit(self.image_rot,self.image_rot.get_rect(center = pcenter))
 
     def attack(self, screen, playercenter):
