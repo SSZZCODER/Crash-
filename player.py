@@ -16,7 +16,8 @@ from spells import Fire
 class Player:
     pygame.font.init()
     font = pygame.font.Font('font/arial.ttf', 45)  
-    title = font.render(str(""), True, (244, 44, 4))  
+    title = font.render(str(""), True, (244, 44, 4)) 
+   
     timer = 120
     animations = pygame.image.load("animations/animation1.png"),pygame.image.load("animations/animation2.png"),pygame.image.load("animations/animation3.png"),pygame.image.load("animations/animation4.png"),pygame.image.load("animations/animation5.png"),pygame.image.load("animations/animation6.png"),pygame.image.load("animations/animation7.png"),pygame.image.load("animations/animation8.png"),pygame.image.load("animations/animation9.png"),pygame.image.load("animations/animation10.png")
     rainbowanimation = pygame.image.load("animations2/rainbow1.png"),pygame.image.load("animations2/rainbow2.png"),pygame.image.load("animations2/rainbow3.png"),pygame.image.load("animations2/rainbow4.png"),pygame.image.load("animations2/rainbow5.png"),pygame.image.load("animations2/rainbow6.png"),pygame.image.load("animations2/rainbow7.png"),pygame.image.load("animations2/rainbow8.png"),pygame.image.load("animations2/rainbow9.png"),pygame.image.load("animations2/rainbow10.png")
@@ -227,7 +228,22 @@ class Player:
                             Player.dmgcounter = 300
                     Player.weaponcooldown = 30
             elif Player.weapon.name == "Rifle":
-                Player.weapon.attack(screen, GameLogic.playerPos)
+                if Player.weapon.reloading == False:               
+                    if Player.weapon.shoottimer >= Player.weapon.shootcooldown:
+                        Player.weapon.attack(screen, GameLogic.playerPos)
+                        Player.weapon.shoottimer = 0
+                        Player.weapon.bulletcount -=1
+                    else: 
+                        Player.weapon.shoottimer += 1
+                    if Player.weapon.bulletcount <=0:
+                        Player.weapon.reloading = True
+                if Player.weapon.reloading == True:
+                    if Player.weapon.reloadtimer >= Player.weapon.reloadcooldown:
+                        Player.weapon.bulletcount = Player.weapon.bulletcapacity
+                        Player.weapon.reloading = False
+                    else:
+                        Player.weapon.reloadtimer += 1
+                
             elif Player.weapon.name == "Sword":
                 pass
             elif Player.weapon.name == "Bomb":
@@ -377,4 +393,8 @@ class Player:
             Player.showingInventory(screen)
         Player.playerhotbar.Render(screen)
         screen.blit(Player.title, (250,250))
-   
+        
+        if Player.weapon.name == "Rifle":
+            bulletcount = Player.font.render(str(Player.weapon.bulletcount), True, (255,0,0))    
+            screen.blit(bulletcount, (250,250))
+        
