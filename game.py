@@ -11,7 +11,7 @@ import sharkarena
 import jungle
 from data import saveData
 
-level = 0
+level = 9
 
 
 

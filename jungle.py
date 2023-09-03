@@ -28,6 +28,8 @@ def main():
     HealthBar = healthbar(30, 0, 115, 20)
     trees = random.randint(4, 9)
     treespawner = objectspawner(trees)
+    spawnmonkey = spawner(0, 600, 11)
+
     Spell = spell(320, 640, 115, 20)
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
@@ -66,6 +68,7 @@ def main():
         oceanwarp.Update(screen)
         oceanpart.Update(screen)
         GameLogic.Update(screen)
+        spawnmonkey.spawn_monkey()
         spawner4.spawnbandage()
         spawner4.spawncoin()
         if Player.Update(screen) == True:
