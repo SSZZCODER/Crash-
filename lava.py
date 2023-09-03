@@ -55,6 +55,9 @@ def main():
     magmaspawner = objectspawner(magmarocks)
     particlelava = ParticleSystem(10,700,(5,5,250))
     particleocean = ParticleSystem(725, 700, (0, 128, 0))
+    if len(GameLogic.objects[GameLogic.current_chunk])==0:
+        GameLogic.objects[GameLogic.current_chunk] = []
+        magmaspawner.spawnmagmarock()
 
     droppedkey = False
     global keypos 

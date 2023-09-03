@@ -10,7 +10,7 @@ import time
 from gamelogic import GameLogic
 from warp import Warp
 from items import spawneritems
-from coral import *
+import coral
 from warp import *
 import random
 def main():
@@ -18,8 +18,9 @@ def main():
     screen = pygame.display.set_mode((750,750))
     background = pygame.image.load('images/17.png')
     background = pygame.transform.scale(background, (750,750))
+    GameLogic.current_chunk = "ocean"
     corals = random.randint(4, 9)
-    coralspawner = objectspawner(corals)
+    coralspawner = coral.objectspawner(corals)
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
     spawner3 = spawner(0, 600, 11)
@@ -44,9 +45,8 @@ def main():
     junglepart = ParticleSystem(725,700,(0, 100, 0))
     energy = pygame.image.load('images/energy.png')
     energy = pygame.transform.scale(energy, (65, 65))
-    GameLogic.current_chunk = "ocean"
     if len(GameLogic.objects[GameLogic.current_chunk])==0:
-    #    GameLogic.objects[GameLogic.current_chunk] = []
+        GameLogic.objects[GameLogic.current_chunk] = []
         coralspawner.spawncoral()
 
 
