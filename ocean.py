@@ -38,10 +38,10 @@ def main():
 
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
-    warp2 = Warp(0,650, 35,100, (128, 0, 128), -50,0)
-    oceanpart = ParticleSystem(725,700,(128, 0, 128))
-    warp3 = Warp(715,650, 35,100, (0, 100, 0), -50,0)
-    junglepart = ParticleSystem(0,650,(0, 100, 0))
+    lavawarp = Warp(0,650, 35,100, (128, 0, 128), 50,0)
+    oceanpart = ParticleSystem(0,650,(128, 0, 128))
+    junglewarp = Warp(720,650, 35,100, (0, 100, 0), -650,0)
+    junglepart = ParticleSystem(725,700,(0, 100, 0))
     energy = pygame.image.load('images/energy.png')
     energy = pygame.transform.scale(energy, (65, 65))
     GameLogic.current_chunk = "ocean"
@@ -64,12 +64,12 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:   
                 exit=True
-            if  warp2.Touched() == True:
-                Player.MoveBy(warp2.offset_x, warp2.offset_y)
+            if  lavawarp.Touched() == True:
+                Player.MoveBy(lavawarp.offset_x, lavawarp.offset_y)
                 GameLogic.spellList = []
                 return 2
-            if  warp3.Touched() == True:
-                Player.MoveBy(warp3.offset_x, warp3.offset_y)
+            if  junglewarp.Touched() == True:
+                Player.MoveBy(junglewarp.offset_x, junglewarp.offset_y)
                 GameLogic.spellList = []
                 return 9
             if bossportal3.Touched() == True and haskey == True:
@@ -83,8 +83,8 @@ def main():
                     return 0
             
         screen.blit(background,[0,0])
-        warp2.Update(screen)
-        warp3.Update(screen)
+        lavawarp.Update(screen)
+        junglewarp.Update(screen)
         junglepart.Update(screen)
         bossportal3.Update(screen)
         screen.blit(portal, [600, 10])

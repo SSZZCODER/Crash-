@@ -28,8 +28,9 @@ def main():
     Spell = spell(320, 640, 115, 20)
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
-    warp2 = Warp(715,650, 35,100, (0,191,255), -50,0)
-    junglepart = ParticleSystem(725,700,(0,191,255))
+    oceanwarp = Warp(0,650, 35,100, (0, 0, 128), 650,0)
+    
+    oceanpart = ParticleSystem(0,650,(0, 0, 128))
     energy = pygame.image.load('images/energy.png')
     energy = pygame.transform.scale(energy, (65, 65))
     GameLogic.current_chunk = "jungle"
@@ -46,8 +47,8 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:   
                 exit=True
-            if  warp2.Touched() == True:
-                Player.MoveBy(warp2.offset_x, warp2.offset_y)
+            if  oceanwarp.Touched() == True:
+                Player.MoveBy(oceanwarp.offset_x, oceanwarp.offset_y)
                 GameLogic.spellList = []
                 return 5
             
@@ -58,8 +59,8 @@ def main():
                     return 0
             
         screen.blit(background,[0,0])
-        warp2.Update(screen)
-        junglepart.Update(screen)
+        oceanwarp.Update(screen)
+        oceanpart.Update(screen)
         GameLogic.Update(screen)
         spawner4.spawnbandage()
         spawner4.spawncoin()
