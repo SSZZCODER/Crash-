@@ -78,10 +78,10 @@ class Rifleweapon:
             bulletpos = [self.rect.x, self.rect.y]
         if angle > 90 and angle < 180:
             bulletpos = [self.rect.x + self.rect.w, self.rect.y]
-        if angle < 90 and angle > 180:
-            bulletpos = [self.rext.y, self.rect.x]
-        if angle > -90 and angle < -180:
-            bulletpos = [self.rect.y, self.rext.x+ self.rect.w]
+        if angle < 0 and angle > -90:
+            bulletpos = [self.rect.x, self.rect.y + self.rect.h]
+        if angle > 0 and angle < 90:
+            bulletpos = [self.rect.x + self.rect.w, self.rect.y + self.rect.h]
         self.bullets.append(Bullet(self.bulletspeed, attackvector, bulletpos[0], bulletpos[1]))
 
 
