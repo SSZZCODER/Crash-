@@ -28,8 +28,8 @@ def main():
     Spell = spell(320, 640, 115, 20)
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
-    warp2 = Warp(715,650, 35,100, (0, 0, 128), -50,0)
-    junglepart = ParticleSystem(725,700,(128, 0, 128))
+    warp2 = Warp(715,650, 35,100, (0,191,255), -50,0)
+    junglepart = ParticleSystem(725,700,(0,191,255))
     energy = pygame.image.load('images/energy.png')
     energy = pygame.transform.scale(energy, (65, 65))
     GameLogic.current_chunk = "jungle"

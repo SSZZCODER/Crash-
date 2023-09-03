@@ -38,10 +38,10 @@ def main():
 
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
-    warp2 = Warp(715,650, 35,100, (128, 0, 128), -50,0)
+    warp2 = Warp(0,650, 35,100, (128, 0, 128), -50,0)
     oceanpart = ParticleSystem(725,700,(128, 0, 128))
-    warp3 = Warp(0,650, 35,100, (128, 0, 128), -50,0)
-    junglepart = ParticleSystem(0,650,(128, 0, 128))
+    warp3 = Warp(715,650, 35,100, (0, 100, 0), -50,0)
+    junglepart = ParticleSystem(0,650,(0, 100, 0))
     energy = pygame.image.load('images/energy.png')
     energy = pygame.transform.scale(energy, (65, 65))
     GameLogic.current_chunk = "ocean"
