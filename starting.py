@@ -64,6 +64,9 @@ def main():
     energy = pygame.transform.scale(energy, (65, 65))
     GameLogic.current_chunk = "grass"
     bushspawner = objectspawner(bushes)
+    if len(GameLogic.objects[GameLogic.current_chunk])!=0:
+        GameLogic.objects[GameLogic.current_chunk] = []
+        bushspawner.spawnbush()
     particles = ParticleSystem(10,700, (250,5,5))
     shopui = Shop(0,50)
  
