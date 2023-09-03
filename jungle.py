@@ -12,6 +12,7 @@ from warp import Warp
 from items import spawneritems
 from coral import *
 from warp import *
+from tree import *
 import random
 def main():
     pygame.init()
@@ -25,6 +26,8 @@ def main():
     spawner4 = spawneritems(0,300,20)
     StaminaBar = staminabar(30, 30, 115, 20)
     HealthBar = healthbar(30, 0, 115, 20)
+    trees = random.randint(4, 9)
+    treespawner = objectspawner(trees)
     Spell = spell(320, 640, 115, 20)
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
@@ -34,7 +37,8 @@ def main():
     energy = pygame.image.load('images/energy.png')
     energy = pygame.transform.scale(energy, (65, 65))
     GameLogic.current_chunk = "jungle"
-
+    if len(GameLogic.objects[GameLogic.current_chunk])==0:
+        treespawner.spawntree()
 
 
     clock = pygame.time.Clock()
