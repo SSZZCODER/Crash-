@@ -391,56 +391,49 @@ class monkey(enemy):
             self.move_cooldown = 30
             self.dropKey = False
             self.itemcount = 10
-            self.fire_dmg = random.choice([4, 5])
-            self.burn_duration = random.choice([120, 240])
             self.banana_dmg = random.choice([4, 5])
             self.banana_dmg_duration = random.choice([120, 240])
             self.bananas = []
             self.banana_speed = 8
-            self.banana_cooldown  = 30
-            self.melee_range = 100
+            self.banana_cooldown  = 60
+            self.melee_range = 0
             self.itemcount = 10
         def assignImage(self):
             return pygame.transform.scale(pygame.image.load('images/monkey.png'),(70, 90))
-
+        
+        def move(self):
+            pass
         def render(self, screen):
-             screen.blit(self.image, (self.xPos, self.yPos)) 
-             pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(self.xPos+15,self.yPos-20, 40, 10))
-             pygame.draw.rect(screen, (250, 28, 0), pygame.Rect(self.xPos+15,self.yPos-20, int((self.health/self.max_health)*40), 10))
-             player_x, player_y = GameLogic.playerPos
-             rel_x, rel_y = player_x - self.xPos, player_y - self.yPos 
-             n = rel_x**2 + rel_y**2
- 
-             if n>0:
+            screen.blit(self.image, (self.xPos, self.yPos)) 
+            pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(self.xPos+15,self.yPos-20, 40, 10))
+            pygame.draw.rect(screen, (250, 28, 0), pygame.Rect(self.xPos+15,self.yPos-20, int((self.health/self.max_health)*40), 10))
+            player_x, player_y = GameLogic.playerPos
+            rel_x, rel_y = player_x - self.xPos, player_y - self.yPos 
+            n = rel_x**2 + rel_y**2
+
+            if n>0:
                 n = math.sqrt(n)
                 rel_x = rel_x/n
                 rel_y = rel_y/n
-             if n < self.range and n > self.melee_range:
+            if n < self.range and n > self.melee_range:
                 if self.banana_cooldown == 0:
                     x_dist = GameLogic.playerPos[0]-self.xPos
                     y_dist = GameLogic.playerPos[1]-self.yPos
                     angle = math.atan2(x_dist, y_dist)   * (180/math.pi)
-                    t = trident(self.xPos, self.yPos, self.banana_speed,1, self.banana_dmg, 30, 200, angle)
+                    t = Banana(self.xPos, self.yPos, self.banana_speed,1, self.banana_dmg, 30, 200, angle)
                     self.bananas.append(t)
                     GameLogic.enemyList[GameLogic.current_chunk].append(t)
-                    self.banana_cooldown = 30
-             elif self.banana_cooldown > 0:
-                self.banana_cooldown -= 1
-             print(n)
-        def attack(self):
-            attack_choice = random.randint(1,5)
-            if attack_choice == 3:
-                return [2, self.fire_dmg, self.burn_duration]
-            else:
-                return [0, self.damage]
+                    self.banana_cooldown = 60
+                elif self.banana_cooldown > 0:
+                    self.banana_cooldown -= 1
+                print(n)
         def takeDamage(self, damage):
             self.health -= damage
             if self.health <= 0:
                 self.dropKey = True
-                GameLogic.itemlist[GameLogic.current_chunk].append( Coin(1, self.xPos, self.yPos,self))
                 GameLogic.enemyList[GameLogic.current_chunk].remove(self)
             print("taken damage")
-class trident:
+class Banana:
     def __init__(self, xPos, yPos, speed, health, damage,throw_cooldown, range, angle):
         self.xPos = xPos
         self.yPos = yPos
@@ -450,7 +443,7 @@ class trident:
         self.throw_cooldown = throw_cooldown
         self.range = range
         self.angle = angle
-        self.image = pygame.image.load('images/bananabullet.png')
+        self.image = pygame.transform.scale(pygame.image.load('images/bananabullet.png'),(15, 50))
         self.rect = self.image.get_rect(center = [self.xPos, self.yPos]) 
         self.pos = Vector2(self.xPos,self.yPos)
         self.ppos = Vector2(GameLogic.playerPos)
@@ -584,11 +577,12 @@ class spawner:
             if self.max_enemycount - self.enemycount < enemies:
                 enemies = self.max_enemycount - self.enemycount
             for i in range(enemies):
-                x = random.randint(50, 650)
-                y = random.randint(50, 650)
+                trees = GameLogic.objects["jungle"]
+                x = random.choice(trees).xpos
+                y = random.choice(trees).ypos
                 speed = random.randint(1,2)
                 health =random.randint(100, 110)
                 damage = random.randint(5, 6)
-                GameLogic.enemyList[GameLogic.current_chunk].append( monkey(x, y, speed, health, damage, 30, 30, 200))
+                GameLogic.enemyList[GameLogic.current_chunk].append( monkey(x, y, speed, health, damage, 30, 30, 300))
                 self.enemycount += 1
                 self.life = self.spawn_cooldown     

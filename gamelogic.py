@@ -36,12 +36,12 @@ class GameLogic:
         for Items in GameLogic.itemlist:
             GameLogic.itemlist[Items] = []
     def Update(screen):
+        for object in GameLogic.objects[GameLogic.current_chunk]:
+            object.update(screen)
         for Item in GameLogic.itemlist[GameLogic.current_chunk]:
             Item.Render(screen)
         for enemy in GameLogic.enemyList[GameLogic.current_chunk]:
             enemy.update(screen)
-        for object in GameLogic.objects[GameLogic.current_chunk]:
-            object.update(screen)
         for spell in GameLogic.spellList:
             spell.update(screen)
     def playSound(name):
