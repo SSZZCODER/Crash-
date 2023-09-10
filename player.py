@@ -17,7 +17,7 @@ class Player:
     pygame.font.init()
     font = pygame.font.Font('font/arial.ttf', 45)  
     title = font.render(str(""), True, (244, 44, 4)) 
-   
+
     timer = 120
     animations = pygame.image.load("animations/animation1.png"),pygame.image.load("animations/animation2.png"),pygame.image.load("animations/animation3.png"),pygame.image.load("animations/animation4.png"),pygame.image.load("animations/animation5.png"),pygame.image.load("animations/animation6.png"),pygame.image.load("animations/animation7.png"),pygame.image.load("animations/animation8.png"),pygame.image.load("animations/animation9.png"),pygame.image.load("animations/animation10.png")
     rainbowanimation = pygame.image.load("animations2/rainbow1.png"),pygame.image.load("animations2/rainbow2.png"),pygame.image.load("animations2/rainbow3.png"),pygame.image.load("animations2/rainbow4.png"),pygame.image.load("animations2/rainbow5.png"),pygame.image.load("animations2/rainbow6.png"),pygame.image.load("animations2/rainbow7.png"),pygame.image.load("animations2/rainbow8.png"),pygame.image.load("animations2/rainbow9.png"),pygame.image.load("animations2/rainbow10.png")
@@ -395,6 +395,11 @@ class Player:
         screen.blit(Player.title, (250,250))
         
         if Player.weapon.name == "Rifle":
-            bulletcount = Player.font.render(str(Player.weapon.bulletcount), True, (255,0,0))    
-            screen.blit(bulletcount, (250,250))
+            if Player.weapon.reloading == False: 
+                bulletcount = Player.font.render(str(Player.weapon.bulletcount), True, (255,0,0))    
+                screen.blit(bulletcount, (350,600))
+            elif Player.weapon.reloading == True:
+                setext = Player.font.render(str("Reloading"), True, (255,0,0))
+                screen.blit(setext, (350,600))
+
         
