@@ -17,6 +17,7 @@ class GameLogic:
                       "acid": pygame.mixer.Sound("sounds/acid.wav")
     }
     spellList = []
+    bulletlist = []
     current_chunk = "grass"
     playerPos = [0, 0]
     playerspeedmulti = 1
