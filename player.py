@@ -201,6 +201,13 @@ class Player:
         elif Player.weapon.name == "Rifle":
             Player.weapon.update(screen, Player.playercenter[0] , Player.playercenter[1],Player.playercenter)   
             Player.playerimage = Player.skinnew
+            if Player.weapon.reloading == True:
+                    if Player.weapon.reloadtimer >= Player.weapon.reloadcooldown:
+                        Player.weapon.bulletcount = Player.weapon.bulletcapacity
+                        Player.weapon.reloading = False
+                        Player.weapon.reloadtimer = 0
+                    else:
+                        Player.weapon.reloadtimer += 1
             
         elif Player.weapon.name == "Sword":
             Player.weapon.update(screen, Player.playercenter[0] , Player.playercenter[1],Player.playercenter)       
@@ -237,12 +244,8 @@ class Player:
                         Player.weapon.shoottimer += 1
                     if Player.weapon.bulletcount <=0:
                         Player.weapon.reloading = True
-                if Player.weapon.reloading == True:
-                    if Player.weapon.reloadtimer >= Player.weapon.reloadcooldown:
-                        Player.weapon.bulletcount = Player.weapon.bulletcapacity
-                        Player.weapon.reloading = False
-                    else:
-                        Player.weapon.reloadtimer += 1
+                
+                    
                 
             elif Player.weapon.name == "Sword":
                 pass

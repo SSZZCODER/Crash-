@@ -56,10 +56,10 @@ class Rifleweapon:
         self.bullets = []
         self.bulletspeed = 20
         self.shoottimer = 0
-        self.shootcooldown = 35
+        self.shootcooldown = 5
         self.reloading = False
         self.reloadtimer = 0 
-        self.reloadcooldown = 150
+        self.reloadcooldown = 40
 
 
 
@@ -71,8 +71,6 @@ class Rifleweapon:
         pcenter = [playercenter[0],playercenter[1]]
         self.image_rot = pygame.transform.rotate(self.image, angle)
         self.rect = self.image_rot.get_rect(center = pcenter)
-        print(angle)
-       
         screen.blit(self.image_rot,self.image_rot.get_rect(center = pcenter))
 
     def attack(self, screen, playercenter):
