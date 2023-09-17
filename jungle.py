@@ -108,7 +108,7 @@ def main():
         if droppedkey == True:
             screen.blit(junglekey, keypos)
             junglekey_rect.center = keypos
-        print(killsforkey)
+        print(enemylength)
         pygame.display.update()
         clock.tick(60)
 

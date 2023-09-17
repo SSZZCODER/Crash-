@@ -116,6 +116,7 @@ def main():
         if droppedkey == True:
             screen.blit(oceankey, keypos)
             oceankey_rect.center = keypos
+        print(enemylength)
         pygame.display.update()
         clock.tick(60)
 
