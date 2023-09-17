@@ -34,7 +34,12 @@ def main():
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
     oceanwarp = Warp(0,650, 35,100, (0, 0, 128), 650,0)
-    
+    portal = pygame.image.load('images/bossportal4.png')
+    portal = pygame.transform.scale(portal, (150,200))
+    junglekey = pygame.image.load('images/junglekey.png')
+    junglekey_rect = junglekey.get_bounding_rect()
+    bossportal4 = Warp(625, 35,100,175,(0,0,0), 50,0)
+
     oceanpart = ParticleSystem(0,650,(0, 0, 128))
     energy = pygame.image.load('images/energy.png')
     energy = pygame.transform.scale(energy, (65, 65))
@@ -46,7 +51,11 @@ def main():
     clock = pygame.time.Clock()
     exit = False
 
-
+    droppedkey = False
+    global keypos 
+    keypos = [0,0]
+    killsforkey = 0
+    haskey = False
 
     while not exit:
         enemylength = len(GameLogic.enemyList[GameLogic.current_chunk])
@@ -57,7 +66,10 @@ def main():
                 Player.MoveBy(oceanwarp.offset_x, oceanwarp.offset_y)
                 GameLogic.spellList = []
                 return 5
-            
+            if bossportal4.Touched() == True and haskey == True:
+                Player.MoveBy(bossportal4.offset_x, bossportal4.offset_y)
+                GameLogic.spellList = []
+                return 10
             if event.type == pygame.QUIT:
                 return -1
             if event.type == pygame.KEYDOWN:
@@ -71,11 +83,25 @@ def main():
         spawnmonkey.spawn_monkey()
         spawner4.spawnbandage()
         spawner4.spawncoin()
+        bossportal4.Update(screen)
+        screen.blit(portal, [600, 10])
+        if haskey == False and droppedkey == True:
+            if pygame.Rect(GameLogic.playerPos, [50, 55]).colliderect(pygame.Rect(keypos, [36, 15])):
+                haskey = True
+                droppedkey = False
+        if haskey == True:
+            bossportal4 = Warp(625, 35,100,175,(144, 238, 144), 50,0)
         if Player.Update(screen) == True:
             return 3
         Spell.render(screen)
         StaminaBar.render(screen)
         HealthBar.render(screen)
+        if len(GameLogic.enemyList[GameLogic.current_chunk])<enemylength:
+            if killsforkey >= 2 and haskey == False:
+                droppedkey = True
+                keypos = [375, 375]
+            else:
+                killsforkey +=1
         screen.blit(heart, (-29, -45))
         screen.blit(energy, (-9, 10))
         pygame.display.update()

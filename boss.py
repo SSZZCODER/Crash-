@@ -546,7 +546,7 @@ class Boss4:
     def render(self, screen):
         screen.blit(self.image, self.image.get_rect(center = (self.xPos, self.yPos)))
         pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(245, 10, 300, 50))
-        pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(245, 10, int((self.health/2500)*300), 50))       
+        pygame.draw.rect(screen, (34,139,34), pygame.Rect(245, 10, int((self.health/2500)*300), 50))       
     def update(self, screen):
         self.move()            
         self.render(screen)
