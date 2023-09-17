@@ -485,4 +485,113 @@ class Tooth:
         self.move()
         self.render(screen)
         self.attack()
-                
+class Boss4:
+    def __init__(self, damage, xPos, yPos):
+        self.health = 2500
+        self.damage = damage
+        self.xPos = xPos
+        self.yPos = yPos
+        self.movetimer = 0
+        self.moving = False
+        self.newcenter = Vector2(0)
+        self.velocity = Vector2(0)
+        self.speed = 3
+        self.bananatimer = 100
+        self.image = pygame.image.load('images/monkeyking.png')
+        self.image = pygame.transform.scale(self.image,(175, 200))
+        self.bananas = []
+    def banana(self, screen):
+        if self.bananatimer <= 0:
+            self.bananas.append(Banana(0,0,self.xPos, self.yPos, GameLogic.playerPos))
+            self.bananatimer = 100
+        elif self.bananatimer > 0:
+            self.bananatimer -= 1
+        if len(self.bananas) > 0:
+            for banana in self.bananas:
+                banana.update(screen)
+                if banana.destroyed == True:
+                    self.bananas.remove(banana)
+        print(len(self.bananas))
+    def attack(self):
+        return [0, 0]
+    def move(self):
+        if self.moving == False and self.movetimer == 0:
+            self.newcenter.x = random.randint(0,750)
+            self.newcenter.y = random.randint(0,750)
+            self.velocity =  self.newcenter - Vector2(self.xPos, self.yPos)
+            self.velocity.normalize()
+            self.moving = True
+            self.movetimer = 30
+
+        elif self.moving == False and self.movetimer > 0:
+            self.movetimer -=1
+        if self.moving == True:
+            if self.xPos > self.newcenter.x:
+                self.xPos -= 1
+            if self.yPos > self.newcenter.y:
+                self.yPos -= 1
+            if self.xPos < self.newcenter.x:
+                self.xPos += 1
+            if self.yPos < self.newcenter.y:
+                self.yPos += 1
+            if self.xPos == self.newcenter.x and self.yPos == self.newcenter.y:
+                self.moving = False
+    
+    def takeDamage(self, damage):
+        self.health -= damage
+        GameLogic.playSoundBoss("monkey")
+        if self.health <= 0:
+            GameLogic.enemyList[GameLogic.current_chunk].remove(self)
+
+    def render(self, screen):
+        screen.blit(self.image, self.image.get_rect(center = (self.xPos, self.yPos)))
+        pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(245, 10, 300, 50))
+        pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(245, 10, int((self.health/2500)*300), 50))       
+    def update(self, screen):
+        self.move()            
+        self.render(screen)
+        self.banana(screen)
+class Banana:
+    def __init__(self, angle, direction, xPos, yPos, playerpos):
+        self.imagethrow = pygame.image.load("images/bananabullet.png")
+        self.imagethrow = pygame.transform.scale(self.imagethrow, (60,30))
+        self.throw_dmg = 25
+        self.throw_rect = self.imagethrow.get_bounding_rect()
+        self.angle = angle
+        self.damage = 5
+        self.speed = 7
+        self.direction = direction
+        self.xPos = xPos 
+        self.yPos = yPos
+        self.throwing = True
+        self.destroyed = False
+        self.playerpos = playerpos
+        self.direction = Vector2(self.playerpos) - Vector2([self.xPos, self.yPos])
+        self.direction = self.direction.normalize()
+        self.rel_x = 0
+        self.true_ypos = yPos
+    def render(self, screen):
+        if self.throwing == True:
+            screen.blit(self.imagethrow, [self.xPos, self.yPos])
+            self.throw_rect.x = self.xPos
+            self.throw_rect.y = self.yPos 
+    def move(self):
+        if self.throwing == True:
+            self.xPos += self.direction[0] * self.speed
+            self.true_ypos += self.direction[1] * self.speed
+            self.yPos = self.true_ypos+(50*math.sin((self.rel_x)*math.pi+10))
+        if self.xPos > 750 or self.xPos < 0:
+            self.destroyed = True
+        if self.yPos > 750 or self.yPos < 0:
+            self.destroyed = True
+        self.rel_x += 0.1
+    def attack(self):
+        if self.throwing == True:
+            if pygame.Rect(GameLogic.playerPos,[50,55]).colliderect(self.throw_rect):
+                print("hit player")
+                Player.health -= self.throw_dmg
+                self.destroyed = True
+    def update(self, screen):
+        self.move()
+        self.render(screen)
+        self.attack()
