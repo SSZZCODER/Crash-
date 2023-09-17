@@ -155,16 +155,31 @@ class Swordweapon:
         x_dist = mpos[0] - playercenter[0]
         y_dist = mpos[1] - playercenter[1]
         angle = math.atan2(x_dist, y_dist)   * (180/math.pi)
-        pcenter = [playercenter[0],playercenter[1]]
+        pcenter = [playercenter[0],playercenter[1]]        
         self.image_rot = pygame.transform.rotate(self.image, angle)
         self.rect = self.image_rot.get_rect(center = pcenter)
         screen.blit(self.image_rot,self.image_rot.get_rect(center = pcenter))
 
         #screen.blit(self.image,(self.xpos, self.ypos))
-    def attack(self, screen):
+    def attack(self, screen, playercenter):
         if self.attacktimer < self.attackcooldown:
+            mpos = pygame.mouse.get_pos() 
+            x_dist = mpos[0] - playercenter[0]
+            y_dist = mpos[1] - playercenter[1]
+            angle = math.atan2(x_dist, y_dist)   * (180/math.pi)
+            if angle < -90 and angle > -180:
+                swordpos = [self.rect.x, self.rect.y]
+            if angle > 90 and angle < 180:
+                swordpos = [self.rect.x + self.rect.w/2, self.rect.y]
+            if angle < 0 and angle > -90:
+                swordpos = [self.rect.x, self.rect.y + self.rect.h/2]
+            if angle > 0 and angle < 90:
+                swordpos = [self.rect.x + self.rect.w/2, self.rect.y + self.rect.h/2]
+            hitbox = pygame.Rect(swordpos, [64,64])
             self.image = self.image_attack
             self.attacktimer += 1
+            pygame.draw.rect(screen, (255,0,0), hitbox)
+
         else:
             self.attacktimer = 0
             self.image = self.image_idle
@@ -177,7 +192,7 @@ class Swordweapon:
         self.ypos = ypos
         self.render(screen, playercenter)
         if self.attacking:
-            self.attack(screen)
+            self.attack(screen, playercenter)
 
 class Bombweapon:
     def __init__(self, xpos, ypos, cooldown, damage):
