@@ -56,10 +56,10 @@ class Rifleweapon:
         self.bullets = []
         self.bulletspeed = 20
         self.shoottimer = 0
-        self.shootcooldown = 5
+        self.shootcooldown = 25
         self.reloading = False
         self.reloadtimer = 0 
-        self.reloadcooldown = 40
+        self.reloadcooldown = 80
 
 
 
@@ -108,6 +108,7 @@ class Bullet:
         self.ypos = ypos
         self.damage = 15
         self.rect = pygame.Rect(0,0,32,32)
+        self.destroyed = False
     
     def move(self):
         self.xpos += self.direction[0]
@@ -117,10 +118,8 @@ class Bullet:
         for enemy in GameLogic.enemyList[GameLogic.current_chunk]:
             if (self.rect.colliderect(enemy.image.get_rect(center=(enemy.xPos, enemy.yPos)))):
                 enemy.takeDamage(self.damage)
-                GameLogic.bulletlist.remove(self)
-                return True
-        return False
-        
+                self.destroyed = True
+
     def render(self, screen):
         self.rect.center = (self.xpos, self.ypos)
         pygame.draw.circle(screen, (0,0,0), [self.xpos, self.ypos], 5)
@@ -129,6 +128,7 @@ class Bullet:
     def update(self, screen):
         self.move()
         self.render(screen)
+        self.hit()
         
 class Swordweapon:
     def __init__(self, xpos, ypos, cooldown, damage):
