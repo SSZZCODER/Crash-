@@ -4,9 +4,9 @@ class GameLogic:
 
     pygame.mixer.init()
     up = False
-    enemyList = {"grass":[], "lava":[], "ocean":[], "Boss1":[], "Boss2":[], "Boss3":[], "jungle":[]}
-    itemlist = {"grass":[], "lava":[], "ocean":[],"Boss1":[],"Boss2":[], "Boss3":[], "jungle":[]}
-    objects = {"grass":[], "lava":[], "ocean":[], "Boss1":[],"Boss2":[], "Boss3":[], "jungle":[]}
+    enemyList = {"grass":[], "lava":[], "ocean":[], "Boss1":[], "Boss2":[], "Boss3":[], "Boss4":[], "jungle":[]}
+    itemlist = {"grass":[], "lava":[], "ocean":[],"Boss1":[],"Boss2":[], "Boss3":[],"Boss4":[], "jungle":[]}
+    objects = {"grass":[], "lava":[], "ocean":[], "Boss1":[],"Boss2":[], "Boss3":[], "Boss4":[], "jungle":[]}
     soundlist = {"zombie": pygame.mixer.Sound("sounds/hurt.wav"), 
                 "achievement": pygame.mixer.Sound("sounds/power.wav"), 
                 "coin": pygame.mixer.Sound("sounds/coin.wav"), 
@@ -14,7 +14,8 @@ class GameLogic:
                 }
     soundlistboss = {"bossdmg": pygame.mixer.Sound("sounds/bossdmg.wav"),
                       "curse": pygame.mixer.Sound("sounds/curse.wav"),
-                      "acid": pygame.mixer.Sound("sounds/acid.wav")
+                      "acid": pygame.mixer.Sound("sounds/acid.wav"),
+                      "monkey": pygame.mixer.Sound("sounds/monkeysound.wav")
     }
     spellList = []
     bulletlist = []

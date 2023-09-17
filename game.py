@@ -9,9 +9,10 @@ import bossarena
 import magmaarena
 import sharkarena
 import jungle
+import monkeyarena
 from data import saveData
 
-level = 0
+level = 9
 
 
 
@@ -37,6 +38,8 @@ while level != -1:
         level = sharkarena.main()
     if level == 9: 
         level = jungle.main()
+    if level == 10:
+        level = monkeyarena.main()
     print(level) 
 
         
