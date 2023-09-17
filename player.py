@@ -248,7 +248,13 @@ class Player:
                     
                 
             elif Player.weapon.name == "Sword":
-                pass
+                if Player.weapon.swingtimer >= Player.weapon.swingcooldown:
+                    Player.weapon.attack(screen, GameLogic.playerPos)
+                    
+                    Player.weapon.swingtimer =0
+                else:
+                    Player.weapon.swingtimer +=1
+
             elif Player.weapon.name == "Bomb":
                 pass
         if Player.attacking == True:
@@ -397,7 +403,7 @@ class Player:
         Player.playerhotbar.Render(screen)
         screen.blit(Player.title, (250,250))
         
-        if Player.weapon.name == "Rifle":
+        if Player.weapon.name == "Rifle": 
             if Player.weapon.reloading == False: 
                 bulletcount = Player.font.render(str(Player.weapon.bulletcount), True, (255,0,0))    
                 screen.blit(bulletcount, (350,600))

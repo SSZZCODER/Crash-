@@ -98,6 +98,8 @@ class Rifleweapon:
         if len(self.bullets) > 0:
             for bullet in self.bullets:
                 bullet.update(screen)
+                if bullet.destroyed == True:
+                    self.bullets.remove(bullet)
 
 class Bullet:
     def __init__(self, speed, direction, xpos, ypos):
@@ -106,7 +108,7 @@ class Bullet:
         self.velocity = self.direction.scale_to_length(self.speed)
         self.xpos = xpos
         self.ypos = ypos
-        self.damage = 15
+        self.damage = 25
         self.rect = pygame.Rect(0,0,32,32)
         self.destroyed = False
     
@@ -136,10 +138,16 @@ class Swordweapon:
         self.ypos = ypos
         self.cooldown = cooldown
         self.damage = damage
-        self.image = pygame.image.load("images/newswordv4.png")
-        self.image = pygame.transform.scale(self.image, (18, 165))
+        self.image_idle = pygame.image.load("images/newswordv4.png")
+        self.image_attack = pygame.image.load("swordanimation/sword-2.png (1) (1).png")
+        self.image = self.image_idle
+        #self.image = pygame.transform.scale(self.image, (18, 165))
         self.rect = self.image.get_rect()
         self.name = "Sword"
+        self.swingtimer = 0
+        self.swingcooldown = 25
+        self.attacktimer = 0
+        self.attackcooldown = 10
 
     def render(self, screen, playercenter):
         mpos = pygame.mouse.get_pos()
@@ -152,6 +160,15 @@ class Swordweapon:
         screen.blit(self.image_rot,self.image_rot.get_rect(center = pcenter))
 
         #screen.blit(self.image,(self.xpos, self.ypos))
+    def attack(self, screen, playerPos):
+        if self.attacktimer >= self.attackcooldown:
+            self.image = self.image_attack
+            self.attacktimer=0
+        else:
+            self.image = self.image_idle
+            self.attacktimer += 1
+    
+
 
     def update(self, screen, xpos, ypos, playercenter):
         self.xpos = xpos
