@@ -78,20 +78,20 @@ def main():
                     return 0
             
         screen.blit(background,[0,0])
-        oceanwarp.Update(screen)
-        oceanpart.Update(screen)
-        GameLogic.Update(screen)
-        spawnmonkey.spawn_monkey()
-        spawner4.spawnbandage()
-        spawner4.spawncoin()
-        bossportal4.Update(screen)
-        screen.blit(portal, [600, 10])
         if haskey == False and droppedkey == True:
             if pygame.Rect(GameLogic.playerPos, [50, 55]).colliderect(pygame.Rect(keypos, [36, 15])):
                 haskey = True
                 droppedkey = False
         if haskey == True:
             bossportal4 = Warp(625, 35,100,175,(144, 238, 144), 50,0)
+        oceanwarp.Update(screen)
+        oceanpart.Update(screen)
+        spawnmonkey.spawn_monkey()
+        spawner4.spawnbandage()
+        spawner4.spawncoin()
+        bossportal4.Update(screen)
+        screen.blit(portal, [600, 10])
+        GameLogic.Update(screen)
         if Player.Update(screen) == True:
             return 3
         Spell.render(screen)
@@ -108,6 +108,7 @@ def main():
         if droppedkey == True:
             screen.blit(junglekey, keypos)
             junglekey_rect.center = keypos
+        print(killsforkey)
         pygame.display.update()
         clock.tick(60)
 
