@@ -37,6 +37,7 @@ def main():
     portal = pygame.image.load('images/bossportal4.png')
     portal = pygame.transform.scale(portal, (150,200))
     junglekey = pygame.image.load('images/junglekey.png')
+    junglekey = pygame.transform.scale(junglekey, (50,20))
     junglekey_rect = junglekey.get_bounding_rect()
     bossportal4 = Warp(625, 35,100,175,(0,0,0), 50,0)
 
@@ -104,6 +105,9 @@ def main():
                 killsforkey +=1
         screen.blit(heart, (-29, -45))
         screen.blit(energy, (-9, 10))
+        if droppedkey == True:
+            screen.blit(junglekey, keypos)
+            junglekey_rect.center = keypos
         pygame.display.update()
         clock.tick(60)
 
