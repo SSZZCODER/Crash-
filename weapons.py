@@ -170,11 +170,11 @@ class Swordweapon:
             if angle < -90 and angle > -180:
                 swordpos = [self.rect.x, self.rect.y]
             if angle > 90 and angle < 180:
-                swordpos = [self.rect.x + self.rect.w, self.rect.y]
+                swordpos = [self.rect.x + self.rect.w/2, self.rect.y]
             if angle < 0 and angle > -90:
-                swordpos = [self.rect.x, self.rect.y + self.rect.h]
+                swordpos = [self.rect.x, self.rect.y + self.rect.h/2]
             if angle > 0 and angle < 90:
-                swordpos = [self.rect.x + self.rect.w, self.rect.y + self.rect.h]
+                swordpos = [self.rect.x + self.rect.w/2, self.rect.y + self.rect.h/2]
             hitbox = pygame.Rect(swordpos, [64,64])
             self.image = self.image_attack
             self.attacktimer += 1
