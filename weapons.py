@@ -148,6 +148,7 @@ class Swordweapon:
         self.swingcooldown = 25
         self.attacktimer = 0
         self.attackcooldown = 10
+        self.attacking = False
 
     def render(self, screen, playercenter):
         mpos = pygame.mouse.get_pos()
@@ -160,13 +161,14 @@ class Swordweapon:
         screen.blit(self.image_rot,self.image_rot.get_rect(center = pcenter))
 
         #screen.blit(self.image,(self.xpos, self.ypos))
-    def attack(self, screen, playerPos):
-        if self.attacktimer >= self.attackcooldown:
+    def attack(self, screen):
+        if self.attacktimer < self.attackcooldown:
             self.image = self.image_attack
-            self.attacktimer=0
-        else:
-            self.image = self.image_idle
             self.attacktimer += 1
+        else:
+            self.attacktimer = 0
+            self.image = self.image_idle
+            self.attacking = False
     
 
 
@@ -174,6 +176,8 @@ class Swordweapon:
         self.xpos = xpos
         self.ypos = ypos
         self.render(screen, playercenter)
+        if self.attacking:
+            self.attack(screen)
 
 class Bombweapon:
     def __init__(self, xpos, ypos, cooldown, damage):

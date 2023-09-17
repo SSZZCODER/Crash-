@@ -11,7 +11,7 @@ from spells import Fire
 from warp import Warp
 import time
 from gamelogic import GameLogic
-from data import saveData
+#from data import saveData
 from boss import Boss
 from particle import ParticleSystem, particlePlayer
 from bushspawner import *
@@ -144,7 +144,7 @@ def main():
         HealthBar.render(screen)
         screen.blit(heart, (-29, -45))
         screen.blit(energy, (-9, 10))
-        saveData.save()
+        #saveData.save()
         pygame.display.flip()
         clock.tick(60)
         

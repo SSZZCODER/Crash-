@@ -248,12 +248,7 @@ class Player:
                     
                 
             elif Player.weapon.name == "Sword":
-                if Player.weapon.swingtimer >= Player.weapon.swingcooldown:
-                    Player.weapon.attack(screen, GameLogic.playerPos)
-                    
-                    Player.weapon.swingtimer =0
-                else:
-                    Player.weapon.swingtimer +=1
+                Player.weapon.attacking = True
 
             elif Player.weapon.name == "Bomb":
                 pass

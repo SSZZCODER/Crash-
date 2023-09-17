@@ -10,9 +10,9 @@ import magmaarena
 import sharkarena
 import jungle
 import monkeyarena
-from data import saveData
+#from data import saveData
 
-level = 9
+level = 0
 
 
 
