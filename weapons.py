@@ -139,7 +139,7 @@ class Swordweapon:
         self.cooldown = cooldown
         self.damage = damage
         self.image_idle = pygame.image.load("images/newswordv4.png")
-        self.image_attack = pygame.image.load("swordanimation/sword-2.png (1) (1).png")
+        self.image_attack = pygame.image.load("swordanimation/sword-2.png (1) (4).png")
         self.image = self.image_idle
         #self.image = pygame.transform.scale(self.image, (18, 165))
         self.rect = self.image.get_rect()
@@ -178,8 +178,15 @@ class Swordweapon:
             hitbox = pygame.Rect(swordpos, [64,64])
             self.image = self.image_attack
             self.attacktimer += 1
-            pygame.draw.rect(screen, (255,0,0), hitbox)
-
+            #pygame.draw.rect(screen, (255,0,0), hitbox)
+            for enemy in GameLogic.enemyList[GameLogic.current_chunk]:
+                if (hitbox.colliderect(enemy.image.get_rect(center=(enemy.xPos, enemy.yPos)))):
+                    enemy.takeDamage(self.damage)
+                    self.attacktimer = 0
+                    self.image = self.image_idle
+                    self.attacking = False
+                    break
+            
         else:
             self.attacktimer = 0
             self.image = self.image_idle
@@ -204,8 +211,14 @@ class Bombweapon:
         self.image = pygame.transform.scale(self.image, (12*4, 37.5*4))
         self.rect = self.image.get_rect()
         self.name = "Bomb"
+        self.thrown = False
+        self.speed = 1
+        self.bombs = []
+        self.throwtimer = 0
+        self.throwcooldown = 50
+        
 
-    def render(self, screen, playercenter):
+    def hold_render(self, screen, playercenter):
         mpos = pygame.mouse.get_pos()
         x_dist = mpos[0] - playercenter[0]
         y_dist = mpos[1] - playercenter[1]
@@ -215,15 +228,74 @@ class Bombweapon:
         self.rect = self.image_rot.get_rect(center = pcenter)
         screen.blit(self.image_rot,self.image_rot.get_rect(center = pcenter))
 
+    def attack(self, screen, playercenter):
+        mpos = pygame.mouse.get_pos() 
+        x_dist = mpos[0] - playercenter[0]
+        y_dist = mpos[1] - playercenter[1]
+        angle = math.atan2(x_dist, y_dist)   * (180/math.pi)
+        attackvector = Vector2(x_dist, y_dist).normalize()
+        bulletpos = [self.rect.x, self.rect.y + self.rect.w]
+        if angle < -90 and angle > -180:
+            bombpos = [self.rect.x, self.rect.y]
+        if angle > 90 and angle < 180:
+            bombpos = [self.rect.x + self.rect.w, self.rect.y]
+        if angle < 0 and angle > -90:
+            bombpos = [self.rect.x, self.rect.y + self.rect.h]
+        if angle > 0 and angle < 90:
+            bombpos = [self.rect.x + self.rect.w, self.rect.y + self.rect.h]
+        self.bombs.append(Bomb(self.speed, attackvector, bombpos[0], bombpos[1]))
+
+
+    def render(self, screen, playercenter):
+        #if not self.thrown:
+        self.hold_render(screen, playercenter)
+
+
 
     def update(self, screen, xpos, ypos, playercenter):
         self.xpos = xpos
         self.ypos = ypos
         self.render(screen, playercenter)
+        if len(self.bombs) > 0:
+            for bomb in self.bombs:
+                bomb.update(screen)
+                if bomb.destroyed == True:
+                    self.bombs.remove(bomb)
 
 
 
 
+class Bomb:
+    def __init__(self, speed, direction, xpos, ypos):
+        self.speed = speed
+        self.direction = direction
+        self.velocity = self.direction.scale_to_length(self.speed)
+        self.xpos = xpos
+        self.ypos = ypos
+        self.damage = 25
+        self.image = pygame.image.load("images/newbombv6.png")
+        self.rect = pygame.Rect(0,0,32,32)
+        self.destroyed = False
+    
+    def move(self):
+        self.xpos += self.direction[0]
+        self.ypos += self.direction[1]
+    
+    def hit(self):
+        for enemy in GameLogic.enemyList[GameLogic.current_chunk]:
+            if (self.rect.colliderect(enemy.image.get_rect(center=(enemy.xPos, enemy.yPos)))):
+                enemy.takeDamage(self.damage)
+                self.destroyed = True
+
+    def render(self, screen):
+        self.rect.center = (self.xpos, self.ypos)
+        screen.blit(self.image,self.rect)
+
+
+    def update(self, screen):
+        self.move()
+        self.render(screen)
+        self.hit()
 
             
 

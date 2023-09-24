@@ -30,7 +30,7 @@ class Player:
     
     weapon_fist = weapon("Fist", dmg, 7, 40, 120)
     weapon_rifle = Rifleweapon(0, 0, 5, 50)
-    weapon_sword = Swordweapon(0,0,2.5, 40)
+    weapon_sword = Swordweapon(0,0,2.5, 20)
     weapon_bomb = Bombweapon(0,0,10,100)
     weapon = weapon_fist
     attack_cooldown = 30
@@ -215,7 +215,9 @@ class Player:
 
         elif Player.weapon.name == "Bomb":
             Player.weapon.update(screen, Player.playercenter[0] , Player.playercenter[1],Player.playercenter)
-            Player.playerimage = Player.skinnew   
+            Player.playerimage = Player.skinnew
+            if Player.weapon.throwtimer < Player.weapon.throwcooldown:
+                Player.weapon.throwtimer += 1   
 
         Player.Render(screen)
         Player.spellangle()
@@ -251,7 +253,11 @@ class Player:
                 Player.weapon.attacking = True
 
             elif Player.weapon.name == "Bomb":
-                pass
+                #Player.weapon.thrown = True
+                if Player.weapon.throwtimer >= Player.weapon.throwcooldown:
+                    Player.weapon.attack(screen,GameLogic.playerPos)
+                    Player.weapon.throwtimer = 0
+
         if Player.attacking == True:
             if Player.weapon.name == "Fist":
                 if Player.animation_reverse == True:
