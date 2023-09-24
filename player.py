@@ -30,7 +30,7 @@ class Player:
     
     weapon_fist = weapon("Fist", dmg, 7, 40, 120)
     weapon_rifle = Rifleweapon(0, 0, 5, 50)
-    weapon_sword = Swordweapon(0,0,2.5, 40)
+    weapon_sword = Swordweapon(0,0,2.5, 20)
     weapon_bomb = Bombweapon(0,0,10,100)
     weapon = weapon_fist
     attack_cooldown = 30
@@ -251,7 +251,8 @@ class Player:
                 Player.weapon.attacking = True
 
             elif Player.weapon.name == "Bomb":
-                pass
+                Player.weapon.thrown = True
+
         if Player.attacking == True:
             if Player.weapon.name == "Fist":
                 if Player.animation_reverse == True:
