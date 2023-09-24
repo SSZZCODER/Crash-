@@ -215,7 +215,9 @@ class Player:
 
         elif Player.weapon.name == "Bomb":
             Player.weapon.update(screen, Player.playercenter[0] , Player.playercenter[1],Player.playercenter)
-            Player.playerimage = Player.skinnew   
+            Player.playerimage = Player.skinnew
+            if Player.weapon.throwtimer < Player.weapon.throwcooldown:
+                Player.weapon.throwtimer += 1   
 
         Player.Render(screen)
         Player.spellangle()
@@ -251,7 +253,10 @@ class Player:
                 Player.weapon.attacking = True
 
             elif Player.weapon.name == "Bomb":
-                Player.weapon.thrown = True
+                #Player.weapon.thrown = True
+                if Player.weapon.throwtimer >= Player.weapon.throwcooldown:
+                    Player.weapon.attack(screen,GameLogic.playerPos)
+                    Player.weapon.throwtimer = 0
 
         if Player.attacking == True:
             if Player.weapon.name == "Fist":
