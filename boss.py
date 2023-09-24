@@ -512,6 +512,11 @@ class Boss4:
                 if banana.destroyed == True:
                     self.bananas.remove(banana)
         print(len(self.bananas))
+    def banana_slip(self):
+           for i in range(20):
+                xpos = random.randint(50, 650)
+                ypos = random.randint(50, 650)
+                GameLogic.objects[GameLogic.current_chunk].append(banana_peel(xpos, ypos))
     def attack(self):
         return [0, 0]
     def move(self):
@@ -550,6 +555,7 @@ class Boss4:
     def update(self, screen):
         self.move()            
         self.render(screen)
+        self.banana_slip()
         self.banana(screen)
 class Banana:
     def __init__(self, angle, direction, xPos, yPos, playerpos):
@@ -595,3 +601,9 @@ class Banana:
         self.move()
         self.render(screen)
         self.attack()
+class banana_peel:
+    def __init__(self, xpos, ypos):
+        self.xpos = xpos
+        self.ypos = ypos
+        self.banana_img = pygame.image.load("images/bananapeel.png")
+        self.banana_img = pygame.transform.scale(self.banana_img, (240, 290))
