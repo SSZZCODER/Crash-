@@ -578,9 +578,8 @@ class spawner:
                 enemies = self.max_enemycount - self.enemycount
             for i in range(enemies):
                 trees = GameLogic.objects["jungle"]
-                tree = random.choice(trees)
-                x = tree.xpos
-                y = tree.ypos
+                x = random.choice(trees).xpos
+                y = random.choice(trees).ypos
                 speed = random.randint(1,2)
                 health =random.randint(100, 110)
                 damage = random.randint(5, 6)
