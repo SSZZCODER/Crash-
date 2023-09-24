@@ -516,7 +516,7 @@ class Boss4:
            for i in range(20):
                 xpos = random.randint(50, 650)
                 ypos = random.randint(50, 650)
-                GameLogic.objects[GameLogic.current_chunk].append(banana_peel(xpos, ypos))
+                GameLogic.enemyList[GameLogic.current_chunk].append(banana_peel(xpos, ypos))
     def attack(self):
         return [0, 0]
     def move(self):
@@ -607,3 +607,7 @@ class banana_peel:
         self.ypos = ypos
         self.banana_img = pygame.image.load("images/bananapeel.png")
         self.banana_img = pygame.transform.scale(self.banana_img, (240, 290))
+    def update(self, screen):
+        self.render(screen)
+    def render(self, screen):
+        screen.blit(self.banana_img)
