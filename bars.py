@@ -39,3 +39,11 @@ class spell(bar):
      def render(self, screen):
          super().render(screen)
          pygame.draw.rect(screen, self.color, pygame.Rect(self.rect.x, self.rect.y, int((Player.dmgcounter/300)*self.rect.width), self.rect.height))
+class slowed(bar):
+     def __init__(self, x, y, width, height):
+        super().__init__(x, y, width, height)
+        self.color = (220,220,220)
+
+     def render(self, screen):
+         super().render(screen)
+         pygame.draw.rect(screen, self.color, pygame.Rect(self.rect.x, self.rect.y, int((Player.freezecooldown/60)*self.rect.width), self.rect.height))

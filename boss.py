@@ -500,6 +500,9 @@ class Boss4:
         self.image = pygame.image.load('images/monkeyking.png')
         self.image = pygame.transform.scale(self.image,(175, 200))
         self.bananas = []
+        self.bananasliptimer = 0
+        self.bananaslipcooldown = random.randint(50, 250)
+        self.maxbananas = 20
     def banana(self, screen):
         if self.bananatimer <= 0:
             self.bananas.append(Banana(0,0,self.xPos, self.yPos, GameLogic.playerPos))
@@ -513,7 +516,7 @@ class Boss4:
                     self.bananas.remove(banana)
         print(len(self.bananas))
     def banana_slip(self):
-           for i in range(20):
+           for i in range(5):
                 xpos = random.randint(50, 650)
                 ypos = random.randint(50, 650)
                 GameLogic.enemyList[GameLogic.current_chunk].append(banana_peel(xpos, ypos))
@@ -555,7 +558,12 @@ class Boss4:
     def update(self, screen):
         self.move()            
         self.render(screen)
-        self.banana_slip()
+        if self.bananasliptimer >= self.bananaslipcooldown and len(GameLogic.enemyList[GameLogic.current_chunk]) <= self.maxbananas:
+            self.banana_slip()
+            self.bananasliptimer = 0
+            self.bananaslipcooldown = random.randint(50,250)
+        else:
+            self.bananasliptimer += 1
         self.banana(screen)
 class Banana:
     def __init__(self, angle, direction, xPos, yPos, playerpos):
@@ -602,12 +610,98 @@ class Banana:
         self.render(screen)
         self.attack()
 class banana_peel:
-    def __init__(self, xpos, ypos):
-        self.xpos = xpos
-        self.ypos = ypos
-        self.banana_img = pygame.image.load("images/bananapeel.png")
-        self.banana_img = pygame.transform.scale(self.banana_img, (240, 290))
+    def __init__(self, xPos, yPos, speed = 0, health = 10, damage = 0, damage_cooldown = 0, move_cooldown = 0, range = 0):
+        self.xPos = xPos
+        self.yPos = yPos
+        self.speed = speed
+        self.health = health
+        self.damage = damage
+        self.damage_cooldown = 0
+        self.move_cooldown = 0
+        self.movearound = False
+        self.movearounddirection = random.randint(-1,1)
+        while self.movearounddirection == 0:
+            self.movearounddirection = random.randint(-1,1)
+        self.original_image = pygame.image.load("images/bananapeel.png")
+        self.original_image = pygame.transform.scale(self.original_image, (70, 50))
+        self.image = self.original_image
+        self.range = range
+        self.max_health = health    
+        self.h = self.image.get_rect(center=(self.xPos, self.yPos)).h
+        self.w = self.image.get_rect(center=(self.xPos, self.yPos)).w
+        self.rect1 = pygame.Rect(int(self.w/2) + self.xPos, self.yPos, 2, int(self.h))
+        self.rect2 = pygame.Rect(self.xPos - int(self.w/2), self.yPos, 2, int(self.h) )
+        self.rect3 = pygame.Rect( self.xPos, self.yPos + int(self.h/2), int(self.w), 2)
+        self.rect4 = pygame.Rect( self.xPos, self.yPos - int(self.h/2), int(self.w), 2)
+    def assignImage(self):
+        pass
+    def render(self, screen):   
+        screen.blit(self.image, (self.xPos, self.yPos))
+        #pygame.draw.rect(screen, (0,255,0), self.rect1)
+        #pygame.draw.rect(screen, (0,255,0), self.rect2)
+        #pygame.draw.rect(screen, (0,255,0), self.rect3)
+        #pygame.draw.rect(screen, (0,255,0), self.rect4)
+        #pygame.draw.rect(screen, (250, 28, 0), pygame.Rect(self.xPos,self.yPos-20, int((self.health/100)*57), 10))
+
+    def move(self): 
+        self.h=self.image.get_rect(center=(self.xPos, self.yPos)).h
+        self.w=self.image.get_rect(center=(self.xPos, self.yPos)).w
+        
+        self.rect1 = pygame.Rect(int(self.w/2) + self.xPos, self.yPos, 2, int(self.h))
+        self.rect1.center = (int(self.w/2) + self.xPos, self.yPos)
+        self.rect2 = pygame.Rect(self.xPos - int(self.w/2), self.yPos, 2, int(self.h) )
+        self.rect2.center = (self.xPos - int(self.w/2), self.yPos)
+        self.rect3 = pygame.Rect( self.xPos, self.yPos + int(self.h/2), int(self.w), 2)
+        self.rect3.center = (self.xPos, self.yPos + int(self.h/2))
+        self.rect4 = pygame.Rect( self.xPos, self.yPos - int(self.h/2), int(self.w), 2)
+        self.rect4.center = (self.xPos, self.yPos - int(self.h/2))
+        player_x, player_y = GameLogic.playerPos
+        rel_x, rel_y = player_x - self.xPos, player_y - self.yPos 
+        n = rel_x**2 + rel_y**2
+
+        if n>0:
+            n = math.sqrt(n)
+            rel_x = rel_x/n
+            rel_y = rel_y/n
+        if n<=self.range and self.movearound == False:
+            self.xPos += rel_x * self.speed
+            self.yPos += rel_y * self.speed
+            angle = math.atan2(rel_x, rel_y)   * (180/math.pi) 
+            self.image = pygame.transform.rotate(self.original_image, angle-90)
+        if self.movearound == True:
+            self.xPos += self.movearounddirection*self.speed
+        
+        hitbox = self.image.get_rect(center = (self.xPos, self.yPos))
+        l = 0
+        length = len(GameLogic.objects[GameLogic.current_chunk])
+        for bush in GameLogic.objects[GameLogic.current_chunk]:
+            if bush.rectangle.colliderect((hitbox)):
+               self.xPos -=rel_x*self.speed
+               self.yPos -=rel_y*self.speed
+               self.movearound = True
+               break
+            else:
+                l += 1
+        if l >= length:
+            self.movearound = False
+            """
+            self.movearounddirection = random.randint(-1,1)
+            while self.movearounddirection == 0:
+                self.movearounddirection = random.randint(-1,1)
+                """
+            
+        
+
     def update(self, screen):
+        self.move()
         self.render(screen)
-    def render(self, screen):
-        screen.blit(self.banana_img)
+    def takeDamage(self, damage):
+        self.health -= damage
+        if self.health <= 0:
+            GameLogic.enemyList[GameLogic.current_chunk].remove(self)
+            
+
+        print("taken damage")
+    def attack(self):
+        GameLogic.enemyList[GameLogic.current_chunk].remove(self)
+        return [5]
