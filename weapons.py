@@ -1,6 +1,7 @@
 import pygame
 from gamelogic import GameLogic
 import math
+from player import Player
 from pygame.math import Vector2
 from enemy import *
 
@@ -248,6 +249,7 @@ class Bombweapon:
         self.bombs.append(Bomb(self.speed, attackvector, bombpos[0], bombpos[1]))
 
 
+
     def render(self, screen, playercenter):
         #if not self.thrown:
         self.hold_render(screen, playercenter)
@@ -263,6 +265,7 @@ class Bombweapon:
                 bomb.update(screen)
                 if bomb.destroyed == True:
                     self.bombs.remove(bomb)
+  
 
 
 
@@ -275,14 +278,14 @@ class Bomb:
         self.xpos = xpos
         self.ypos = ypos
         self.damage = 25
-        self.image = pygame.image.load("images/newbombv4.png")
-        self.image = pygame.transform.scale(self.image, (24*2, 74*2))
+        self.image = pygame.image.load("images/newbombv6 (1).png")
+        self.image = pygame.transform.scale(self.image, (24*2, 24*2))
         self.explosion = pygame.image.load("images/explosion.png")
         self.explosion = pygame.transform.scale(self.explosion, (32*3.5,32*3.5))
         self.rect = pygame.Rect(0,0,32,32)
         self.explodedrect = self.explosion.get_bounding_rect()
         self.destroyed = False
-        self.range = 100
+        self.range = 150
         self.disappear = 60
         self.explosiondmg = 5
         
