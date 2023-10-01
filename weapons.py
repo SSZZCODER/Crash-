@@ -1,7 +1,6 @@
 import pygame
 from gamelogic import GameLogic
 import math
-from player import Player
 from pygame.math import Vector2
 from enemy import *
 

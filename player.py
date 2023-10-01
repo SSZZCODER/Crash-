@@ -222,10 +222,20 @@ class Player:
             Player.playerimage = Player.skinnew
 
         elif Player.weapon.name == "Bomb":
-            Player.weapon.update(screen, Player.playercenter[0] , Player.playercenter[1],Player.playercenter)
-            Player.playerimage = Player.skinnew
-            if Player.weapon.throwtimer < Player.weapon.throwcooldown:
-                Player.weapon.throwtimer += 1   
+            amount = 0
+            for item in Player.playerInventory.items:
+                if item != None:
+                    if item.name == "Bomb":
+                        amount = item.amount
+            if amount == 0:
+                Player.weapon.name = "Fist"
+                Player.weapon = Player.weapon_fist
+                #Player.playerInventory.removeItemAll(Player.weapon_bomb)
+            else:
+                Player.weapon.update(screen, Player.playercenter[0] , Player.playercenter[1],Player.playercenter)
+                Player.playerimage = Player.skinnew
+                if Player.weapon.throwtimer < Player.weapon.throwcooldown:
+                    Player.weapon.throwtimer += 1   
 
         Player.Render(screen)
         Player.spellangle()
@@ -264,7 +274,16 @@ class Player:
                 #Player.weapon.thrown = True
                 if Player.weapon.throwtimer >= Player.weapon.throwcooldown:
                     Player.weapon.attack(screen,GameLogic.playerPos)
+                    for item in Player.playerInventory.items:
+                        if item != None:
+                            if item.name == "Bomb":
+                                item.amount -= 1
                     Player.weapon.throwtimer = 0
+        for item in Player.playerInventory.items:
+            if item != None:
+                if item.amount == 0:
+                    Player.playerInventory.items.remove(item)
+                    break
 
         if Player.attacking == True:
             if Player.weapon.name == "Fist":

@@ -53,12 +53,13 @@ class Inventory:
 
 
 
-    def removeItem(self, thing):
+    def removeItemAll(self, thing):
         for i in range(len(self.items)):
-            if self.items[i].name == thing.name:
-                item = self.items[i]
-                self.items.remove(item)
-                return item
+            if self.items[i] != None:
+                if self.items[i].name == thing.name:
+                    item = self.items[i]
+                    self.items.remove(item)
+                    
 
     def removeItem(self, thing, amount):
         for i in range(len(self.items)):
