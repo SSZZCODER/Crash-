@@ -12,7 +12,10 @@ class GameLogic:
                 "coin": pygame.mixer.Sound("sounds/coin.wav"), 
                 "heal": pygame.mixer.Sound("sounds/heal.wav"),
                 "slip": pygame.mixer.Sound("sounds/slip.wav"),
-                "summon": pygame.mixer.Sound("sounds/summonkey.wav")
+                "summon": pygame.mixer.Sound("sounds/summonkey.wav"),
+                "rifle": pygame.mixer.Sound("sounds/rifle.wav"),
+                "sword": pygame.mixer.Sound("sounds/swordslash.wav"),
+                "swordhit": pygame.mixer.Sound("sounds/swordhit.wav")
                 }
     soundlistboss = {"bossdmg": pygame.mixer.Sound("sounds/bossdmg.wav"),
                       "curse": pygame.mixer.Sound("sounds/curse.wav"),
@@ -28,6 +31,9 @@ class GameLogic:
     pygame.mixer.Sound.set_volume(soundlist["achievement"],.05)
     pygame.mixer.Sound.set_volume(soundlist["coin"],.9)
     pygame.mixer.Sound.set_volume(soundlist["heal"],.6)    
+    pygame.mixer.Sound.set_volume(soundlist["summon"], .5)
+    pygame.mixer.Sound.set_volume(soundlist["swordhit"],.5)
+    pygame.mixer.Sound.set_volume(soundlist["sword"],.9)
     pygame.mixer.Sound.set_volume(soundlistboss["bossdmg"],.6)  
     pygame.mixer.Sound.set_volume(soundlistboss["curse"],.02)  
     pygame.mixer.Sound.set_volume(soundlistboss["acid"],.6)  

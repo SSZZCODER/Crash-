@@ -177,10 +177,12 @@ class Swordweapon:
                 swordpos = [self.rect.x + self.rect.w/2, self.rect.y + self.rect.h/2]
             hitbox = pygame.Rect(swordpos, [64,64])
             self.image = self.image_attack
+            GameLogic.playSound("sword")
             self.attacktimer += 1
             #pygame.draw.rect(screen, (255,0,0), hitbox)
             for enemy in GameLogic.enemyList[GameLogic.current_chunk]:
                 if (hitbox.colliderect(enemy.image.get_rect(center=(enemy.xPos, enemy.yPos)))):
+                    GameLogic.playSound("swordhit")
                     enemy.takeDamage(self.damage)
                     self.attacktimer = 0
                     self.image = self.image_idle

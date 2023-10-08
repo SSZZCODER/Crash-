@@ -108,6 +108,7 @@ def main():
         if len(GameLogic.enemyList[GameLogic.current_chunk])<enemylength:
             if killsforkey >= 2 and haskey == False:
                 droppedkey = True
+                GameLogic.playSound("summon")               
                 keypos = [375, 375]
             else:
                 killsforkey +=1
