@@ -236,7 +236,11 @@ class Player:
                 Player.playerimage = Player.skinnew
                 if Player.weapon.throwtimer < Player.weapon.throwcooldown:
                     Player.weapon.throwtimer += 1   
-
+        if len(GameLogic.bomblist) > 0:
+            for bomb in GameLogic.bomblist:
+                bomb.update(screen)
+                if bomb.destroyed == True:
+                    GameLogic.bomblist.remove(bomb)
         Player.Render(screen)
         Player.spellangle()
         Player.itemCheck()
@@ -270,15 +274,25 @@ class Player:
             elif Player.weapon.name == "Sword":
                 Player.weapon.attacking = True
 
-            elif Player.weapon.name == "Bomb" and amount >0:
+            elif Player.weapon.name == "Bomb":
                 #Player.weapon.thrown = True
-                if Player.weapon.throwtimer >= Player.weapon.throwcooldown:
-                    Player.weapon.attack(screen,GameLogic.playerPos)
-                    for item in Player.playerInventory.items:
-                        if item != None:
-                            if item.name == "Bomb":
-                                item.amount -= 1
-                    Player.weapon.throwtimer = 0
+                amount = 0
+                for item in Player.playerInventory.items:
+                    if item != None:
+                        if item.name == "Bomb":
+                            amount = item.amount
+                if amount <= 0:
+                    Player.weapon.name = "Fist"
+                    Player.weapon = Player.weapon_fist
+                    #Player.playerInventory.removeItemAll(Player.weapon_bomb)
+                else:
+                    if Player.weapon.throwtimer >= Player.weapon.throwcooldown:
+                        GameLogic.bomblist.append(Player.weapon.attack(screen,GameLogic.playerPos))
+                        for item in Player.playerInventory.items:
+                            if item != None:
+                                if item.name == "Bomb":
+                                    item.amount -= 1
+                        Player.weapon.throwtimer = 0
         for i in range(len(Player.playerInventory.items)):
             item = Player.playerInventory.items[i]
             if item != None:
