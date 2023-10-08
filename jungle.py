@@ -97,13 +97,17 @@ def main():
         Spell.render(screen)
         StaminaBar.render(screen)
         HealthBar.render(screen)
-        if len(GameLogic.enemyList[GameLogic.current_chunk])<enemylength:
-            if killsforkey >= 2 and haskey == False:
-                droppedkey = True
-                GameLogic.playSound("summon")
-                keypos = [375, 375]
-            else:
-                killsforkey +=1
+        #if len(GameLogic.enemyList[GameLogic.current_chunk])<enemylength:
+         #   if killsforkey >= 2 and haskey == False:
+          #      droppedkey = True
+           #     GameLogic.playSound("summon")
+            #    keypos = [375, 375]
+            #else:
+             #   killsforkey +=1
+        if GameLogic.junglekillsforkey >= 2 and haskey == False:
+            droppedkey = True
+            GameLogic.playSound("summon")
+            keypos = [375,375]
         screen.blit(heart, (-29, -45))
         screen.blit(energy, (-9, 10))
         if droppedkey == True:
