@@ -227,7 +227,7 @@ class Player:
                 if item != None:
                     if item.name == "Bomb":
                         amount = item.amount
-            if amount == 0:
+            if amount <= 0:
                 Player.weapon.name = "Fist"
                 Player.weapon = Player.weapon_fist
                 #Player.playerInventory.removeItemAll(Player.weapon_bomb)
@@ -270,7 +270,7 @@ class Player:
             elif Player.weapon.name == "Sword":
                 Player.weapon.attacking = True
 
-            elif Player.weapon.name == "Bomb":
+            elif Player.weapon.name == "Bomb" and amount >0:
                 #Player.weapon.thrown = True
                 if Player.weapon.throwtimer >= Player.weapon.throwcooldown:
                     Player.weapon.attack(screen,GameLogic.playerPos)
@@ -279,10 +279,11 @@ class Player:
                             if item.name == "Bomb":
                                 item.amount -= 1
                     Player.weapon.throwtimer = 0
-        for item in Player.playerInventory.items:
+        for i in range(len(Player.playerInventory.items)):
+            item = Player.playerInventory.items[i]
             if item != None:
                 if item.amount == 0:
-                    Player.playerInventory.items.remove(item)
+                    Player.playerInventory.items[i] = None
                     break
 
         if Player.attacking == True:
@@ -413,10 +414,13 @@ class Player:
                     if item.inventoryrect.collidepoint(clickedpos):
                         print("clicked on " + item.name)
                         if item.name == "Rifle":
+                            Player.weapon.name = "Rifle"    
                             Player.weapon = Player.weapon_rifle
                         elif item.name == "Sword":
+                            Player.weapon.name = "Sword"
                             Player.weapon = Player.weapon_sword
                         elif item.name == "Bomb":
+                            Player.weapon.name = "Bomb"
                             Player.weapon = Player.weapon_bomb
                         clicked = False
                         break

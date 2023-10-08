@@ -284,7 +284,7 @@ class Bomb:
         self.rect = pygame.Rect(0,0,32,32)
         self.explodedrect = self.explosion.get_bounding_rect()
         self.destroyed = False
-        self.range = 150
+        self.range = 400
         self.disappear = 60
         self.explosiondmg = 5
         
