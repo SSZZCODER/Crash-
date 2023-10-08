@@ -22,7 +22,7 @@ class Player:
     animations = pygame.image.load("animations/animation1.png"),pygame.image.load("animations/animation2.png"),pygame.image.load("animations/animation3.png"),pygame.image.load("animations/animation4.png"),pygame.image.load("animations/animation5.png"),pygame.image.load("animations/animation6.png"),pygame.image.load("animations/animation7.png"),pygame.image.load("animations/animation8.png"),pygame.image.load("animations/animation9.png"),pygame.image.load("animations/animation10.png")
     rainbowanimation = pygame.image.load("animations2/rainbow1.png"),pygame.image.load("animations2/rainbow2.png"),pygame.image.load("animations2/rainbow3.png"),pygame.image.load("animations2/rainbow4.png"),pygame.image.load("animations2/rainbow5.png"),pygame.image.load("animations2/rainbow6.png"),pygame.image.load("animations2/rainbow7.png"),pygame.image.load("animations2/rainbow8.png"),pygame.image.load("animations2/rainbow9.png"),pygame.image.load("animations2/rainbow10.png")
     direction = [0, 0]
-    attacking = False
+    attacking = True
     animation_counter = 0
     dmg = random.randint(15, 20)
     dmgcounter = 0
@@ -33,6 +33,7 @@ class Player:
     weapon_sword = Swordweapon(0,0,2.5, 20)
     weapon_bomb = Bombweapon(0,0,10,100)
     weapon = weapon_fist
+    weapon_name = "Fist"
     attack_cooldown = 30
     dash_speed = 60
     damage_cooldown = 0
@@ -171,6 +172,7 @@ class Player:
         Player.health = 250
         Player.dash_cooldown = 600
         Player.playerInventory.clearInventory()
+        Player.weapon_name = "Fist"
         Player.weapon = Player.weapon_fist
 
         Player.player_x = 340
@@ -203,10 +205,14 @@ class Player:
         Player.dash()
         Player.damage_check()
         Player.particlesp.Update(screen)
-        if Player.weapon.name == "Fist":
+        if Player.weapon_name == "Fist":
+            Player.weapon = Player.weapon_fist
             Player.weapon.update(screen)
-            Player.playerimage = Player.playerimage
-        elif Player.weapon.name == "Rifle":
+            playerimage = pygame.image.load('images/New Piskel (28).png')
+            Player.playerimage = pygame.transform.scale(playerimage,(50, 55))
+ 
+        elif Player.weapon_name == "Rifle":
+            Player.weapon = Player.weapon_rifle
             Player.weapon.update(screen, Player.playercenter[0] , Player.playercenter[1],Player.playercenter)   
             Player.playerimage = Player.skinnew
             if Player.weapon.reloading == True:
@@ -217,11 +223,13 @@ class Player:
                     else:
                         Player.weapon.reloadtimer += 1
             
-        elif Player.weapon.name == "Sword":
+        elif Player.weapon_name == "Sword":
+            Player.weapon = Player.weapon_sword
             Player.weapon.update(screen, Player.playercenter[0] , Player.playercenter[1],Player.playercenter)       
             Player.playerimage = Player.skinnew
 
-        elif Player.weapon.name == "Bomb":
+        elif Player.weapon_name == "Bomb":
+            Player.weapon = Player.weapon_bomb
             amount = 0
             for item in Player.playerInventory.items:
                 if item != None:
@@ -247,7 +255,7 @@ class Player:
         if Player.weaponcooldown != 0:
                 Player.weaponcooldown -= 1
         if pygame.mouse.get_pressed()[0]:
-            if Player.weapon.name == "Fist":
+            if Player.weapon_name == "Fist":
                 if Player.weaponcooldown <= 0:
                     Player.attack()
                     if Player.weapon.attack() == True:
@@ -258,7 +266,7 @@ class Player:
                                 GameLogic.playSound("achievement")
                             Player.dmgcounter = 300
                     Player.weaponcooldown = 30
-            elif Player.weapon.name == "Rifle":
+            elif Player.weapon_name == "Rifle":
                 if Player.weapon.reloading == False:               
                     if Player.weapon.shoottimer >= Player.weapon.shootcooldown:
                         Player.weapon.attack(screen, GameLogic.playerPos)
@@ -272,10 +280,10 @@ class Player:
                 
                     
                 
-            elif Player.weapon.name == "Sword":
+            elif Player.weapon_name == "Sword":
                 Player.weapon.attacking = True
 
-            elif Player.weapon.name == "Bomb":
+            elif Player.weapon_name == "Bomb":
                 #Player.weapon.thrown = True
                 amount = 0
                 for item in Player.playerInventory.items:
@@ -283,7 +291,7 @@ class Player:
                         if item.name == "Bomb":
                             amount = item.amount
                 if amount <= 0:
-                    Player.weapon.name = "Fist"
+                    Player.weapon_name = "Fist"
                     Player.weapon = Player.weapon_fist
                     #Player.playerInventory.removeItemAll(Player.weapon_bomb)
                 else:
@@ -302,7 +310,7 @@ class Player:
                     break
 
         if Player.attacking == True:
-            if Player.weapon.name == "Fist":
+            if Player.weapon_name == "Fist":
                 if Player.animation_reverse == True:
                     Player.animation_counter -= 1
                 elif Player.animation_reverse == False:
@@ -313,11 +321,11 @@ class Player:
                     Player.attacking = False
                     Player.animation_reverse = False
                     Player.animation_counter = 0
-            elif Player.weapon.name == "Rifle":
+            elif Player.weapon_name == "Rifle":
                pass
-            elif Player.weapon.name == "Sword":
+            elif Player.weapon_name == "Sword":
                 pass            
-            elif Player.weapon.name == "Bomb":
+            elif Player.weapon_name == "Bomb":
                 pass      
         if Player.timer>0:
             Player.timer-=1
@@ -429,13 +437,13 @@ class Player:
                     if item.inventoryrect.collidepoint(clickedpos):
                         print("clicked on " + item.name)
                         if item.name == "Rifle":
-                            Player.weapon.name = "Rifle"    
+                            Player.weapon_name = "Rifle"    
                             Player.weapon = Player.weapon_rifle
                         elif item.name == "Sword":
-                            Player.weapon.name = "Sword"
+                            Player.weapon_name = "Sword"
                             Player.weapon = Player.weapon_sword
                         elif item.name == "Bomb":
-                            Player.weapon.name = "Bomb"
+                            Player.weapon_name = "Bomb"
                             Player.weapon = Player.weapon_bomb
                         clicked = False
                         break
@@ -450,7 +458,7 @@ class Player:
         Player.playerhotbar.Render(screen)
         screen.blit(Player.title, (250,250))
         
-        if Player.weapon.name == "Rifle": 
+        if Player.weapon_name == "Rifle": 
             if Player.weapon.reloading == False: 
                 bulletcount = Player.font.render(str(Player.weapon.bulletcount), True, (255,0,0))    
                 screen.blit(bulletcount, (350,600))
