@@ -40,5 +40,3 @@ while level != -1:
     if level == 10:
         level = monkeyarena.main()
     print(level) 
-
-        
