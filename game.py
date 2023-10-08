@@ -12,7 +12,7 @@ import jungle
 import monkeyarena
 from data import saveData
 
-level = 10
+level = 9
 
 
 
@@ -40,5 +40,3 @@ while level != -1:
     if level == 10:
         level = monkeyarena.main()
     print(level) 
-
-        

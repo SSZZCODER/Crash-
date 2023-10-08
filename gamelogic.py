@@ -11,7 +11,8 @@ class GameLogic:
                 "achievement": pygame.mixer.Sound("sounds/power.wav"), 
                 "coin": pygame.mixer.Sound("sounds/coin.wav"), 
                 "heal": pygame.mixer.Sound("sounds/heal.wav"),
-                "slowed": pygame.mixer.Sound("sounds/slip.wav")
+                "slip": pygame.mixer.Sound("sounds/slip.wav"),
+                "summon": pygame.mixer.Sound("sounds/summonkey.wav")
                 }
     soundlistboss = {"bossdmg": pygame.mixer.Sound("sounds/bossdmg.wav"),
                       "curse": pygame.mixer.Sound("sounds/curse.wav"),
