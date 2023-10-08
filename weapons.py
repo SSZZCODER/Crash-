@@ -245,7 +245,8 @@ class Bombweapon:
             bombpos = [self.rect.x + self.rect.w, self.rect.y + self.rect.h]
         #pygame.draw.rect(screen, (255,0,0), self.rect)
         bombpos = self.rect.center
-        self.bombs.append(Bomb(self.speed, attackvector, bombpos[0], bombpos[1]))
+        return Bomb(self.speed, attackvector, bombpos[0], bombpos[1])
+
 
 
 
@@ -259,11 +260,11 @@ class Bombweapon:
         self.xpos = xpos
         self.ypos = ypos
         self.render(screen, playercenter)
-        if len(self.bombs) > 0:
-            for bomb in self.bombs:
-                bomb.update(screen)
-                if bomb.destroyed == True:
-                    self.bombs.remove(bomb)
+        #if len(self.bombs) > 0:
+         #   for bomb in self.bombs:
+          #      bomb.update(screen)
+           #     if bomb.destroyed == True:
+            #        self.bombs.remove(bomb)
   
 
 
