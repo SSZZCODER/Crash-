@@ -89,6 +89,7 @@ class Rifleweapon:
         if angle > 0 and angle < 90:
             bulletpos = [self.rect.x + self.rect.w, self.rect.y + self.rect.h]
         self.bullets.append(Bullet(self.bulletspeed, attackvector, bulletpos[0], bulletpos[1]))
+        GameLogic.playSound("rifle")
 
 
     def update(self, screen, xpos, ypos,playercenter):
@@ -248,8 +249,6 @@ class Bombweapon:
         #pygame.draw.rect(screen, (255,0,0), self.rect)
         bombpos = self.rect.center
         return Bomb(self.speed, attackvector, bombpos[0], bombpos[1])
-
-
 
 
     def render(self, screen, playercenter):

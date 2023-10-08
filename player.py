@@ -268,6 +268,7 @@ class Player:
                         Player.weapon.shoottimer += 1
                     if Player.weapon.bulletcount <=0:
                         Player.weapon.reloading = True
+                        GameLogic.playSound("reload")
                 
                     
                 

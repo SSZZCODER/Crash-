@@ -15,7 +15,9 @@ class GameLogic:
                 "summon": pygame.mixer.Sound("sounds/summonkey.wav"),
                 "rifle": pygame.mixer.Sound("sounds/rifle.wav"),
                 "sword": pygame.mixer.Sound("sounds/swordslash.wav"),
-                "swordhit": pygame.mixer.Sound("sounds/swordhit.wav")
+                "swordhit": pygame.mixer.Sound("sounds/swordhit.wav"),
+                "bomb": pygame.mixer.Sound("sounds/bomb.wav"),
+                "reload": pygame.mixer.Sound("sounds/reload.wav")
                 }
     soundlistboss = {"bossdmg": pygame.mixer.Sound("sounds/bossdmg.wav"),
                       "curse": pygame.mixer.Sound("sounds/curse.wav"),
@@ -29,6 +31,7 @@ class GameLogic:
     playerPos = [0, 0]
     playerspeedmulti = 1
     pygame.mixer.Sound.set_volume(soundlist["zombie"], .05)
+    pygame.mixer.Sound.set_volume(soundlist["bomb"],.05)
     pygame.mixer.Sound.set_volume(soundlist["achievement"],.05)
     pygame.mixer.Sound.set_volume(soundlist["coin"],.9)
     pygame.mixer.Sound.set_volume(soundlist["heal"],.6)    
