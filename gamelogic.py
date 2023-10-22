@@ -20,7 +20,8 @@ class GameLogic:
                 "reload": pygame.mixer.Sound("sounds/reload.wav"),
                 "explosion": pygame.mixer.Sound("sounds/explosion.wav"),
                 "fishsplash": pygame.mixer.Sound("sounds/splash.wav"),
-                "monkeyattack": pygame.mixer.Sound("sounds/monki.wav")
+                "monkeyattack": pygame.mixer.Sound("sounds/monki.wav"),
+                "zombiea": pygame.mixer.Sound("sounds/zombieattack.wav")
                 }
     soundlistboss = {"bossdmg": pygame.mixer.Sound("sounds/bossdmg.wav"),
                       "curse": pygame.mixer.Sound("sounds/curse.wav"),

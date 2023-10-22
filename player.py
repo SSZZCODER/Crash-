@@ -214,7 +214,7 @@ class Player:
         elif Player.weapon_name == "Rifle":
             Player.weapon = Player.weapon_rifle
             Player.weapon.update(screen, Player.playercenter[0] , Player.playercenter[1],Player.playercenter)   
-            Player.playerimage = Player.skinnew
+            Player.playerimage = Player.skinnew 
             if Player.weapon.reloading == True:
                     if Player.weapon.reloadtimer >= Player.weapon.reloadcooldown:
                         Player.weapon.bulletcount = Player.weapon.bulletcapacity
