@@ -307,6 +307,7 @@ class Bomb:
     def explosionhit(self):
         for enemy in GameLogic.enemyList[GameLogic.current_chunk]:
             if (self.explodedrect.colliderect(enemy.image.get_rect(center=(enemy.xPos, enemy.yPos)))):
+                GameLogic.playSound("explosion")
                 enemy.takeDamage(self.explosiondmg)
 
 
