@@ -430,7 +430,7 @@ class monkey(enemy):
         def takeDamage(self, damage):
             self.health -= damage
             if self.health <= 0:
-                self.dropKey = True
+                GameLogic.junglekillsforkey +=1
                 GameLogic.enemyList[GameLogic.current_chunk].remove(self)
             print("taken damage")
 class Banana:

@@ -215,7 +215,7 @@ class Bombweapon:
         self.rect = self.image.get_rect()
         self.name = "Bomb"
         self.thrown = False
-        self.speed = 1
+        self.speed = 3
         self.bombs = []
         self.throwtimer = 0
         self.throwcooldown = 50
@@ -229,7 +229,7 @@ class Bombweapon:
         pcenter = [playercenter[0],playercenter[1]]
         self.image_rot = pygame.transform.rotate(self.image, angle)
         self.rect = self.image_rot.get_rect(center = pcenter)
-        screen.blit(self.image_rot,self.image_rot.get_rect(center = pcenter))
+        #screen.blit(self.image_rot,self.image_rot.get_rect(center = pcenter))
         #pygame.draw.rect(screen, (255,0,0), self.rect)
 
     def attack(self, screen, playercenter):
@@ -246,7 +246,7 @@ class Bombweapon:
             bombpos = [self.rect.x, self.rect.y + self.rect.h]
         if angle > 0 and angle < 90:
             bombpos = [self.rect.x + self.rect.w, self.rect.y + self.rect.h]
-        #pygame.draw.rect(screen, (255,0,0), self.rect)
+        pygame.draw.rect(screen, (255,0,0), self.rect)
         bombpos = self.rect.center
         return Bomb(self.speed, attackvector, bombpos[0], bombpos[1])
 
@@ -286,7 +286,7 @@ class Bomb:
         self.rect = pygame.Rect(0,0,32,32)
         self.explodedrect = self.explosion.get_bounding_rect()
         self.destroyed = False
-        self.range = 400
+        self.range = 300
         self.disappear = 60
         self.explosiondmg = 5
         
@@ -315,7 +315,7 @@ class Bomb:
         self.rect.center = (self.xpos, self.ypos)
         self.explodedrect.center = (self.xpos, self.ypos)
         screen.blit(self.image,self.rect)
-        pygame.draw.rect(screen, (255,0,0), self.rect)
+        #pygame.draw.rect(screen, (255,0,0), self.rect)
 
     def exploded(self):
         self.image = self.explosion
