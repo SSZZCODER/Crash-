@@ -121,10 +121,10 @@ class zombie(enemy):
         def attack(self):
             attack_choice = random.randint(1,5)
             if attack_choice == 3:
-                GameLogic.playSound("zombie")
+                GameLogic.playSound("zombieattack")
                 return [1, self.poison_dmg, self.poison_duration]
             else:
-                GameLogic.playSound("zombie")
+                GameLogic.playSound("zombieattack")
                 return [0, self.damage]
             
         def takeDamage(self, damage):
