@@ -1,7 +1,7 @@
 import pygame
 
 class GameLogic:
-
+    #pygame.mixer.pre_init(44100, 16, 2, 4096)
     pygame.mixer.init()
     up = False
     enemyList = {"grass":[], "lava":[], "ocean":[], "Boss1":[], "Boss2":[], "Boss3":[], "Boss4":[], "jungle":[]}
@@ -16,9 +16,11 @@ class GameLogic:
                 "rifle": pygame.mixer.Sound("sounds/rifle.wav"),
                 "sword": pygame.mixer.Sound("sounds/swordslash.wav"),
                 "swordhit": pygame.mixer.Sound("sounds/swordhit.wav"),
-                "bomb": pygame.mixer.Sound("sounds/bomb.wav"),
+                "bomb": pygame.mixer.Sound("sounds/explosion.wav"),
                 "reload": pygame.mixer.Sound("sounds/reload.wav"),
-                "explosion": pygame.mixer.Sound("sounds/explosion.wav")
+                "explosion": pygame.mixer.Sound("sounds/explosion.wav"),
+                "fishsplash": pygame.mixer.Sound("sounds/splash.wav"),
+                "monkeyattack": pygame.mixer.Sound("sounds/monki.wav")
                 }
     soundlistboss = {"bossdmg": pygame.mixer.Sound("sounds/bossdmg.wav"),
                       "curse": pygame.mixer.Sound("sounds/curse.wav"),
