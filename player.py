@@ -250,12 +250,12 @@ class Player:
                 bomb.update(screen)
                 if bomb.destroyed == True:
                     GameLogic.bomblist.remove(bomb)
-        elif Player.weapon_name == "pumpkinlauncher":
+        elif Player.weapon_name == "Pumpkin_Launcher":
             Player.weapon = Player.weapon_pumpkinlauncher
             amount = 0
             for item in Player.playerInventory.items:
                 if item != None:
-                    if item.name == "pumpkinlauncher":
+                    if item.name == "Pumpkin_Launcher":
                         amount = item.amount
             if amount <= 0:
                 Player.weapon.name = "Fist"
@@ -324,12 +324,12 @@ class Player:
                                 if item.name == "Bomb":
                                     item.amount -= 1
                         Player.weapon.throwtimer = 0
-            elif Player.weapon_name == "pumpkinlauncher":
+            elif Player.weapon_name == "Pumpkin_Launcher":
                 #Player.weapon.thrown = True
                 amount = 0
                 for item in Player.playerInventory.items:
                     if item != None:
-                        if item.name == "pumpkinlauncher":
+                        if item.name == "Pumpkin_Launcher":
                             amount = item.amount
                 if amount <= 0:
                     Player.weapon_name = "Fist"
@@ -340,7 +340,7 @@ class Player:
                         GameLogic.pumpkinlist.append(Player.weapon.attack(screen,GameLogic.playerPos))
                         for item in Player.playerInventory.items:
                             if item != None:
-                                if item.name == "pumpkinlauncher":
+                                if item.name == "Pumpkin_Launcher":
                                     item.amount -= 1
                         Player.weapon.throwtimer = 0
         for i in range(len(Player.playerInventory.items)):
