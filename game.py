@@ -12,7 +12,7 @@ import jungle
 import monkeyarena
 from data import saveData
 
-level = 1
+level = 0
 
 
 

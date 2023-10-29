@@ -501,10 +501,20 @@ class Player:
         
         if Player.weapon_name == "Rifle": 
             if Player.weapon.reloading == False: 
-                bulletcount = Player.font.render(str(Player.weapon.bulletcount), True, (255,0,0))    
-                screen.blit(bulletcount, (350,600))
+                #bulletcount = Player.font.render(str(Player.weapon.bulletcount), True, (255,0,0))    
+                #screen.blit(bulletcount, (350,600))
+                for i in range(Player.weapon.bulletcount):
+                    x = 21
+                    screen.blit(Player.weapon.bulletimage, [0+x*i, 675])                
             elif Player.weapon.reloading == True:
-                setext = Player.font.render(str("Reloading"), True, (255,0,0))
-                screen.blit(setext, (350,600))
+
+                if Player.weapon.reloadcount < Player.weapon.bulletcapacity:
+                    if Player.weapon.reloadtimer %(Player.weapon.reloadcooldown/Player.weapon.bulletcapacity)==0:
+                        Player.weapon.reloadcount += 1
+                    else:
+                        pass
+                screen.blit(Player.weapon.bulletimage, [0*21*Player.weapon.reloadcount, 675])
+                        
+                
 
         

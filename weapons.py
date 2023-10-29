@@ -60,7 +60,9 @@ class Rifleweapon:
         self.reloading = False
         self.reloadtimer = 0 
         self.reloadcooldown = 80
-
+        self.bulletimage = pygame.image.load("images/bulletimage.png")
+        self.reloadcount = 0
+        
 
 
     def render(self, screen,playercenter):
