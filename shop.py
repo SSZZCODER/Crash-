@@ -82,7 +82,7 @@ class HalloweenShop:
         self.image = pygame.image.load("images/halloweenshopui.png")
         self.image = pygame.transform.scale(self.image, (98 *7.75, 73 * 7.75))
         self.launcher = pygame.image.load("images/pumpkinlauncher.png")
-        self.launcher = pygame.transform.scale(self.launcher, (32 ,32))
+        self.launcher = pygame.transform.scale(self.launcher, (32*4.5 ,32*4.5))
         self.launchercost = 6
         self.buy2 = pygame.Rect([310, 460], [195,65])
         self.playercoins = 1000
