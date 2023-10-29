@@ -338,6 +338,143 @@ class Bomb:
         self.explosionhit()
 
             
+class pumpkinlauncher:
+    def __init__(self, xpos, ypos, cooldown, damage):
+        self.xpos = xpos
+        self.ypos = ypos
+        self.cooldown = cooldown
+        self.damage = damage
+        self.image = pygame.image.load("images/pumpkinlauncher.png")
+        self.image = pygame.transform.scale(self.image, (12*4, 37.5*4))
+        self.rect = self.image.get_rect()
+        self.name = "Pumpkin Launcher"
+        self.thrown = False
+        self.speed = 3
+        self.pumpkins = []
+        self.throwtimer = 0
+        self.throwcooldown = 50
+        
+
+    def hold_render(self, screen, playercenter):
+        mpos = pygame.mouse.get_pos()
+        x_dist = mpos[0] - playercenter[0]
+        y_dist = mpos[1] - playercenter[1]
+        angle = math.atan2(x_dist, y_dist)   * (180/math.pi)
+        pcenter = [playercenter[0],playercenter[1]]
+        self.image_rot = pygame.transform.rotate(self.image, angle)
+        self.rect = self.image_rot.get_rect(center = pcenter)
+        screen.blit(self.image_rot,self.image_rot.get_rect(center = pcenter))
+        #pygame.draw.rect(screen, (255,0,0), self.rect)
+
+    def attack(self, screen, playercenter):
+        mpos = pygame.mouse.get_pos() 
+        x_dist = mpos[0] - playercenter[0]
+        y_dist = mpos[1] - playercenter[1]
+        angle = math.atan2(x_dist, y_dist)   * (180/math.pi)
+        attackvector = Vector2(x_dist, y_dist).normalize()
+        if angle < -90 and angle > -180:
+            bombpos = [self.rect.x, self.rect.y]
+        if angle > 90 and angle < 180:
+            bombpos = [self.rect.x + self.rect.w, self.rect.y]
+        if angle < 0 and angle > -90:
+            bombpos = [self.rect.x, self.rect.y + self.rect.h]
+        if angle > 0 and angle < 90:
+            bombpos = [self.rect.x + self.rect.w, self.rect.y + self.rect.h]
+        #pygame.draw.rect(screen, (255,0,0), self.rect)
+        bombpos = self.rect.center
+        return Bomb(self.speed, attackvector, bombpos[0], bombpos[1])
+
+
+    def render(self, screen, playercenter):
+        #if not self.thrown:
+        self.hold_render(screen, playercenter)
+
+
+
+    def update(self, screen, xpos, ypos, playercenter):
+        self.xpos = xpos
+        self.ypos = ypos
+        self.render(screen, playercenter)
+        #if len(self.bombs) > 0:
+         #   for bomb in self.bombs:
+          #      bomb.update(screen)
+           #     if bomb.destroyed == True:
+            #        self.bombs.remove(bomb)
+  
+
+
+
+
+class pumpkin:
+    def __init__(self, speed, direction, xpos, ypos):
+        self.speed = speed
+        self.direction = direction
+        self.velocity = self.direction.scale_to_length(self.speed)
+        self.xpos = xpos
+        self.ypos = ypos
+        self.damage = 25
+        self.image = pygame.image.load("images/newbombv6 (1).png")
+        self.image = pygame.transform.scale(self.image, (24*2, 24*2))
+        self.explosion = pygame.image.load("images/explosion.png")
+        self.explosion = pygame.transform.scale(self.explosion, (32*3.5,32*3.5))
+        self.rect = pygame.Rect(0,0,32,32)
+        self.explodedrect = self.explosion.get_bounding_rect()
+        self.destroyed = False
+        self.range = 200
+        self.disappear = 60
+        self.explosiondmg = 5
+        
+
+
+    def move(self):
+        self.xpos += self.direction[0]
+        self.ypos += self.direction[1]
+    
+    def hit(self):
+        for enemy in GameLogic.enemyList[GameLogic.current_chunk]:
+            if (self.rect.colliderect(enemy.image.get_rect(center=(enemy.xPos, enemy.yPos)))):
+                self.exploded()
+                return True
+                break
+        return False
+
+    def explosionhit(self):
+        for enemy in GameLogic.enemyList[GameLogic.current_chunk]:
+            if (self.explodedrect.colliderect(enemy.image.get_rect(center=(enemy.xPos, enemy.yPos)))):
+                GameLogic.playSound("explosion")
+                enemy.takeDamage(self.explosiondmg)
+
+
+    def render(self, screen):
+        self.rect.center = (self.xpos, self.ypos)
+        self.explodedrect.center = (self.xpos, self.ypos)
+        screen.blit(self.image,self.rect)
+        #pygame.draw.rect(screen, (255,0,0), self.rect)
+
+    def exploded(self):
+        self.image = self.explosion
+        self.direction = [0,0]
+        if self.disappear>0:
+            self.disappear -=1
+        
+        if self.disappear <= 0:
+            self.destroyed = True
+
+    def update(self, screen):
+        self.move()
+        self.render(screen)
+        self.hit()
+        if self.hit() == False:
+            if self.range <=0:
+                self.exploded()
+        if self.range >0:
+            self.range -= 1
+        self.explosionhit()
+
+            
+
+            
+
 
             
 
