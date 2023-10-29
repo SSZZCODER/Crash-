@@ -21,7 +21,9 @@ class GameLogic:
                 "explosion": pygame.mixer.Sound("sounds/explosion.wav"),
                 "fishsplash": pygame.mixer.Sound("sounds/splash.wav"),
                 "monkeyattack": pygame.mixer.Sound("sounds/monki.wav"),
-                "zombiea": pygame.mixer.Sound("sounds/zombieattack.wav")
+                "zombiea": pygame.mixer.Sound("sounds/zombieattack.wav"),
+                "pumpkinlauncher": pygame.mixer.Sound("sounds/rpg.wav"),
+                "splat": pygame.mixer.Sound("sounds/splat.wav")
                 }
     soundlistboss = {"bossdmg": pygame.mixer.Sound("sounds/bossdmg.wav"),
                       "curse": pygame.mixer.Sound("sounds/curse.wav"),
