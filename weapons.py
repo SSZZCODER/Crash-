@@ -347,7 +347,7 @@ class pumpkinlauncher:
         self.image = pygame.image.load("images/pumpkinlauncher.png")
         self.image = pygame.transform.scale(self.image, (12*4, 37.5*4))
         self.rect = self.image.get_rect()
-        self.name = "Pumpkin Launcher"
+        self.name = "Pumpkin_Launcher"
         self.thrown = False
         self.speed = 3
         self.pumpkins = []
@@ -373,16 +373,16 @@ class pumpkinlauncher:
         angle = math.atan2(x_dist, y_dist)   * (180/math.pi)
         attackvector = Vector2(x_dist, y_dist).normalize()
         if angle < -90 and angle > -180:
-            bombpos = [self.rect.x, self.rect.y]
+            pumpkinpos = [self.rect.x, self.rect.y]
         if angle > 90 and angle < 180:
-            bombpos = [self.rect.x + self.rect.w, self.rect.y]
+            pumpkinpos = [self.rect.x + self.rect.w, self.rect.y]
         if angle < 0 and angle > -90:
-            bombpos = [self.rect.x, self.rect.y + self.rect.h]
+            pumpkinpos = [self.rect.x, self.rect.y + self.rect.h]
         if angle > 0 and angle < 90:
-            bombpos = [self.rect.x + self.rect.w, self.rect.y + self.rect.h]
+            pumpkinpos = [self.rect.x + self.rect.w, self.rect.y + self.rect.h]
         #pygame.draw.rect(screen, (255,0,0), self.rect)
-        bombpos = self.rect.center
-        return Bomb(self.speed, attackvector, bombpos[0], bombpos[1])
+        pumpkinpos = self.rect.center
+        return pumpkin(self.speed, attackvector, pumpkinpos[0], pumpkinpos[1])
 
 
     def render(self, screen, playercenter):
@@ -413,9 +413,9 @@ class pumpkin:
         self.xpos = xpos
         self.ypos = ypos
         self.damage = 25
-        self.image = pygame.image.load("images/newbombv6 (1).png")
+        self.image = pygame.image.load("images/pumpkinammo")
         self.image = pygame.transform.scale(self.image, (24*2, 24*2))
-        self.explosion = pygame.image.load("images/explosion.png")
+        self.explosion = pygame.image.load("images/squashedpumpkin.png")
         self.explosion = pygame.transform.scale(self.explosion, (32*3.5,32*3.5))
         self.rect = pygame.Rect(0,0,32,32)
         self.explodedrect = self.explosion.get_bounding_rect()

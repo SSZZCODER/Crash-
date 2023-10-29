@@ -31,6 +31,7 @@ class GameLogic:
     spellList = []
     bulletlist = []
     bomblist = []
+    pumpkinlist = []
     current_chunk = "grass"
     playerPos = [0, 0]
     playerspeedmulti = 1

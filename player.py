@@ -8,7 +8,7 @@ from inventory import Inventory
 import random
 from gamelogic import GameLogic
 from hotbar import Hotbar
-from weapons import Bombweapon, Swordweapon, weapon, Rifleweapon
+from weapons import Bombweapon, Swordweapon, weapon, Rifleweapon, pumpkinlauncher
 from particle import *
 from items import *
 from spells import Fire
@@ -32,6 +32,7 @@ class Player:
     weapon_rifle = Rifleweapon(0, 0, 5, 50)
     weapon_sword = Swordweapon(0,0,2.5, 20)
     weapon_bomb = Bombweapon(0,0,10,100)
+    weapon_pumpkinlauncher = pumpkinlauncher(0, 0, 10, 100)
     weapon = weapon_fist
     weapon_name = "Fist"
     attack_cooldown = 30
@@ -249,6 +250,27 @@ class Player:
                 bomb.update(screen)
                 if bomb.destroyed == True:
                     GameLogic.bomblist.remove(bomb)
+        elif Player.weapon_name == "pumpkinlauncher":
+            Player.weapon = Player.weapon_pumpkinlauncher
+            amount = 0
+            for item in Player.playerInventory.items:
+                if item != None:
+                    if item.name == "pumpkinlauncher":
+                        amount = item.amount
+            if amount <= 0:
+                Player.weapon.name = "Fist"
+                Player.weapon = Player.weapon_fist
+                #Player.playerInventory.removeItemAll(Player.weapon_bomb)
+            else:
+                Player.weapon.update(screen, Player.playercenter[0] , Player.playercenter[1],Player.playercenter)
+                Player.playerimage = Player.skinnew
+                if Player.weapon.throwtimer < Player.weapon.throwcooldown:
+                    Player.weapon.throwtimer += 1   
+        if len(GameLogic.pumpkinlist) > 0:
+            for pumpkin in GameLogic.pumpkinlist:
+                pumpkin.update(screen)
+                if pumpkin.destroyed == True:
+                    GameLogic.pumpkinlist.remove(pumpkin)
         Player.Render(screen)
         Player.spellangle()
         Player.itemCheck()
@@ -300,6 +322,25 @@ class Player:
                         for item in Player.playerInventory.items:
                             if item != None:
                                 if item.name == "Bomb":
+                                    item.amount -= 1
+                        Player.weapon.throwtimer = 0
+            elif Player.weapon_name == "pumpkinlauncher":
+                #Player.weapon.thrown = True
+                amount = 0
+                for item in Player.playerInventory.items:
+                    if item != None:
+                        if item.name == "pumpkinlauncher":
+                            amount = item.amount
+                if amount <= 0:
+                    Player.weapon_name = "Fist"
+                    Player.weapon = Player.weapon_fist
+                    #Player.playerInventory.removeItemAll(Player.weapon_bomb)
+                else:
+                    if Player.weapon.throwtimer >= Player.weapon.throwcooldown:
+                        GameLogic.pumpkinlist.append(Player.weapon.attack(screen,GameLogic.playerPos))
+                        for item in Player.playerInventory.items:
+                            if item != None:
+                                if item.name == "pumpkinlauncher":
                                     item.amount -= 1
                         Player.weapon.throwtimer = 0
         for i in range(len(Player.playerInventory.items)):
