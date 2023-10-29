@@ -215,6 +215,7 @@ class fish(enemy):
             """
 
         def attack(self):
+            GameLogic.playSound("fishsplash")
             return[0, self.damage]
         def takeDamage(self, damage):
             self.health -= damage
