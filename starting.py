@@ -17,6 +17,7 @@ from particle import ParticleSystem, particlePlayer
 from bushspawner import *
 import random
 from shop import Shop
+from shop import HalloweenShop
 from textbar import *
 import pygame.font
 
@@ -32,6 +33,10 @@ def main():
     shopkeeper = pygame.image.load('images/shopkeeper.png')
     shopkeeper = pygame.transform.scale(shopkeeper, (100,100))
     shopkeeperrect= pygame.Rect([650,0], [100,100])
+    halloweenshop = pygame.image.load("images/halloweenshop.png")
+    halloweenshop = pygame.transform.scale(halloweenshop, (100,100))
+    halloweenshoprect= pygame.Rect([0,325], [100,100])
+    
     droppedkey = False
     global keypos 
     keypos = [0,0]
@@ -69,6 +74,7 @@ def main():
         bushspawner.spawnbush()
     particles = ParticleSystem(10,700, (250,5,5))
     shopui = Shop(0,50)
+    shopui2 = HalloweenShop(0,50)
  
     while not exit:
         enemylength = len(GameLogic.enemyList[GameLogic.current_chunk])
@@ -106,7 +112,7 @@ def main():
 
         screen.blit(portal, [600,600])
         screen.blit(shopkeeper, [650,0])
-
+        screen.blit(halloweenshop, [0,325])
         spawner3.spawncoin()
         spawner4.spawnbandage()
         spawner1.spawn()
@@ -140,6 +146,8 @@ def main():
         #enemy_z1.update(screen)
         if shopkeeperrect.collidepoint(Player.player_x, Player.player_y):
             shopui.update(screen, events)
+        if halloweenshoprect.collidepoint(Player.player_x, Player.player_y):
+            shopui2.update(screen, events)
         StaminaBar.render(screen)
         Spell.render(screen)
         HealthBar.render(screen)

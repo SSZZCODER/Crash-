@@ -75,4 +75,56 @@ class Shop:
         self.render(screen)
         self.buy(events)
 
+class HalloweenShop:
+    def __init__(self, xPos, yPos):
+        self.xPos = xPos    
+        self.yPos = yPos
+        self.image = pygame.image.load("images/halloweenshopui.png")
+        self.image = pygame.transform.scale(self.image, (98 *7.75, 73 * 7.75))
+        self.launcher = pygame.image.load("images/pumpkinlauncher.png")
+        self.launcher = pygame.transform.scale(self.launcher, (32 ,32))
+        self.launchercost = 6
+        self.buy2 = pygame.Rect([310, 460], [195,65])
+        self.playercoins = 1000
+    def render(self, screen):
+        screen.blit(self.image, (self.xPos, self.yPos))
+
+        #pygame.draw.rect(screen, [250,0,0], self.buy1)
+        screen.blit(self.launcher, (340, 255))
+        #pygame.draw.rect(screen, [250,0,0], self.buy2)
+
+        #pygame.draw.rect(screen, [250,0,0], self.buy3)
+    def buy(self, events):
+        for i in range(Player.playerInventory.slots):
+            if Player.playerInventory.items[i] != None:
+                if Player.playerInventory.items[i].name == "Coin":
+                    self.playercoins = Player.playerInventory.items[i].amount
+                    break
+
+        for event in events:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+            
+
+                if self.buy2.collidepoint(event.pos) and self.playercoins >= self.launchercost:
+                    print("Bought Launcher")
+                
+                    Player.playerInventory.addItem(items.Bomb())
+                    
+                    self.playercoins -= self.launchercost
+                elif self.buy2.collidepoint(event.pos) and self.playercoins< self.launchercost:   
+                    print("not enough money")
+
+
+        for i in range(Player.playerInventory.slots):
+            if Player.playerInventory.items[i] != None:
+                if Player.playerInventory.items[i].name == "Coin":
+                    Player.playerInventory.items[i].amount = self.playercoins
+                    break
+
+        
+
+    def update(self, screen, events):
+        self.render(screen)
+        self.buy(events)
+
 
