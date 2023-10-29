@@ -51,7 +51,7 @@ class Rifleweapon:
         self.rect = self.image.get_rect()
 
         self.name = "Rifle"
-        self.bulletcapacity = 10
+        self.bulletcapacity = 5
         self.bulletcount = self.bulletcapacity
         self.bullets = []
         self.bulletspeed = 20
@@ -109,7 +109,7 @@ class Bullet:
         self.velocity = self.direction.scale_to_length(self.speed)
         self.xpos = xpos
         self.ypos = ypos
-        self.damage = 25
+        self.damage = 75
         self.rect = pygame.Rect(0,0,32,32)
         self.destroyed = False
     

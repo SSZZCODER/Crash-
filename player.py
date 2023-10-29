@@ -53,7 +53,7 @@ class Player:
     playercenter = [300, 300]
     playerInventory = Inventory(5)
     inventoryShow = False
-    playerhotbar = Hotbar()
+    #playerhotbar = Hotbar()
     poison_cooldown = 0
     burn_cooldown = 0
     spellreset = 120
@@ -455,7 +455,7 @@ class Player:
 
         if Player.inventoryShow:
             Player.showingInventory(screen)
-        Player.playerhotbar.Render(screen)
+        #Player.playerhotbar.Render(screen)
         screen.blit(Player.title, (250,250))
         
         if Player.weapon_name == "Rifle": 
