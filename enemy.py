@@ -121,10 +121,10 @@ class zombie(enemy):
         def attack(self):
             attack_choice = random.randint(1,5)
             if attack_choice == 3:
-                GameLogic.playSound("zombieattack")
+                GameLogic.playSound("zombiea")
                 return [1, self.poison_dmg, self.poison_duration]
             else:
-                GameLogic.playSound("zombieattack")
+                GameLogic.playSound("zombiea")
                 return [0, self.damage]
             
         def takeDamage(self, damage):
@@ -155,6 +155,7 @@ class magma(enemy):
         def attack(self):
             attack_choice = random.randint(1,5)
             if attack_choice == 3:
+                
                 return [2, self.fire_dmg, self.burn_duration]
             else:
                 return [0, self.damage]
