@@ -703,5 +703,6 @@ class banana_peel:
 
         print("taken damage")
     def attack(self):
+        GameLogic.playSound("slip")
         GameLogic.enemyList[GameLogic.current_chunk].remove(self)
         return [5]

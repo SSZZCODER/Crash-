@@ -30,4 +30,3 @@ class bush:
     #    pygame.draw.rect(screen, (0,0,0), self.rectangle)
     def update(self, screen):
         self.render(screen)
-    
