@@ -111,8 +111,8 @@ def main():
         screen.blit(heart, (-29, -45))
         screen.blit(energy, (-9, 10))
         if droppedkey == True:
-            screen.blit(junglekey, keypos)
-            junglekey_rect.center = keypos
+            screen.blit(snowkey, keypos)
+            snowkey_rect.center = keypos
         print(enemylength)
         pygame.display.update()
         clock.tick(60)
