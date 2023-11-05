@@ -13,7 +13,7 @@ import monkeyarena
 import snow
 from data import saveData
 
-level = 0
+level = 11
 
 
 

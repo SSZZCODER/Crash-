@@ -511,7 +511,7 @@ class snowman(enemy):
                     x_dist = GameLogic.playerPos[0]-self.xPos
                     y_dist = GameLogic.playerPos[1]-self.yPos
                     angle = math.atan2(x_dist, y_dist)   * (180/math.pi)
-                    t = Banana(self.xPos, self.yPos, self.snowball_speed,1, self.snowball_dmg, 30, 200, angle)
+                    t = snowball(self.xPos, self.yPos, self.snowball_speed,1, self.snowball_dmg, 30, 200, angle)
                     self.snowballs.append(t)
                     GameLogic.enemyList[GameLogic.current_chunk].append(t)
                     self.snowball_cooldown = 60
@@ -534,7 +534,7 @@ class snowball:
         self.throw_cooldown = throw_cooldown
         self.range = range
         self.angle = angle
-        self.image = pygame.transform.scale(pygame.image.load('images/snowball.png'),(15, 50))
+        self.image = pygame.transform.scale(pygame.image.load('images/snowball.png'),(60, 200))
         self.rect = self.image.get_rect(center = [self.xPos, self.yPos]) 
         self.pos = Vector2(self.xPos,self.yPos)
         self.ppos = Vector2(GameLogic.playerPos)

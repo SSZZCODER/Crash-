@@ -49,7 +49,8 @@ class GameLogic:
     pygame.mixer.Sound.set_volume(soundlistboss["curse"],.02)  
     pygame.mixer.Sound.set_volume(soundlistboss["acid"],.6)  
     junglekillsforkey = 0
-    
+    snowkillsforkey = 0
+
     #pygame.mixer.music.load(soundlist[""])
     #pygame.mixer.music.set_volume(soundlist[""],.05)
     def clear_enemies():

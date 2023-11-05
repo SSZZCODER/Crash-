@@ -10,9 +10,10 @@ import time
 from gamelogic import GameLogic
 from warp import Warp
 from items import spawneritems
-from coral import *
+
 from warp import *
-from tree import *
+
+from igloo import *
 import random
 def main():
     pygame.init()
@@ -26,9 +27,10 @@ def main():
     spawner4 = spawneritems(0,300,20)
     StaminaBar = staminabar(30, 30, 115, 20)
     HealthBar = healthbar(30, 0, 115, 20)
-    trees = random.randint(4, 9)
-    treespawner = objectspawner(trees)
-    spawnmonkey = spawner(0, 600, 11)
+    igloos = random.randint(4, 9)
+    igloospawner = objectspawner(igloos)
+    #spawnmonkey = spawner(0, 600, 11)
+    spawnsnowman = spawner(0, 600, 11)
 
     Spell = spell(320, 640, 115, 20)
     heart = pygame.image.load('images/heart.png')
@@ -38,7 +40,7 @@ def main():
     portal = pygame.transform.scale(portal, (150,200))
     snowkey = pygame.image.load('images/snowkey.png')
     snowkey = pygame.transform.scale(snowkey, (50,20))
-    snowkey_rect = snowkey_rect.get_bounding_rect()
+    snowkey_rect = snowkey.get_bounding_rect()
     bossportal5 = Warp(625, 35,100,175,(0,0,0), 50,0)
 
     oceanpart = ParticleSystem(0,650,(0, 0, 128))
@@ -46,8 +48,7 @@ def main():
     energy = pygame.transform.scale(energy, (65, 65))
     GameLogic.current_chunk = "snow"
     if len(GameLogic.objects[GameLogic.current_chunk])==0:
-        treespawner.spawntree()
-
+        igloospawner.spawnigloo()
 
     clock = pygame.time.Clock()
     exit = False
@@ -83,13 +84,13 @@ def main():
                 haskey = True
                 droppedkey = False
         if haskey == True:
-            bossportal4 = Warp(625, 35,100,175,(144, 238, 144), 50,0)
+            bossportal5 = Warp(625, 35,100,175,(144, 238, 144), 50,0)
         oceanwarp.Update(screen)
         oceanpart.Update(screen)
-        spawnmonkey.spawn_monkey()
+        spawnsnowman.spawn_snowman()
         spawner4.spawnbandage()
         spawner4.spawncoin()
-        bossportal4.Update(screen)
+        bossportal5.Update(screen)
         screen.blit(portal, [600, 10])
         GameLogic.Update(screen)
         if Player.Update(screen) == True:
@@ -104,7 +105,7 @@ def main():
             #    keypos = [375, 375]
             #else:
              #   killsforkey +=1
-        if GameLogic.junglekillsforkey >= 2 and haskey == False:
+        if GameLogic.snowkillsforkey >= 2 and haskey == False:
             droppedkey = True
             GameLogic.playSound("summon")
             keypos = [375,375]
