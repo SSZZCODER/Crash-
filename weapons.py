@@ -384,7 +384,7 @@ class pumpkinlauncher:
         if angle > 0 and angle < 90:
             pumpkinpos = [self.rect.x + self.rect.w, self.rect.y + self.rect.h]
         #pygame.draw.rect(screen, (255,0,0), self.rect)
-        pumpkinpos = self.rect.center
+        #pumpkinpos = self.rect.center
         GameLogic.playSound("pumpkinlauncher")
         return pumpkin(self.speed, attackvector, pumpkinpos[0], pumpkinpos[1])
 
