@@ -17,7 +17,7 @@ import random
 def main():
     pygame.init()
     screen = pygame.display.set_mode((750,750))
-    background = pygame.image.load('images/jungle.png')
+    background = pygame.image.load('images/snow.png')
     background = pygame.transform.scale(background, (750,750))
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
@@ -34,9 +34,9 @@ def main():
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
     oceanwarp = Warp(0,650, 35,100, (0, 0, 128), 650,0)
-    portal = pygame.image.load('images/bossportal4.png')
+    portal = pygame.image.load('images/bossportal5.png')
     portal = pygame.transform.scale(portal, (150,200))
-    junglekey = pygame.image.load('images/junglekey.png')
+    junglekey = pygame.image.load('images/snowkey.png')
     junglekey = pygame.transform.scale(junglekey, (50,20))
     junglekey_rect = junglekey.get_bounding_rect()
     bossportal4 = Warp(625, 35,100,175,(0,0,0), 50,0)
@@ -67,8 +67,8 @@ def main():
                 Player.MoveBy(oceanwarp.offset_x, oceanwarp.offset_y)
                 GameLogic.spellList = []
                 return 5
-            if bossportal4.Touched() == True and haskey == True:
-                Player.MoveBy(bossportal4.offset_x, bossportal4.offset_y)
+            if bossportal5.Touched() == True and haskey == True:
+                Player.MoveBy(bossportal5.offset_x, bossportal5.offset_y)
                 GameLogic.spellList = []
                 return 10
             if event.type == pygame.QUIT:
