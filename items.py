@@ -105,3 +105,10 @@ class Bomb():
         self.image = pygame.image.load("images/bomb.png")
         self.inventoryimage = pygame.transform.scale(self.image, (60,70))
         self.inventoryrect = self.inventoryimage.get_bounding_rect()
+class pumpkin_launcher():
+    def __init__(self):
+        self.amount = 1
+        self.name = "Pumpkin_Launcher"
+        self.image = pygame.image.load("images/pumpkinlauncher.png")
+        self.inventoryimage = pygame.transform.scale(self.image, (60,70))
+        self.inventoryrect = self.inventoryimage.get_bounding_rect()

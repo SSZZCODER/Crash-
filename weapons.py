@@ -344,8 +344,9 @@ class pumpkinlauncher:
         self.ypos = ypos
         self.cooldown = cooldown
         self.damage = damage
-        self.image = pygame.image.load("images/pumpkinlauncher.png")
+        self.image = pygame.image.load("images/pumplauncher.png")
         self.image = pygame.transform.scale(self.image, (12*4, 37.5*4))
+        #self.image = pygame.transform.rotate(self.image, 45)
         self.rect = self.image.get_rect()
         self.name = "Pumpkin_Launcher"
         self.thrown = False
@@ -382,7 +383,9 @@ class pumpkinlauncher:
             pumpkinpos = [self.rect.x + self.rect.w, self.rect.y + self.rect.h]
         #pygame.draw.rect(screen, (255,0,0), self.rect)
         pumpkinpos = self.rect.center
+        GameLogic.playSound("pumpkinlauncher")
         return pumpkin(self.speed, attackvector, pumpkinpos[0], pumpkinpos[1])
+
 
 
     def render(self, screen, playercenter):
@@ -413,7 +416,7 @@ class pumpkin:
         self.xpos = xpos
         self.ypos = ypos
         self.damage = 25
-        self.image = pygame.image.load("images/pumpkinammo")
+        self.image = pygame.image.load("images/pumpkinammo.png")
         self.image = pygame.transform.scale(self.image, (24*2, 24*2))
         self.explosion = pygame.image.load("images/squashedpumpkin.png")
         self.explosion = pygame.transform.scale(self.explosion, (32*3.5,32*3.5))

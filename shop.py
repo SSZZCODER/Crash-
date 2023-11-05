@@ -108,7 +108,7 @@ class HalloweenShop:
                 if self.buy2.collidepoint(event.pos) and self.playercoins >= self.launchercost:
                     print("Bought Launcher")
                 
-                    Player.playerInventory.addItem(items.Bomb())
+                    Player.playerInventory.addItem(items.pumpkin_launcher())
                     
                     self.playercoins -= self.launchercost
                 elif self.buy2.collidepoint(event.pos) and self.playercoins< self.launchercost:   

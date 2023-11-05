@@ -325,6 +325,7 @@ class Player:
                                     item.amount -= 1
                         Player.weapon.throwtimer = 0
             elif Player.weapon_name == "Pumpkin_Launcher":
+                #GameLogic.playSound("pumpkinlauncher")
                 #Player.weapon.thrown = True
                 amount = 0
                 for item in Player.playerInventory.items:
@@ -486,6 +487,9 @@ class Player:
                         elif item.name == "Bomb":
                             Player.weapon_name = "Bomb"
                             Player.weapon = Player.weapon_bomb
+                        elif item.name == "Pumpkin_Launcher":
+                            Player.weapon_name = "Pumpkin_Launcher"
+                            Player.weapon = Player.weapon_pumpkinlauncher
                         clicked = False
                         break
 
