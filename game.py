@@ -10,6 +10,7 @@ import magmaarena
 import sharkarena
 import jungle
 import monkeyarena
+import snow
 from data import saveData
 
 level = 0
@@ -39,4 +40,6 @@ while level != -1:
         level = jungle.main()
     if level == 10:
         level = monkeyarena.main()
+    if level == 11:
+        level = snow.main()
     print(level) 
