@@ -42,6 +42,8 @@ def main():
     bossportal4 = Warp(625, 35,100,175,(0,0,0), 50,0)
 
     oceanpart = ParticleSystem(0,650,(0, 0, 128))
+    snowwarp = Warp(720,650, 35,100, (173, 216, 230), -650,0)
+    snowpart = ParticleSystem(725,700,(173, 216, 230))
     energy = pygame.image.load('images/energy.png')
     energy = pygame.transform.scale(energy, (65, 65))
     GameLogic.current_chunk = "jungle"
@@ -67,6 +69,10 @@ def main():
                 Player.MoveBy(oceanwarp.offset_x, oceanwarp.offset_y)
                 GameLogic.spellList = []
                 return 5
+            if  snowwarp.Touched() == True:
+                Player.MoveBy(snowwarp.offset_x, snowwarp.offset_y)
+                GameLogic.spellList = []
+                return 11
             if bossportal4.Touched() == True and haskey == True:
                 Player.MoveBy(bossportal4.offset_x, bossportal4.offset_y)
                 GameLogic.spellList = []
@@ -86,6 +92,8 @@ def main():
             bossportal4 = Warp(625, 35,100,175,(144, 238, 144), 50,0)
         oceanwarp.Update(screen)
         oceanpart.Update(screen)
+        snowwarp.Update(screen)
+        snowpart.Update(screen)
         spawnmonkey.spawn_monkey()
         spawner4.spawnbandage()
         spawner4.spawncoin()

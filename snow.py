@@ -35,7 +35,7 @@ def main():
     Spell = spell(320, 640, 115, 20)
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
-    oceanwarp = Warp(0,650, 35,100, (0, 0, 128), 650,0)
+    snowwarp = Warp(0,650, 35,100, (0, 0, 128), 650,0)
     portal = pygame.image.load('images/bossportal5.png')
     portal = pygame.transform.scale(portal, (150,200))
     snowkey = pygame.image.load('images/snowkey.png')
@@ -43,7 +43,7 @@ def main():
     snowkey_rect = snowkey.get_bounding_rect()
     bossportal5 = Warp(625, 35,100,175,(0,0,0), 50,0)
 
-    oceanpart = ParticleSystem(0,650,(0, 0, 128))
+    snowpart = ParticleSystem(0,650,(0, 0, 128))
     energy = pygame.image.load('images/energy.png')
     energy = pygame.transform.scale(energy, (65, 65))
     GameLogic.current_chunk = "snow"
@@ -64,10 +64,10 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:   
                 exit=True
-            if  oceanwarp.Touched() == True:
-                Player.MoveBy(oceanwarp.offset_x, oceanwarp.offset_y)
+            if  snowwarp.Touched() == True:
+                Player.MoveBy(snowwarp.offset_x, snowwarp.offset_y)
                 GameLogic.spellList = []
-                return 5
+                return 9
             if bossportal5.Touched() == True and haskey == True:
                 Player.MoveBy(bossportal5.offset_x, bossportal5.offset_y)
                 GameLogic.spellList = []
@@ -85,8 +85,8 @@ def main():
                 droppedkey = False
         if haskey == True:
             bossportal5 = Warp(625, 35,100,175,(144, 238, 144), 50,0)
-        oceanwarp.Update(screen)
-        oceanpart.Update(screen)
+        snowwarp.Update(screen)
+        snowpart.Update(screen)
         spawnsnowman.spawn_snowman()
         spawner4.spawnbandage()
         spawner4.spawncoin()
