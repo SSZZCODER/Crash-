@@ -582,7 +582,8 @@ class bigsnowball(enemy):
              screen.blit(self.image, (self.xPos, self.yPos)) 
 
         def attack(self):
-                return [5]
+            GameLogic.playSound("freeze")
+            return [5]
         def takeDamage():
             pass
 class spawner:
