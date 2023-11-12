@@ -898,7 +898,6 @@ class Tooth:
         self.move()
         self.render(screen)
         self.attack()
-
 class Boss5:
     def __init__(self, damage, xPos, yPos):
         self.health = 2500
@@ -910,10 +909,25 @@ class Boss5:
         self.newcenter = Vector2(0)
         self.velocity = Vector2(0)
         self.speed = 3
+        self.icicletimer = 100
         self.image = pygame.image.load('images/yeti.png')
         self.image = pygame.transform.scale(self.image,(175, 200))
-
-
+        self.icicles = []
+        self.iciclesliptimer = 0
+        self.icicleslipcooldown = random.randint(50, 250)
+        self.maxicicles = 20
+    def icicle(self, screen):
+        if self.icicletimer <= 0:
+            self.icicles.append(Icicle(0,0,self.xPos, self.yPos, GameLogic.playerPos))
+            self.icicletimer = 100
+        elif self.icicletimer > 0:
+            self.icicletimer -= 1
+        if len(self.icicles) > 0:
+            for icicle in self.icicles:
+                icicle.update(screen)
+                if icicle.destroyed == True:
+                    self.icicles.remove(icicle)
+        print(len(self.icicles))
     def attack(self):
         return [0, 0]
     def move(self):
@@ -941,7 +955,7 @@ class Boss5:
     
     def takeDamage(self, damage):
         self.health -= damage
-        GameLogic.playSoundBoss("monkey")
+        GameLogic.playSoundBoss("roar")
         if self.health <= 0:
             GameLogic.enemyList[GameLogic.current_chunk].remove(self)
 
@@ -952,10 +966,53 @@ class Boss5:
     def update(self, screen):
         self.move()            
         self.render(screen)
-        if self.bananasliptimer >= self.bananaslipcooldown and len(GameLogic.enemyList[GameLogic.current_chunk]) <= self.maxbananas:
-            self.banana_slip()
-            self.bananasliptimer = 0
-            self.bananaslipcooldown = random.randint(50,250)
+        if self.iciclesliptimer >= self.icicleslipcooldown and len(GameLogic.enemyList[GameLogic.current_chunk]) <= self.maxicicles:
+            self.iciclesliptimer = 0
+            self.icicleslipcooldown = random.randint(50,250)
         else:
-            self.bananasliptimer += 1
-        self.banana(screen)
+            self.iciclesliptimer += 1
+        self.icicle(screen)
+class Icicle:
+    def __init__(self, angle, direction, xPos, yPos, playerpos):
+        self.imagethrow = pygame.image.load("images/icicle.png")
+        self.imagethrow = pygame.transform.scale(self.imagethrow, (60,30))
+        self.throw_dmg = 25
+        self.throw_rect = self.imagethrow.get_bounding_rect()
+        self.angle = angle
+        self.damage = 5
+        self.speed = 7
+        self.direction = direction
+        self.xPos = xPos 
+        self.yPos = yPos
+        self.throwing = True
+        self.destroyed = False
+        self.playerpos = playerpos
+        self.direction = Vector2(self.playerpos) - Vector2([self.xPos, self.yPos])
+        self.direction = self.direction.normalize()
+        self.rel_x = 0
+        self.true_ypos = yPos
+    def render(self, screen):
+        if self.throwing == True:
+            screen.blit(self.imagethrow, [self.xPos, self.yPos])
+            self.throw_rect.x = self.xPos
+            self.throw_rect.y = self.yPos 
+    def move(self):
+        if self.throwing == True:
+            self.xPos += self.direction[0] * self.speed
+            self.true_ypos += self.direction[1] * self.speed
+            self.yPos = self.true_ypos+(50*math.sin((self.rel_x)*math.pi+10))
+        if self.xPos > 750 or self.xPos < 0:
+            self.destroyed = True
+        if self.yPos > 750 or self.yPos < 0:
+            self.destroyed = True
+        self.rel_x += 0.1
+    def attack(self):
+        if self.throwing == True:
+            if pygame.Rect(GameLogic.playerPos,[50,55]).colliderect(self.throw_rect):
+                print("hit player")
+                Player.health -= self.throw_dmg
+                self.destroyed = True
+    def update(self, screen):
+        self.move()
+        self.render(screen)
+        self.attack()
