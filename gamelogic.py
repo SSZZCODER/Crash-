@@ -23,12 +23,13 @@ class GameLogic:
                 "monkeyattack": pygame.mixer.Sound("sounds/monki.wav"),
                 "zombiea": pygame.mixer.Sound("sounds/zombieattack.wav"),
                 "pumpkinlauncher": pygame.mixer.Sound("sounds/rpg.wav"),
-                "splat": pygame.mixer.Sound("sounds/splat.wav")
+                "splat": pygame.mixer.Sound("sounds/splat.wav"),
                 }
     soundlistboss = {"bossdmg": pygame.mixer.Sound("sounds/bossdmg.wav"),
                       "curse": pygame.mixer.Sound("sounds/curse.wav"),
                       "acid": pygame.mixer.Sound("sounds/acid.wav"),
-                      "monkey": pygame.mixer.Sound("sounds/monkeysound.wav")
+                      "monkey": pygame.mixer.Sound("sounds/monkeysound.wav"),
+                        "roar": pygame.mixer.Sound("sounds/yetiroar.wav")
     }
     spellList = []
     bulletlist = []

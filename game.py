@@ -11,6 +11,7 @@ import sharkarena
 import jungle
 import monkeyarena
 import snow
+import snowarena
 from data import saveData
 import snowarena
 

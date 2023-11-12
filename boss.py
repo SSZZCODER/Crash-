@@ -899,13 +899,45 @@ class Tooth:
         self.render(screen)
         self.attack()
 
-class Boss6:
-        def __init__(self, damage, xPos, yPos):
-            self.health = 2500
-            self.damage = damage
-            self.xPos = xPos
-            self.yPos = yPos
-            self.movetimer = 0
+
+class Boss5:
+    def __init__(self, damage, xPos, yPos):
+        self.health = 2500
+        self.damage = damage
+        self.xPos = xPos
+        self.yPos = yPos
+        self.movetimer = 0
+        self.moving = False
+        self.newcenter = Vector2(0)
+        self.velocity = Vector2(0)
+        self.speed = 3
+        self.icicletimer = 100
+        self.image = pygame.image.load('images/yeti.png')
+        self.image = pygame.transform.scale(self.image,(175, 200))
+        self.icicles = []
+        self.iciclesliptimer = 0
+        self.icicleslipcooldown = random.randint(50, 250)
+        self.maxicicles = 20
+    def icicle(self, screen):
+        if self.icicletimer <= 0:
+            self.icicles.append(Icicle(0,0,self.xPos, self.yPos, GameLogic.playerPos))
+            self.icicletimer = 100
+        elif self.icicletimer > 0:
+            self.icicletimer -= 1
+        if len(self.icicles) > 0:
+            for icicle in self.icicles:
+                icicle.update(screen)
+                if icicle.destroyed == True:
+                    self.icicles.remove(icicle)
+        print(len(self.icicles))
+    def attack(self):
+        return [0, 0]
+    def move(self):
+        if self.moving == False and self.movetimer == 0:
+            self.newcenter.x = random.randint(0,750)
+            self.newcenter.y = random.randint(0,750)
+            self.velocity =  self.newcenter - Vector2(self.xPos, self.yPos)
+            self.velocity.normalize()
             self.moving = True
             self.newcenter = Vector2(random.randint(0,750),random.randint(0,750))
             self.velocity = Vector2(0)
