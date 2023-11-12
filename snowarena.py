@@ -24,6 +24,8 @@ def main():
     StaminaBar = staminabar(30, 30, 115, 20)
     HealthBar = healthbar(30, 0, 115, 20)
     Spell = spell(320, 640, 115, 20)
+
+
     
     spawner3 = spawneritems(0,300,20)
     spawner4 = spawneritems(0,300,1)
@@ -34,7 +36,7 @@ def main():
     energy = pygame.transform.scale(energy, (65, 65))
     GameLogic.current_chunk = "Boss5"
     GameLogic.enemyList[GameLogic.current_chunk].append(Boss5(7, 350 ,95))
-
+    GameLogic.enemyList[GameLogic.current_chunk].append(Boss6(7, 350 ,650))
 
     clock = pygame.time.Clock()
     exit = False
