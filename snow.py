@@ -71,7 +71,7 @@ def main():
             if bossportal5.Touched() == True and haskey == True:
                 Player.MoveBy(bossportal5.offset_x, bossportal5.offset_y)
                 GameLogic.spellList = []
-                return 12
+                return 10
             if event.type == pygame.QUIT:
                 return -1
             if event.type == pygame.KEYDOWN:
