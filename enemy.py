@@ -534,7 +534,7 @@ class snowball:
         self.throw_cooldown = throw_cooldown
         self.range = range
         self.angle = angle
-        self.image = pygame.transform.scale(pygame.image.load('images/snowball.png'),(60, 200))
+        self.image = pygame.transform.scale(pygame.image.load('images/snowball.png'),(60, 60))
         self.rect = self.image.get_rect(center = [self.xPos, self.yPos]) 
         self.pos = Vector2(self.xPos,self.yPos)
         self.ppos = Vector2(GameLogic.playerPos)
