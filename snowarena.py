@@ -25,8 +25,6 @@ def main():
     StaminaBar = staminabar(30, 30, 115, 20)
     HealthBar = healthbar(30, 0, 115, 20)
     Spell = spell(320, 640, 115, 20)
-    slowedbar = slowed(30, 60, 115, 20)
-
     
     spawner3 = spawneritems(0,300,20)
     spawner4 = spawneritems(0,300,1)
