@@ -213,7 +213,7 @@ class Bombweapon:
         self.cooldown = cooldown
         self.damage = damage
         self.image = pygame.image.load("images/newbombv6.png")
-        self.image = pygame.transform.scale(self.image, (12*4, 37.5*4))
+        self.image = pygame.transform.scale(self.image, (12*4, 37.5*4.5))
         self.rect = self.image.get_rect()
         self.name = "Bomb"
         self.thrown = False
@@ -239,7 +239,7 @@ class Bombweapon:
         x_dist = mpos[0] - playercenter[0]
         y_dist = mpos[1] - playercenter[1]
         angle = math.atan2(x_dist, y_dist)   * (180/math.pi)
-        attackvector = Vector2(x_dist, y_dist).normalize()
+        attackvector = Vector2(x_dist, y_dist).normalize()  
         if angle < -90 and angle > -180:
             bombpos = [self.rect.x, self.rect.y]
         if angle > 90 and angle < 180:
@@ -249,7 +249,7 @@ class Bombweapon:
         if angle > 0 and angle < 90:
             bombpos = [self.rect.x + self.rect.w, self.rect.y + self.rect.h]
         #pygame.draw.rect(screen, (255,0,0), self.rect)
-        bombpos = self.rect.center
+        #bombpos = self.rect.center
         return Bomb(self.speed, attackvector, bombpos[0], bombpos[1])
 
 
@@ -281,7 +281,7 @@ class Bomb:
         self.xpos = xpos
         self.ypos = ypos
         self.damage = 25
-        self.image = pygame.image.load("images/newbombv6 (1).png")
+        self.image = pygame.image.load("images/newbombv5 (1).png")
         self.image = pygame.transform.scale(self.image, (24*2, 24*2))
         self.explosion = pygame.image.load("images/explosion.png")
         self.explosion = pygame.transform.scale(self.explosion, (32*3.5,32*3.5))
