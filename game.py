@@ -14,7 +14,7 @@ import snow
 import snowarena
 from data import saveData
 
-level = 1
+level = 12
 
 
 

@@ -564,6 +564,27 @@ class snowball:
         self.shoot()
         if self.health <= 0:
             GameLogic.enemyList[GameLogic.current_chunk].remove(self)
+class bigsnowball(enemy):
+        def __init__(self, xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range):
+            super().__init__(xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range)
+            self.damage_cooldown = 30
+            self.move_cooldown = 30
+            self.roll_dmg = random.choice([4, 5])
+            self.freeze_duration = random.choice([120, 240])
+            self.dropKey = False
+            self.itemcount = 10
+        def move(self):
+            self.xPos += self.speed
+        def assignImage(self):
+            return pygame.transform.scale(pygame.image.load('images/bigsnowball.png'),(70, 90))
+
+        def render(self, screen):
+             screen.blit(self.image, (self.xPos, self.yPos)) 
+
+        def attack(self):
+                return [5]
+        def takeDamage():
+            pass
 class spawner:
     def __init__(self, enemycount, spawn_cooldown, max_enemycount):
         self.enemycount = enemycount
@@ -692,5 +713,22 @@ class spawner:
                 health =random.randint(100, 110)
                 damage = random.randint(5, 6)
                 GameLogic.enemyList[GameLogic.current_chunk].append( snowman(x, y, speed, health, damage, 30, 30, 200))
+                self.enemycount += 1
+                self.life = self.spawn_cooldown     
+    def spawn_snowball(self):
+        if self.life > 0:
+            self.life -= 1
+        else:
+          if self.enemycount <= self.max_enemycount:
+            enemies = random.randint(2,3)
+            if self.max_enemycount - self.enemycount < enemies:
+                enemies = self.max_enemycount - self.enemycount
+            for i in range(enemies):
+                x = 0
+                y = random.randint(50, 650)
+                speed = random.randint(1,2)
+                health =random.randint(100, 110)
+                damage = random.randint(5, 6)
+                GameLogic.enemyList[GameLogic.current_chunk].append( bigsnowball(x, y, speed, health, damage, 30, 30, 200))
                 self.enemycount += 1
                 self.life = self.spawn_cooldown     

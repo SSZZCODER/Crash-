@@ -3,7 +3,6 @@ from inventory import Inventory
 from particle import ParticleSystem
 from player import Player
 from hotbar import Hotbar
-
 from bars import *
 from enemy import *
 import time
@@ -25,17 +24,16 @@ def main():
     StaminaBar = staminabar(30, 30, 115, 20)
     HealthBar = healthbar(30, 0, 115, 20)
     Spell = spell(320, 640, 115, 20)
-    slowedbar = slowed(30, 60, 115, 20)
-
     
     spawner3 = spawneritems(0,300,20)
     spawner4 = spawneritems(0,300,1)
+    spawner5 = spawner(0, 600, 11)
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
     energy = pygame.image.load('images/energy.png')
     energy = pygame.transform.scale(energy, (65, 65))
-    GameLogic.current_chunk = "Boss4"
-    GameLogic.enemyList[GameLogic.current_chunk].append(Boss4(7, 350 ,95))
+    GameLogic.current_chunk = "Boss5"
+    GameLogic.enemyList[GameLogic.current_chunk].append(Boss5(7, 350 ,95))
 
 
     clock = pygame.time.Clock()
@@ -53,6 +51,7 @@ def main():
             
         screen.blit(background,[0,0])
         GameLogic.Update(screen)
+        spawner5.spawn_snowball()
         spawner3.spawncoin()
         spawner4.spawnbandage()
         if Player.Update(screen) == True:
@@ -61,9 +60,6 @@ def main():
         Spell.render(screen)
         StaminaBar.render(screen)
         HealthBar.render(screen)
-        if Player.freezecooldown != 0:
-            slowedbar.render(screen)
-            screen.blit(slowedimg, (11, 45))
         screen.blit(heart, (-29, -45))
         screen.blit(energy, (-9, 10))
         pygame.display.update()
