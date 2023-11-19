@@ -15,7 +15,7 @@ import snowarena
 from data import saveData
 import snowarena
 
-level = 1
+level = 12
 
 
 while level != -1:

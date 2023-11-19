@@ -903,17 +903,17 @@ class Tooth:
 class Boss5:
     def __init__(self, damage, xPos, yPos):
         self.health = 2500
-        self.damage = damage
-        self.xPos = xPos
-        self.yPos = yPos
-        self.movetimer = 0
-        self.moving = False
         self.newcenter = Vector2(0)
         self.velocity = Vector2(0)
         self.speed = 3
         self.icicletimer = 100
         self.image = pygame.image.load('images/yeti.png')
         self.image = pygame.transform.scale(self.image,(175, 200))
+        self.moving = False
+        self.movetimer = 0
+        self.xPos = xPos
+        self.damage = damage
+        self.yPos = yPos
         self.icicles = []
         self.iciclesliptimer = 0
         self.icicleslipcooldown = random.randint(50, 250)
@@ -932,6 +932,11 @@ class Boss5:
         print(len(self.icicles))
     def attack(self):
         return [0, 0]
+    def takeDamage(self, damage):
+        self.health -= damage
+        GameLogic.playSoundBoss("roar")
+        if self.health <= 0:
+            GameLogic.enemyList[GameLogic.current_chunk].remove(self)
     def move(self):
         if self.moving == False and self.movetimer == 0:
             self.newcenter.x = random.randint(0,750)
@@ -939,51 +944,11 @@ class Boss5:
             self.velocity =  self.newcenter - Vector2(self.xPos, self.yPos)
             self.velocity.normalize()
             self.moving = True
-            self.newcenter = Vector2(random.randint(0,750),random.randint(0,750))
-            self.velocity = Vector2(0)
-            self.speed = 3
-            self.imageright = pygame.image.load('images/sharkboss.png')
-            self.imageright = pygame.transform.scale(self.imageright,(175, 200))
-            self.imageleft = pygame.transform.flip(self.imageright, True, False)
-            self.imageleft = pygame.transform.scale(self.imageleft,(175, 200))
-            self.topimage = pygame.image.load('images/topdownviewsharkboss.png')
-            self.topimage = pygame.transform.scale(self.topimage,(175, 200))
-            self.toprightimage = pygame.transform.rotate(self.topimage, -45)
-            self.toprightimage = pygame.transform.scale(self.toprightimage,(200, 225))
-            self.topleftimage = pygame.transform.rotate(self.topimage, 45)
-            self.topleftimage = pygame.transform.scale(self.topleftimage,(200,225))           
-            self.bottomimage = pygame.transform.flip(self.topimage,False, True)
-            self.bottomimage = pygame.transform.scale(self.bottomimage,(175, 200))
-            self.bottomrightimage = pygame.transform.rotate(self.topimage, -135)
-            self.bottomrightimage = pygame.transform.scale(self.bottomrightimage, (200,225))
-            self.bottomleftimage = pygame.transform.rotate(self.topimage, 135)
-            self.bottomleftimage = pygame.transform.scale(self.bottomleftimage, (200,225))
-            self.image = self.imageright
-            self.lungespeed = 5
-            self.lunging = False
-            self.trackplayertime = 150
-            self.lungevelocity = Vector2(0)
-            self.lungedistance = -1
-            self.startlungepos = Vector2(0)
-            self.teethtimer = 100
-            self.tooths = []
-        def move(self):
-            if self.xPos > self.newcenter.x and self.yPos == self.newcenter.y:
-                self.image = self.imageleft
-            if self.xPos < self.newcenter.x and self.yPos == self.newcenter.y:
-                self.image = self.imageright
-            if self.xPos > self.newcenter.x and self.yPos < self.newcenter.y:
-                self.image = self.bottomleftimage
-            if self.xPos < self.newcenter.x and self.yPos > self.newcenter.y:
-                self.image = self.toprightimage
-            if self.xPos > self.newcenter.x and self.yPos > self.newcenter.y:
-                self.image = self.topleftimage
-            if self.xPos < self.newcenter.x and self.yPos < self.newcenter.y:
-                self.image = self.bottomrightimage
-            if self.xPos == self.newcenter.x and self.yPos > self.newcenter.y:
-                self.image = self.topimage
-            if self.xPos == self.newcenter.x and self.yPos < self.newcenter.y:
-                self.image = self.bottomimage
+            self.movetimer = 30
+
+        elif self.moving == False and self.movetimer > 0:
+            self.movetimer -=1
+        if self.moving == True:
             if self.xPos > self.newcenter.x:
                 self.xPos -= 1
             if self.yPos > self.newcenter.y:
@@ -992,9 +957,7 @@ class Boss5:
                 self.xPos += 1
             if self.yPos < self.newcenter.y:
                 self.yPos += 1
-        
             if self.xPos == self.newcenter.x and self.yPos == self.newcenter.y:
-                self.newcenter = Vector2(random.randint(0,750),random.randint(0,750))
                 self.moving = False
                 self.lunging = True
         def lunge(self):
@@ -1062,73 +1025,3 @@ class Boss5:
             self.attack()
 
 
-class Boss6:
-    def __init__(self, damage, xPos, yPos):
-        self.health = 2500
-        self.damage = damage
-        self.xPos = xPos
-        self.yPos = yPos
-        self.movetimer = 0
-        self.moving = False
-        self.newcenter = Vector2(0)
-        self.velocity = Vector2(0)
-        self.speed = 3
-        self.image = pygame.image.load("images/snowmanboss.png")
-        self.cooldown =0
-        self.curse_cooldown = 0
-        self.aura_image = pygame.image.load("images/snowaura.png")
-        self.aura_image = pygame.transform.scale(self.aura_image, (240, 290))
-        self.aura_rect = self.aura_image.get_bounding_rect()
-       
-    def curse(self): #make the aura rotate
-        if self.aura_rect.colliderect(pygame.Rect(GameLogic.playerPos, [50, 55])):
-            Player.speed = 0
-            Player.health -= .5 
-        else:
-            Player.speed = 3
-
-    def move(self):
-        if self.moving == False and self.movetimer == 0:
-            self.newcenter.x = random.randint(0,750)
-            self.newcenter.y = random.randint(0,750)
-            self.velocity =  self.newcenter - Vector2(self.xPos, self.yPos)
-            self.velocity.normalize()
-            self.moving = True
-            self.movetimer = 30
-
-        elif self.moving == False and self.movetimer > 0:
-            self.movetimer -=1
-        if self.moving == True:
-            if self.xPos > self.newcenter.x:
-                self.xPos -= 1
-            if self.yPos > self.newcenter.y:
-                self.yPos -= 1
-            if self.xPos < self.newcenter.x:
-                self.xPos += 1
-            if self.yPos < self.newcenter.y:
-                self.yPos += 1
-            if self.xPos == self.newcenter.x and self.yPos == self.newcenter.y:
-                self.moving = False
-    
-    def takeDamage(self, damage):
-        self.health -= damage
-        GameLogic.playSoundBoss("bossdmg")
-        if self.health <= 0:
-            GameLogic.enemyList[GameLogic.current_chunk].remove(self)
-
-    def render(self, screen):
-        screen.blit(self.image, self.image.get_rect(center = (self.xPos, self.yPos)))
-        pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(245, 10, 300, 50))
-        pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(245, 10, int((self.health/2500)*300), 50))
-        screen.blit(self.aura_image, self.aura_image.get_rect(center = (self.xPos, self.yPos)))
-        self.aura_rect.center = (self.xPos, self.yPos)      
-    def attack(self):
-        return [0, 0]  
-    def update(self, screen):
-        self.move()            
-        self.render(screen) 
-        self.attack()
-
-
-class IciclePierce:
-    pass         
