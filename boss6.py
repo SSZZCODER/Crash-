@@ -27,7 +27,6 @@ class Boss6:
        
     def curse(self): 
         if self.aura_rect.colliderect(pygame.Rect(GameLogic.playerPos, [50, 55])):
-            Player.speed = 0
             Player.speed = 0.25
             Player.health -= .5 
             self.aura_angle +=1
