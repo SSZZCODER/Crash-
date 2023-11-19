@@ -67,8 +67,6 @@ class GameLogic:
             Item.Render(screen)
         for enemy in GameLogic.enemyList[GameLogic.current_chunk]:
             enemy.update(screen)
-            if enemy.health <= 0:
-                GameLogic.enemyList[GameLogic.current_chunk].remove(enemy)
         for spell in GameLogic.spellList:
             spell.update(screen)
     def playSound(name):

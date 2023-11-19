@@ -10,6 +10,7 @@ import time
 from gamelogic import GameLogic
 from items import spawneritems
 from boss import Boss5
+from boss6 import Boss6
 import random
 
 
@@ -28,14 +29,15 @@ def main():
     
     spawner3 = spawneritems(0,300,20)
     spawner5 = spawner(0, 300, 20)
+    spawner6 = spawner(0,300,20)
     spawner4 = spawneritems(0,300,1)
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
     energy = pygame.image.load('images/energy.png')
     energy = pygame.transform.scale(energy, (65, 65))
     GameLogic.current_chunk = "Boss5"
-    GameLogic.enemyList[GameLogic.current_chunk].append(Boss5(7, 350 ,95))
-    #GameLogic.enemyList[GameLogic.current_chunk].append(Boss6(7, 350 ,650))
+    #GameLogic.enemyList[GameLogic.current_chunk].append(Boss5(7, 350 ,95))
+    GameLogic.enemyList[GameLogic.current_chunk].append(Boss6(7, 350 ,650))
 
     clock = pygame.time.Clock()
     exit = False
@@ -55,6 +57,7 @@ def main():
         spawner3.spawncoin()
         spawner4.spawnbandage()
         spawner5.spawn_snowball()
+        spawner6.spawn_marker()
         if Player.Update(screen) == True:
             return 3
         Spell.render(screen)

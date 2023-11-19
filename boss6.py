@@ -28,11 +28,15 @@ class Boss6:
     def curse(self): 
         if self.aura_rect.colliderect(pygame.Rect(GameLogic.playerPos, [50, 55])):
             Player.speed = 0
+            Player.speed = 0.25
             Player.health -= .5 
             self.aura_angle +=1
         else:
             Player.speed = 3
 
+
+    def attack(self):
+        return[0,0]
     
 
     def move(self):
@@ -65,12 +69,14 @@ class Boss6:
             GameLogic.enemyList[GameLogic.current_chunk].remove(self)
 
     def render(self, screen):
-        screen.blit(self.image, self.image.get_rect(center = (self.xPos, self.yPos)))
+      
         pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(245, 10, 300, 50))
         pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(245, 10, int((self.health/2500)*300), 50))
         aura_rot = pygame.transform.rotate(self.aura_image, self.aura_angle)
-        screen.blit(aura_rot, self.aura_image.get_rect(center = (self.xPos, self.yPos)))
+        screen.blit(aura_rot, aura_rot.get_rect(center = (self.xPos, self.yPos)))
         self.aura_rect.center = (self.xPos, self.yPos)      
+        pygame.draw.rect(screen, (255,0,0), self.image.get_rect(center = (self.xPos, self.yPos)))
+        screen.blit(self.image, self.image.get_rect(center = (self.xPos, self.yPos))) 
     def update(self, screen):
         self.move()            
         self.render(screen) 
@@ -78,5 +84,4 @@ class Boss6:
 
 
 
-class IciclePierce:
-    pass         
+

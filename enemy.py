@@ -587,6 +587,22 @@ class bigsnowball(enemy):
             return [5]
         def takeDamage():
             pass
+class marker(enemy):
+    def __init__(self, xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range):  
+        super().__init__(xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range)
+    
+    def assignImage(self):
+        return pygame.transform.scale(pygame.image.load('images/iciclearea.png'),(70, 90))        
+    def move(self):
+        pass
+    def render(self, screen):
+        screen.blit(self.image, self.image.get_rect(center = (self.xPos, self.yPos)))
+    def attack(self):
+        self.image = pygame.image.load("images/iciclepierce.png")
+        return[0,25]
+
+
+
 class spawner:
     def __init__(self, enemycount, spawn_cooldown, max_enemycount):
         self.enemycount = enemycount
@@ -734,3 +750,23 @@ class spawner:
                 GameLogic.enemyList[GameLogic.current_chunk].append( bigsnowball(x, y, speed, health, damage, 30, 30, 200))
                 self.enemycount += 1
                 self.life = self.spawn_cooldown     
+
+    def spawn_marker(self):
+        if self.life > 0:
+            self.life -= 1
+        else:
+          if self.enemycount <= self.max_enemycount:
+            enemies = random.randint(2,3)
+            if self.max_enemycount - self.enemycount < enemies:
+                enemies = self.max_enemycount - self.enemycount
+            for i in range(enemies):
+                x = random.randint(50,650)
+                y = random.randint(50, 650)
+                health =random.randint(100, 110)
+                damage = random.randint(5, 6)
+                GameLogic.enemyList[GameLogic.current_chunk].append( marker(x, y, 0, health, damage, 30, 30, 200))
+                self.enemycount += 1
+                self.life = self.spawn_cooldown     
+
+
+
