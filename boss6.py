@@ -23,13 +23,17 @@ class Boss6:
         self.aura_image = pygame.image.load("images/snowaura.png")
         self.aura_image = pygame.transform.scale(self.aura_image, (240, 290))
         self.aura_rect = self.aura_image.get_bounding_rect()
+        self.aura_angle = 0
        
-    def curse(self): #make the aura rotate
+    def curse(self): 
         if self.aura_rect.colliderect(pygame.Rect(GameLogic.playerPos, [50, 55])):
             Player.speed = 0
             Player.health -= .5 
+            self.aura_angle +=1
         else:
             Player.speed = 3
+
+    
 
     def move(self):
         if self.moving == False and self.movetimer == 0:
@@ -64,14 +68,14 @@ class Boss6:
         screen.blit(self.image, self.image.get_rect(center = (self.xPos, self.yPos)))
         pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(245, 10, 300, 50))
         pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(245, 10, int((self.health/2500)*300), 50))
-        screen.blit(self.aura_image, self.aura_image.get_rect(center = (self.xPos, self.yPos)))
+        aura_rot = pygame.transform.rotate(self.aura_image, self.aura_angle)
+        screen.blit(aura_rot, self.aura_image.get_rect(center = (self.xPos, self.yPos)))
         self.aura_rect.center = (self.xPos, self.yPos)      
-    def attack(self):
-        return [0, 0]  
     def update(self, screen):
         self.move()            
         self.render(screen) 
-        self.attack()
+        self.curse()
+
 
 
 class IciclePierce:
