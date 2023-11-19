@@ -579,10 +579,11 @@ class bigsnowball(enemy):
             return pygame.transform.scale(pygame.image.load('images/bigsnowball.png'),(70, 90))
 
         def render(self, screen):
-             screen.blit(self.image, (self.xPos, self.yPos)) 
+            screen.blit(self.image, self.image.get_rect(center = (self.xPos, self.yPos)))
 
         def attack(self):
             GameLogic.playSound("freeze")
+            self.health = 0
             return [5]
         def takeDamage():
             pass
@@ -714,5 +715,22 @@ class spawner:
                 health =random.randint(100, 110)
                 damage = random.randint(5, 6)
                 GameLogic.enemyList[GameLogic.current_chunk].append( snowman(x, y, speed, health, damage, 30, 30, 200))
+                self.enemycount += 1
+                self.life = self.spawn_cooldown     
+    def spawn_snowball(self):
+        if self.life > 0:
+            self.life -= 1
+        else:
+          if self.enemycount <= self.max_enemycount:
+            enemies = random.randint(2,3)
+            if self.max_enemycount - self.enemycount < enemies:
+                enemies = self.max_enemycount - self.enemycount
+            for i in range(enemies):
+                x = 0
+                y = random.randint(50, 650)
+                speed = random.randint(1,2)
+                health =random.randint(100, 110)
+                damage = random.randint(5, 6)
+                GameLogic.enemyList[GameLogic.current_chunk].append( bigsnowball(x, y, speed, health, damage, 30, 30, 200))
                 self.enemycount += 1
                 self.life = self.spawn_cooldown     
