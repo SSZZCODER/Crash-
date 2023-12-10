@@ -1021,5 +1021,3 @@ class Icicle:
         self.move()
         self.render(screen)
         self.attack()
-
-
