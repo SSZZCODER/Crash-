@@ -1021,3 +1021,64 @@ class Icicle:
         self.move()
         self.render(screen)
         self.attack()
+class Boss7:
+    def __init__(self, damage, xPos, yPos):
+        self.health = 2500
+        self.newcenter = Vector2(0)
+        self.velocity = Vector2(0)
+        self.speed = 3
+        self.icicletimer = 100
+        self.image = pygame.image.load('images/sandman.png')
+        self.image = pygame.transform.scale(self.image,(175, 200))
+        self.moving = False
+        self.movetimer = 0
+        self.xPos = xPos
+        self.damage = damage
+        self.yPos = yPos
+        print(len(self.icicles))
+    def attack(self):
+        return [0, 0]
+    def takeDamage(self, damage):
+        self.health -= damage
+        GameLogic.playSoundBoss("roar")
+        if self.health <= 0:
+            GameLogic.enemyList[GameLogic.current_chunk].remove(self)
+    def move(self):
+        if self.moving == False and self.movetimer == 0:
+            self.newcenter.x = random.randint(0,750)
+            self.newcenter.y = random.randint(0,750)
+            self.velocity =  self.newcenter - Vector2(self.xPos, self.yPos)
+            self.velocity.normalize()
+            self.moving = True
+            self.movetimer = 30
+
+        elif self.moving == False and self.movetimer > 0:
+            self.movetimer -=1
+        if self.moving == True:
+            if self.xPos > self.newcenter.x:
+                self.xPos -= 1
+            if self.yPos > self.newcenter.y:
+                self.yPos -= 1
+            if self.xPos < self.newcenter.x:
+                self.xPos += 1
+            if self.yPos < self.newcenter.y:
+                self.yPos += 1
+            if self.xPos == self.newcenter.x and self.yPos == self.newcenter.y:
+                self.moving = False
+                self.lunging = True
+    def takeDamage(self, damage):
+        self.health -= damage
+        GameLogic.playSoundBoss("bossdmg")
+        if self.health <= 0:
+            GameLogic.enemyList[GameLogic.current_chunk].remove(self)
+
+    def attack(self):
+        return [4, 3, 60]
+    def render(self, screen):
+        screen.blit(self.image, self.image.get_rect(center = (self.xPos, self.yPos)))
+        pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(245, 10, 300, 50))
+        pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(245, 10, int((self.health/2500)*300), 50))
+    def update(self, screen):
+        self.render(screen)
+        self.attack()
+        self.move()        
