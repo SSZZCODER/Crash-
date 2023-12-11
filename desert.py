@@ -29,7 +29,7 @@ def main():
     HealthBar = healthbar(30, 0, 115, 20)
     tumbleweeds = random.randint(4, 9)
     tumbleweedspawner = objectspawner(tumbleweeds)
-    spawnsnowman = spawner(0, 600, 11) 
+    spawnsnowman = spawner(0, 600, 11) #chant this
 
     Spell = spell(320, 640, 115, 20)
     heart = pygame.image.load('images/heart.png')
@@ -45,7 +45,7 @@ def main():
     snowpart = ParticleSystem(0,650,(0, 0, 128)) #change this
     energy = pygame.image.load('images/energy.png')
     energy = pygame.transform.scale(energy, (65, 65))
-    GameLogic.current_chunk = "snow"
+    GameLogic.current_chunk = "desert"
     if len(GameLogic.objects[GameLogic.current_chunk])==0:
         tumbleweedspawner.spawntumbleweed()
 
@@ -63,11 +63,11 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:   
                 exit=True
-            if  snowwarp.Touched() == True:
+            if  snowwarp.Touched() == True:                     #change this
                 Player.MoveBy(snowwarp.offset_x, snowwarp.offset_y)
                 GameLogic.spellList = []
                 return 9
-            if bossportal5.Touched() == True and haskey == True:
+            if bossportal5.Touched() == True and haskey == True: #change this
                 Player.MoveBy(bossportal5.offset_x, bossportal5.offset_y)
                 GameLogic.spellList = []
                 return 10
@@ -83,13 +83,13 @@ def main():
                 haskey = True
                 droppedkey = False
         if haskey == True:
-            bossportal5 = Warp(625, 35,100,175,(144, 238, 144), 50,0)
-        snowwarp.Update(screen)
-        snowpart.Update(screen)
-        spawnsnowman.spawn_snowman()
+            bossportal5 = Warp(625, 35,100,175,(144, 238, 144), 50,0) #change this
+        snowwarp.Update(screen) #change this
+        snowpart.Update(screen) #change this
+        spawnsnowman.spawn_snowman() #change this
         spawner4.spawnbandage()
         spawner4.spawncoin()
-        bossportal5.Update(screen)
+        bossportal5.Update(screen) #change this
         screen.blit(portal, [600, 10])
         GameLogic.Update(screen)
         if Player.Update(screen) == True:
@@ -111,8 +111,8 @@ def main():
         screen.blit(heart, (-29, -45))
         screen.blit(energy, (-9, 10))
         if droppedkey == True:
-            screen.blit(snowkey, keypos)
-            snowkey_rect.center = keypos
+            screen.blit(desertkey, keypos)
+            desertkey_rect.center = keypos
         print(enemylength)
         pygame.display.update()
         clock.tick(60)
