@@ -770,3 +770,42 @@ class spawner:
 
 
 
+
+class Scorpian(enemy):
+
+    def __init__(self, xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range):
+        super().__init__(xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range)
+
+        self.damage_cooldown = 30
+        self.move_cooldown = 30
+    
+        #self.dropKey = False
+        self.poison = random.choice([4, 5])
+        self.poisoned_duration = random.choice([120, 240])
+        self.poisondarts = []
+        self.poison_speed = 8
+        self.poison_cooldown  = 30
+        #self.melee_range = 100
+
+
+    def assignImage(self):
+        return pygame.transform.scale(pygame.image.load('images/scorpian.png'),(70, 90))
+
+    def render(self, screen):
+        screen.blit(self.image, (self.xPos, self.yPos)) 
+        '''
+        attack_choice = random.randint(1,5)
+        if attack_choice == 3:
+            return [2, self.fire_dmg, self.burn_duration]
+        else:
+            return [0, self.damage]
+        '''
+    def takeDamage(self, damage):
+        self.health -= damage
+        '''
+        if self.health <= 0:
+            self.dropKey = True
+            GameLogic.itemlist[GameLogic.current_chunk].append( Coin(1, self.xPos, self.yPos,self))
+            GameLogic.enemyList[GameLogic.current_chunk].remove(self)
+        print("taken damage")
+        '''
