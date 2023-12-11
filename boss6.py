@@ -74,7 +74,7 @@ class Boss6:
         aura_rot = pygame.transform.rotate(self.aura_image, self.aura_angle)
         screen.blit(aura_rot, aura_rot.get_rect(center = (self.xPos, self.yPos)))
         self.aura_rect.center = (self.xPos, self.yPos)      
-        pygame.draw.rect(screen, (255,0,0), self.image.get_rect(center = (self.xPos, self.yPos)))
+        
         screen.blit(self.image, self.image.get_rect(center = (self.xPos, self.yPos))) 
     def update(self, screen):
         self.move()            
