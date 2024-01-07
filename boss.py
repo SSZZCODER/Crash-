@@ -1035,7 +1035,39 @@ class Boss7:
         self.xPos = xPos
         self.damage = damage
         self.yPos = yPos
-        print(len(self.icicles))
+        self.duststorms = []
+        self.duststormsliptimer = 0
+        self.duststormslipcooldown = random.randint(50, 250)
+        self.maxduststorms = 20
+        self.duststormtimer = 100
+        self.earthquakes = []
+        self.earthquaketimer = 0
+        self.earthquakescooldown = 100
+    def duststorm(self, screen):
+        if self.duststormtimer <= 0:
+            self.duststorms.append(Dust_storm(0,0,self.xPos, self.yPos, GameLogic.playerPos))
+            self.duststormtimer = 100
+        elif self.duststormtimer > 0:
+            self.duststormtimer -= 1
+        if len(self.duststorms) > 0:
+            for duststorm in self.duststorms:
+                duststorm.update(screen)
+                if duststorm.destroyed == True:
+                    self.duststorms.remove(duststorm)
+        print(len(self.duststorms))
+    def earthquake(self, screen):
+        if self.earthquaketimer >= self.earthquakescooldown:
+            x = GameLogic.playerPos[0]
+            y = GameLogic.playerPos[1]
+            self.earthquakes.append(Earthquake(x, y, GameLogic.playerPos))
+            self.earthquaketimer = 0
+        elif self.earthquaketimer < self.earthquakescooldown:
+            self.earthquaketimer += 1
+        if len(self.earthquakes) > 0:
+            for e in self.earthquakes:
+                e.update(screen)
+                if e.destroyed == True:
+                    self.earthquakes.remove(e)
     def attack(self):
         return [0, 0]
     def takeDamage(self, damage):
@@ -1081,4 +1113,83 @@ class Boss7:
     def update(self, screen):
         self.render(screen)
         self.attack()
-        self.move()        
+        self.move()
+        self.duststorm(screen)
+        self.earthquake(screen)
+class Dust_storm:
+    def __init__(self, angle, direction, xPos, yPos, playerpos):
+        self.image = pygame.image.load("images/duststorm.png")
+        self.image = pygame.transform.scale(self.image, (200,110))
+        self.throw_dmg = 25
+        self.throw_rect = self.image.get_bounding_rect()
+        self.angle = angle
+        self.damage = 5
+        self.speed = 5
+        self.direction = direction
+        self.xPos = xPos 
+        self.yPos = yPos
+        self.throwing = True
+        self.destroyed = False
+        self.playerpos = playerpos
+        self.direction = Vector2(self.playerpos) - Vector2([self.xPos, self.yPos])
+        self.direction = self.direction.normalize()
+        self.rel_x = 0
+        self.true_ypos = yPos
+    def render(self, screen):
+        if self.throwing == True:
+            screen.blit(self.image, [self.xPos, self.yPos])
+            self.throw_rect.x = self.xPos
+            self.throw_rect.y = self.yPos 
+    def move(self):
+        if self.throwing == True:
+            self.xPos += self.direction[0] * self.speed
+            self.true_ypos += self.direction[1] * self.speed
+            self.yPos = self.true_ypos+(50*math.sin((self.rel_x)*math.pi+10))
+        if self.xPos > 750 or self.xPos < 0:
+            self.destroyed = True
+        if self.yPos > 750 or self.yPos < 0:
+            self.destroyed = True
+        self.rel_x += 0.1
+    def attack(self):
+        if self.throwing == True:
+            if pygame.Rect(GameLogic.playerPos,[50,55]).colliderect(self.throw_rect):
+                print("hit player")
+                Player.health -= self.throw_dmg
+                self.destroyed = True
+    def update(self, screen):
+        self.move()
+        self.render(screen)
+        self.attack()
+class Earthquake:
+    def __init__(self, xPos, yPos, playerpos):
+        self.images = [pygame.image.load("images/earthquake1.png"), pygame.image.load("images/earthquake2.png"), pygame.image.load("images/earthquake3.png"), pygame.image.load("images/earthquake4.png")]
+        self.xPos = xPos 
+        self.yPos = yPos
+        self.playerpos = playerpos
+        self.damage = 1
+        self.speed = 5
+        self.spawntimer = 0
+        self.spawnswitch = 50
+        self.spawnindex = 0
+        self.destroyed = False
+    def render(self, screen):
+        if self.spawntimer >= self.spawnswitch:
+            self.spawnindex += 1
+            self.spawntimer = 0
+        else:
+            self.spawntimer += 1
+        screen.blit(self.images[self.spawnindex], [self.xPos, self.yPos])
+    def destroy(self):
+        if self.spawnindex == 3 and self.spawntimer >= 40:
+            self.destroyed = True
+    def attack(self):
+        rect = self.images[self.spawnindex].get_bounding_rect()
+        rect.x = self.xPos
+        rect.y = self.yPos
+        if rect.colliderect(pygame.Rect(GameLogic.playerPos, [50, 55])):
+                Player.health -= self.damage
+    def update(self, screen):
+        self.render(screen)
+        self.attack()
+        self.destroy()
+

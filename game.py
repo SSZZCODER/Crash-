@@ -12,10 +12,11 @@ import jungle
 import monkeyarena
 import snow
 import snowarena
+import desertarena
 from data import saveData
 import snowarena
 
-level = 12
+level = 13
 
 
 while level != -1:
@@ -45,4 +46,6 @@ while level != -1:
         level = snow.main()
     if level == 12:
         level = snowarena.main()
+    if level == 13:
+        level = desertarena.main()
     print(level) 
