@@ -39,7 +39,7 @@ def main():
 
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
-    lavawarp = Warp(0,650, 35,100, (128, 0, 128), 50,0)
+    lavawarp = Warp(0,650, 35,100, (128, 0, 128), 650,0)
     oceanpart = ParticleSystem(0,650,(128, 0, 128))
     junglewarp = Warp(720,650, 35,100, (0, 100, 0), -650,0)
     junglepart = ParticleSystem(725,700,(0, 100, 0))

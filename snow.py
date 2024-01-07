@@ -29,7 +29,6 @@ def main():
     HealthBar = healthbar(30, 0, 115, 20)
     igloos = random.randint(4, 9)
     igloospawner = objectspawner(igloos)
-    #spawnmonkey = spawner(0, 600, 11)
     spawnsnowman = spawner(0, 600, 11)
 
     Spell = spell(320, 640, 115, 20)
@@ -41,6 +40,8 @@ def main():
     snowkey = pygame.image.load('images/snowkey.png')
     snowkey = pygame.transform.scale(snowkey, (50,20))
     snowkey_rect = snowkey.get_bounding_rect()
+    desertwarp = Warp(720,650, 35,100, (255,215,0), -650,0)
+    desertpart = ParticleSystem(725,700,(255,215,0))
     bossportal5 = Warp(625, 35,100,175,(0,0,0), 50,0)
 
     snowpart = ParticleSystem(0,650,(0, 0, 128))
@@ -68,6 +69,10 @@ def main():
                 Player.MoveBy(snowwarp.offset_x, snowwarp.offset_y)
                 GameLogic.spellList = []
                 return 9
+            if desertwarp.Touched() == True:
+                Player.MoveBy(desertwarp.offset_x, desertwarp.offset_y)
+                GameLogic.spellList = []
+                return 13
             if bossportal5.Touched() == True and haskey == True:
                 Player.MoveBy(bossportal5.offset_x, bossportal5.offset_y)
                 GameLogic.spellList = []
@@ -87,6 +92,8 @@ def main():
             bossportal5 = Warp(625, 35,100,175,(144, 238, 144), 50,0)
         snowwarp.Update(screen)
         snowpart.Update(screen)
+        desertpart.Update(screen)
+        desertwarp.Update(screen)
         spawnsnowman.spawn_snowman()
         spawner4.spawnbandage()
         spawner4.spawncoin()

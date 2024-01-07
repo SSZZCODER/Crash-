@@ -39,7 +39,7 @@ def main():
     spawner2 = spawner(0, 600, 11)
     spawner7 = spawner(0, 600, 11)
     startingwarp = Warp(0,650, 35,100, (5,5,255), 50,0)
-    oceanwarp = Warp(715,650, 35,100, (0, 128, 0), -50 , 0)
+    oceanwarp = Warp(715,650, 35,100, (0, 128, 0), -650 , 0)
     bossportal2 = Warp(625, 35,100,175,(0,0,0), 50,0)
 
     StaminaBar = staminabar(30, 30, 115, 20)

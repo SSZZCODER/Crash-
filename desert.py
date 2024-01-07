@@ -10,6 +10,7 @@ import time
 from gamelogic import GameLogic
 from warp import Warp
 from items import spawneritems
+import tumbleweed
 
 from warp import *
 
@@ -28,21 +29,21 @@ def main():
     StaminaBar = staminabar(30, 30, 115, 20)
     HealthBar = healthbar(30, 0, 115, 20)
     tumbleweeds = random.randint(4, 9)
-    tumbleweedspawner = objectspawner(tumbleweeds)
-    spawnsnowman = spawner(0, 600, 11) #chant this
+    tumbleweedspawner = tumbleweed.objectspawner(tumbleweeds)
+    spawnscorpian = spawner(0, 600, 11) #change   this
 
     Spell = spell(320, 640, 115, 20)
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
-    snowwarp = Warp(0,650, 35,100, (0, 0, 128), 650,0) # changethis
+    snowwarp = Warp(0,650, 35,100, (0, 0, 128), 650,0) 
     portal = pygame.image.load('images/desertportal.png')
     portal = pygame.transform.scale(portal, (150,200))
     desertkey = pygame.image.load('images/desertkey.png')
     desertkey = pygame.transform.scale(desertkey, (50,20))
     desertkey_rect = desertkey.get_bounding_rect()
-    bossportal5 = Warp(625, 35,100,175,(0,0,0), 50,0) #change this
+    bossportal5 = Warp(625, 35,100,175,(0,0,0), 50,0) 
 
-    snowpart = ParticleSystem(0,650,(0, 0, 128)) #change this
+    snowpart = ParticleSystem(0,650,(0, 0, 128)) 
     energy = pygame.image.load('images/energy.png')
     energy = pygame.transform.scale(energy, (65, 65))
     GameLogic.current_chunk = "desert"
@@ -63,11 +64,11 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:   
                 exit=True
-            if  snowwarp.Touched() == True:                     #change this
+            if  snowwarp.Touched() == True:                     
                 Player.MoveBy(snowwarp.offset_x, snowwarp.offset_y)
                 GameLogic.spellList = []
-                return 9
-            if bossportal5.Touched() == True and haskey == True: #change this
+                return 11
+            if bossportal5.Touched() == True and haskey == True: 
                 Player.MoveBy(bossportal5.offset_x, bossportal5.offset_y)
                 GameLogic.spellList = []
                 return 10
@@ -83,13 +84,13 @@ def main():
                 haskey = True
                 droppedkey = False
         if haskey == True:
-            bossportal5 = Warp(625, 35,100,175,(144, 238, 144), 50,0) #change this
-        snowwarp.Update(screen) #change this
-        snowpart.Update(screen) #change this
-        spawnsnowman.spawn_snowman() #change this
+            bossportal5 = Warp(625, 35,100,175,(153,76,0), 50,0) 
+        snowwarp.Update(screen) 
+        snowpart.Update(screen) 
+        spawnscorpian.spawn_scorpian() #change this
         spawner4.spawnbandage()
         spawner4.spawncoin()
-        bossportal5.Update(screen) #change this
+        bossportal5.Update(screen) 
         screen.blit(portal, [600, 10])
         GameLogic.Update(screen)
         if Player.Update(screen) == True:

@@ -15,6 +15,7 @@ import snowarena
 import desertarena
 from data import saveData
 import snowarena
+import desert
 
 level = 13
 
@@ -47,5 +48,5 @@ while level != -1:
     if level == 12:
         level = snowarena.main()
     if level == 13:
-        level = desertarena.main()
+        level = desert.main()
     print(level) 
