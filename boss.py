@@ -1154,6 +1154,7 @@ class Dust_storm:
         if self.throwing == True:
             if pygame.Rect(GameLogic.playerPos,[50,55]).colliderect(self.throw_rect):
                 print("hit player")
+                GameLogic.playSound("tornado")
                 Player.health -= self.throw_dmg
                 self.destroyed = True
     def update(self, screen):
@@ -1187,7 +1188,9 @@ class Earthquake:
         rect.x = self.xPos
         rect.y = self.yPos
         if rect.colliderect(pygame.Rect(GameLogic.playerPos, [50, 55])):
-                Player.health -= self.damage
+            GameLogic.playSoundBoss("earthquake")
+            if self.spawnindex >= 1:
+                    Player.health -= self.damage
     def update(self, screen):
         self.render(screen)
         self.attack()
