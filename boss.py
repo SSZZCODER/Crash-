@@ -1154,7 +1154,7 @@ class Dust_storm:
         if self.throwing == True:
             if pygame.Rect(GameLogic.playerPos,[50,55]).colliderect(self.throw_rect):
                 print("hit player")
-                GameLogic.playSound("tornado")
+                GameLogic.playSoundBoss("tornado")
                 Player.health -= self.throw_dmg
                 self.destroyed = True
     def update(self, screen):
