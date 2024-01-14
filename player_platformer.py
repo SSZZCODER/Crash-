@@ -17,31 +17,38 @@ class Player_Platformer:
         self.create_player()
 
     def create_player(self):
-        self.facing = "right"
+        self.facing = 1
         self.rect = pygame.Rect(0, 0, self.width, self.height)
         self.rect.center = Vector2(self.x, self.y)
         self.fist_distance = 50
         self.fist_rect = pygame.Rect(0, 0, self.fist_width, self.fist_height)
-        self.fist_rect.center = Vector2(self.rect.centerx+self.fist_distance, self.rect.centery)
+        self.fist_rect.center = Vector2(self.rect.centerx+self.fist_distance * self.facing, self.rect.centery)
         
     def move_x(self, keys):
         if keys[pygame.K_d]:
             self.vel[0] = self.speed
+            self.facing = 1
         elif keys[pygame.K_a]:
             self.vel[0] = -self.speed
+            self.facing = -1
         else:
             self.vel[0] = 0
 
     def move_y(self, keys, dt):
-        gravity = 9
+        gravity = 5
         self.vel[1] += gravity*dt
 
     def collisions(self, platforms):
         self.dx = self.vel[0]
         self.dy = self.vel[1]
+        for platform in platforms:
+            if platform.rect.colliderect(pygame.Rect(self.rect.x, self.rect.y + self.dy, self.rect.width, self.rect.height)):
+                self.dy = self.rect.bottom - platform.rect.top
+                self.dy = 0
+                self.vel[1] = 0 
         self.rect.centerx += self.dx
         self.rect.centery += self.dy
-        self.fist_rect.centerx = self.rect.centerx + self.fist_distance
+        self.fist_rect.centerx = self.rect.centerx + self.fist_distance * self.facing
         self.fist_rect.centery = self.rect.centery
 
     def render(self, screen):
