@@ -1196,3 +1196,60 @@ class Earthquake:
         self.attack()
         self.destroy()
 
+
+
+
+
+
+class Boss8:
+    def __init__(self, damage, xPos, yPos):
+        self.health = 5000
+        self.damage = damage
+        self.xPos = xPos
+        self.yPos = yPos
+        self.movetimer = 0
+        self.moving = False
+        self.newcenter = Vector2(0)
+        self.velocity = Vector2(0)
+        self.speed = 3
+        self.image = pygame.image.load('images/skeletonarmy.png')
+        self.image = pygame.transform.scale(self.image,(175, 200))
+
+    def attack(self):
+        return [0, 0]
+    def move(self):
+        if self.moving == False and self.movetimer == 0:
+            self.newcenter.x = random.randint(0,750)
+            self.newcenter.y = random.randint(0,750)
+            self.velocity =  self.newcenter - Vector2(self.xPos, self.yPos)
+            self.velocity.normalize()
+            self.moving = True
+            self.movetimer = 30
+
+        elif self.moving == False and self.movetimer > 0:
+            self.movetimer -=1
+        if self.moving == True:
+            if self.xPos > self.newcenter.x:
+                self.xPos -= 1
+            if self.yPos > self.newcenter.y:
+                self.yPos -= 1
+            if self.xPos < self.newcenter.x:
+                self.xPos += 1
+            if self.yPos < self.newcenter.y:
+                self.yPos += 1
+            if self.xPos == self.newcenter.x and self.yPos == self.newcenter.y:
+                self.moving = False
+    
+    def takeDamage(self, damage):
+        self.health -= damage
+        GameLogic.playSoundBoss("monkey") #change this
+        if self.health <= 0:
+            GameLogic.enemyList[GameLogic.current_chunk].remove(self)
+
+    def render(self, screen):
+        screen.blit(self.image, self.image.get_rect(center = (self.xPos, self.yPos)))
+        pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(245, 10, 300, 50))
+        pygame.draw.rect(screen, (34,139,34), pygame.Rect(245, 10, int((self.health/2500)*300), 50))       
+    def update(self, screen):
+        self.move()            
+        self.render(screen)

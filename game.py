@@ -17,8 +17,9 @@ from data import saveData
 import snowarena
 import desert
 import desertarena
+import pryamid
 
-level = 14
+level = 15
 
 
 while level != -1:
@@ -52,4 +53,6 @@ while level != -1:
         level = desert.main()
     if level == 14:
         level = desertarena.main()
+    if level == 15:
+        level = pryamid.main()
     print(level) 
