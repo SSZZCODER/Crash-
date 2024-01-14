@@ -43,8 +43,8 @@ class Player_Platformer:
         self.dy = self.vel[1]
         for platform in platforms:
             if platform.rect.colliderect(pygame.Rect(self.rect.x, self.rect.y + self.dy, self.rect.width, self.rect.height)):
-                self.dy = self.rect.bottom - platform.rect.top
-                self.dy = 0
+                self.dy = platform.rect.top - self.rect.bottom
+                #self.dy = 0
                 self.vel[1] = 0 
         self.rect.centerx += self.dx
         self.rect.centery += self.dy
