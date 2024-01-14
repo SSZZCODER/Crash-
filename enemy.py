@@ -703,6 +703,107 @@ class Poison_Dart:
         if self.health <= 0:
             GameLogic.enemyList[GameLogic.current_chunk].remove(self)
 
+class Skeleton(enemy):
+        def __init__(self, xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range):
+            super().__init__(xPos, yPos, speed, health, damage, damage_cooldown, move_cooldown, range)
+            self.damage_cooldown = 30
+            self.move_cooldown = 30
+
+            self.punch_dmg = random.choice([2, 3])
+            self.punch_duration = random.choice([100, 200])
+            
+
+            self.bone_dmg = random.choice([7, 8])
+            self.bone_duration = random.choice([120, 240])
+            self.bones = []
+            self.bone_speed = 6
+            self.bone_cooldown  = 30
+            self.melee_range = 100
+
+
+        def assignImage(self):
+            return pygame.transform.scale(pygame.image.load('images/skeleton.png'),(70, 45))
+
+        def render(self, screen):
+             screen.blit(self.image, (self.xPos, self.yPos)) 
+             pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(self.xPos+15,self.yPos-20, 40, 10))
+             pygame.draw.rect(screen, (250, 28, 0), pygame.Rect(self.xPos+15,self.yPos-20, int((self.health/self.max_health)*40), 10))
+             player_x, player_y = GameLogic.playerPos
+             rel_x, rel_y = player_x - self.xPos, player_y - self.yPos 
+             n = rel_x**2 + rel_y**2
+ 
+             if n>0:
+                n = math.sqrt(n)
+                rel_x = rel_x/n
+                rel_y = rel_y/n
+             if n < self.range and n > self.melee_range:
+                if self.bone_cooldown == 0:
+                    x_dist = GameLogic.playerPos[0]-self.xPos
+                    y_dist = GameLogic.playerPos[1]-self.yPos
+                    angle = math.atan2(x_dist, y_dist)   * (180/math.pi)
+                    t = Bone(self.xPos, self.yPos, self.bone_speed,1, self.bone_dmg, 30, 200, angle)
+                    self.bones.append(t)
+                    GameLogic.enemyList[GameLogic.current_chunk].append(t)
+                    self.bone_cooldown = 30
+             elif self.bone_cooldown> 0:
+                self.bone_cooldown -= 1
+             print(n)
+
+        def attack(self):
+
+            attack_choice = random.randint(1,5)
+            if attack_choice == 3:
+                return [2, self.punch_dmg, self.punch_duration]
+            else:
+                return [0, self.damage]
+        def takeDamage(self, damage):
+            self.health -= damage
+            if self.health <= 0:
+                GameLogic.enemyList[GameLogic.current_chunk].remove(self)
+            print("taken damage")  
+
+class Bone:
+    def __init__(self, xPos, yPos, speed, health, damage,throw_cooldown, range, angle):
+        self.xPos = xPos
+        self.yPos = yPos
+        self.speed = speed
+        self.health = health
+        self.damage = damage
+        self.throw_cooldown = throw_cooldown
+        self.range = range
+        self.angle = angle
+        self.image = pygame.image.load('images/bone.png')
+        self.rect = self.image.get_rect(center = [self.xPos, self.yPos]) 
+        self.pos = Vector2(self.xPos,self.yPos)
+        self.ppos = Vector2(GameLogic.playerPos)
+        self.vel = self.ppos - self.pos
+        self.vel = self.vel.normalize()
+        self.vel*= self.speed
+        image_rot = pygame.transform.rotate(self.image, self.angle-180)
+        self.rect = image_rot.get_rect(center = [self.xPos, self.yPos]) 
+        self.image = image_rot
+    def render(self, screen):
+        screen.blit(self.image, (self.xPos, self.yPos)) 
+        
+
+    def attack(self):
+        return[3, self.damage]
+        
+
+    def shoot(self):
+        self.xPos += self.vel[0]
+        self.yPos += self.vel[1]
+
+    def takeDamage(self,damage):
+        pass
+        
+    def update(self,screen):
+        self.render(screen)
+        self.shoot()
+        if self.health <= 0:
+            GameLogic.enemyList[GameLogic.current_chunk].remove(self)
+
+
 class spawner:
     def __init__(self, enemycount, spawn_cooldown, max_enemycount):
         self.enemycount = enemycount
@@ -882,5 +983,22 @@ class spawner:
                 health =random.randint(100, 110)
                 damage = random.randint(5, 6)
                 GameLogic.enemyList[GameLogic.current_chunk].append( Scorpian(x, y, speed, health, damage, 30, 30, 300))
+                self.enemycount += 1
+                self.life = self.spawn_cooldown     
+    def spawn_skeleton(self):
+        if self.life > 0:
+            self.life -= 1
+        else:
+          if self.enemycount <= self.max_enemycount:
+            enemies = random.randint(2,3)
+            if self.max_enemycount - self.enemycount < enemies:
+                enemies = self.max_enemycount - self.enemycount
+            for i in range(enemies):
+                x= random.randint(50,650)
+                y= random.randint(50,650)
+                speed = random.randint(1,2)
+                health =random.randint(100, 110)
+                damage = random.randint(5, 6)
+                GameLogic.enemyList[GameLogic.current_chunk].append( Skeleton(x, y, speed, health, damage, 30, 30, 300))
                 self.enemycount += 1
                 self.life = self.spawn_cooldown     
