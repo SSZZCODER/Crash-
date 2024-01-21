@@ -1,6 +1,7 @@
 import pygame
 from pygame.math import Vector2
 import math
+pygame.mixer.init()
 
 class Player_Platformer:
     def __init__(self, x, y, speed, jumpheight, width, height, fist_width, fist_height):
@@ -42,7 +43,7 @@ class Player_Platformer:
         self.fist_speed = 8.5
         self.fist_time = self.fist_length/self.fist_speed
         self.fist_timer = 0 
-
+        self.attack_sound = pygame.mixer.Sound("sounds/punch-2-166695.wav")
 
         
     def move_x(self, keys):
@@ -69,6 +70,7 @@ class Player_Platformer:
     def attack(self, keys, dt):
         if keys[pygame.K_SPACE]:
             if self.attacktimer >= self.attackcooldown:
+                self.attack_sound.play()
                 self.attacking = True
                 self.attacktimer = 0
         if self.attacking:
@@ -94,6 +96,13 @@ class Player_Platformer:
                     self.dy = 0
                 self.vel[1] = 0
                 self.ontheground = True
+        if self.rect.centerx + self.dx >= 750:
+            self.rect.right = 750
+            self.dx = 0
+        elif self.rect.centerx + self.dx<=0:
+            self.rect.left = 0
+            self.dx = 0
+            
         self.rect.centerx += self.dx
         self.rect.centery += self.dy
         #self.fist_rect.centerx = self.rect.centerx + self.fist_distance * self.facing
@@ -105,7 +114,8 @@ class Player_Platformer:
         screen.blit(self.image, self.rect)
         screen.blit(self.fist_img, self.fist_rect)
         if self.attacking:
-            pygame.draw.rect(screen, (255, 0, 0), self.fist_rect)
+            #pygame.draw.rect(screen, (255, 0, 0), self.fist_rect)
+            pass
     def update(self, screen, keys, dt, platforms):
         self.collisions(platforms)
         self.move_x(keys)
