@@ -37,9 +37,9 @@ class Player_Platformer:
         self.attacking = False
         self.attackcooldown = 2.5
         self.attacktimer = 0
-        self.fist_length = 20
+        self.fist_length = 17.5
         self.fist_attack_distance = 0
-        self.fist_speed = 2
+        self.fist_speed = 8.5
         self.fist_time = self.fist_length/self.fist_speed
         self.fist_timer = 0 
 
@@ -112,6 +112,4 @@ class Player_Platformer:
         self.move_y(keys, dt)
         self.render(screen)
         self.attack(keys, dt)
-        print(self.attacktimer)
-
 
