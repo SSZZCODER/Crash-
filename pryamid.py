@@ -9,7 +9,7 @@ def main():
     screen = pygame.display.set_mode((750,750))
     background = pygame.image.load('images/pryamid.png')
     background = pygame.transform.scale(background, (750,750))
-    player = Player_Platformer(25, 25, 5, 10, 50, 50, 15, 15)
+    player = Player_Platformer(25, 25, 5, 15, 50, 50, 15, 15)
     platforms = [Platform(0, 600, 150, 750, (0,0,0))]
     
 
