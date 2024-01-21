@@ -35,7 +35,7 @@ class Player_Platformer:
 
     def create_playerattack(self):
         self.attacking = False
-        self.attackcooldown = 50
+        self.attackcooldown = 2.5
         self.attacktimer = 0
         
 
@@ -98,5 +98,6 @@ class Player_Platformer:
         self.move_y(keys, dt)
         self.render(screen)
         self.attack(keys, dt)
+        print(self.attacktimer)
 
 
