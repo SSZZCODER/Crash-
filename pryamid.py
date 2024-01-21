@@ -25,7 +25,7 @@ def main():
                 return -1
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_m:
-                    return 0
+                    return 0 
         keys = pygame.key.get_pressed()
         screen.blit(background,[0,0])
         player.update(screen, keys, dt, platforms)
