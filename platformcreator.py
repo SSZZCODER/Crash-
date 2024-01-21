@@ -9,9 +9,12 @@ class Platform:
         self.width = width
         self.color = color
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.image = pygame.image.load("images/platformimage.png")
+        self.image = pygame.transform.scale(self.image,(self.width,self.height))
 
     def update(self, screen):
-        pygame.draw.rect(screen, self.color, self.rect)
+        screen.blit(self.image, self.rect)
+
         
 
 
