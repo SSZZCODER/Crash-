@@ -37,7 +37,11 @@ class Player_Platformer:
         self.attacking = False
         self.attackcooldown = 2.5
         self.attacktimer = 0
-        
+        self.fist_length = 20
+        self.fist_speed = 2
+        self.fist_time = self.fist_length/self.fist_speed
+        self.fist_timer = 0 
+
 
         
     def move_x(self, keys):
@@ -66,10 +70,17 @@ class Player_Platformer:
             if self.attacktimer >= self.attackcooldown:
                 self.attacking = True
                 self.attacktimer = 0
-        else:
-            self.attacktimer += dt
-            self.attacking = False
-
+        if self.attacking:
+            if self.fist_timer <= self.fist_time:
+                self.fist_rect.centerx += self.fist_speed * self.fist_timer * self.facing
+                self.fist_timer += dt
+            else:
+                self.fist_timer = 0
+                self.attacking = False
+        if self.attacking == False:
+            if self.attacktimer < self.attackcooldown:
+                self.attacktimer += dt
+                
     def collisions(self, platforms):
         self.dx = self.vel[0]
         self.dy = self.vel[1]
