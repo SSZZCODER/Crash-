@@ -20,10 +20,12 @@ class Player_Platformer:
     def create_player(self):
         self.facing = 1
         self.image = pygame.image.load("images/playerbody_sideways.png") 
+        self.image = pygame.transform.scale(self.image,[self.width,self.height])
         self.rect = self.image.get_rect()
         self.rect.center = Vector2(self.x, self.y)
         self.fist_distance = 50
         self.fist_img = pygame.image.load("images/playerhand_sideways.png")
+        self.fist_img = pygame.transform.scale(self.fist_img,[self.fist_width,self.fist_height])
         self.fist_rect = self.fist_img.get_rect()
         self.fist_rect.center = Vector2(self.rect.centerx+self.fist_distance * self.facing, self.rect.centery)
         self.desiredjump = False
