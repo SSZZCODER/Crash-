@@ -19,10 +19,12 @@ class Player_Platformer:
 
     def create_player(self):
         self.facing = 1
-        self.rect = pygame.Rect(0, 0, self.width, self.height)
+        self.image = pygame.image.load("images/playerbody_sideways.png") 
+        self.rect = self.image.get_rect()
         self.rect.center = Vector2(self.x, self.y)
         self.fist_distance = 50
-        self.fist_rect = pygame.Rect(0, 0, self.fist_width, self.fist_height)
+        self.fist_img = pygame.image.load("images/playerhand_sideways.png")
+        self.fist_rect = self.fist_img.get_rect()
         self.fist_rect.center = Vector2(self.rect.centerx+self.fist_distance * self.facing, self.rect.centery)
         self.desiredjump = False
         self.ontheground = False
@@ -65,8 +67,10 @@ class Player_Platformer:
         self.fist_rect.centery = self.rect.centery
 
     def render(self, screen):
-        pygame.draw.rect(screen, (255, 0, 0), self.rect)
-        pygame.draw.rect(screen, (255, 0, 0), self.fist_rect)
+        #pygame.draw.rect(screen, (255, 0, 0), self.rect)
+        #pygame.draw.rect(screen, (255, 0, 0), self.fist_rect)
+        screen.blit(self.image, self.rect)
+        screen.blit(self.fist_img, self.fist_rect)
     def update(self, screen, keys, dt, platforms):
         self.collisions(platforms)
         self.move_x(keys)
