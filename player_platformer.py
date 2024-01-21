@@ -16,6 +16,8 @@ class Player_Platformer:
         self.dx = 0
         self.dy = 0
         self.create_player()
+        self.create_playerattack()
+
 
     def create_player(self):
         self.facing = 1
@@ -30,6 +32,12 @@ class Player_Platformer:
         self.fist_rect.center = Vector2(self.rect.centerx+self.fist_distance * self.facing, self.rect.centery)
         self.desiredjump = False
         self.ontheground = False
+
+    def create_playerattack(self):
+        self.attacking = False
+        self.attackcooldown = 50
+        self.attacktimer = 0
+        
 
         
     def move_x(self, keys):
@@ -52,7 +60,16 @@ class Player_Platformer:
                 jumpvelocity = -1*math.sqrt(-2*gravity*self.jumpheight)
                 print(jumpvelocity)
         self.vel[1] += jumpvelocity
-        
+    
+    def attack(self, keys, dt):
+        if keys[pygame.K_SPACE]:
+            if self.attacktimer >= self.attackcooldown:
+                self.attacking = True
+                self.attacktimer = 0
+        else:
+            self.attacktimer += dt
+            self.attacking = False
+
     def collisions(self, platforms):
         self.dx = self.vel[0]
         self.dy = self.vel[1]
@@ -73,10 +90,13 @@ class Player_Platformer:
         #pygame.draw.rect(screen, (255, 0, 0), self.fist_rect)
         screen.blit(self.image, self.rect)
         screen.blit(self.fist_img, self.fist_rect)
+        if self.attacking:
+            pygame.draw.rect(screen, (255, 0, 0), self.fist_rect)
     def update(self, screen, keys, dt, platforms):
         self.collisions(platforms)
         self.move_x(keys)
         self.move_y(keys, dt)
         self.render(screen)
+        self.attack(keys, dt)
 
 
