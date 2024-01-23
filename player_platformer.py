@@ -30,6 +30,9 @@ class Player_Platformer:
         self.fist_img = pygame.transform.scale(self.fist_img,[self.fist_width,self.fist_height])
         self.fist_rect = self.fist_img.get_rect()
         self.fist_rect.center = Vector2(self.rect.centerx+self.fist_distance * self.facing, self.rect.centery)
+        self.fist_attack_img = pygame.image.load("images/playerhand_sideways_attack.png")
+        self.fist_attack_img = pygame.transform.scale(self.fist_attack_img, (self.fist_width, self.fist_height))
+        self.fist_attack_right_img = pygame.transform.flip(self.fist_attack_img, 1, 0)
         self.desiredjump = False
         self.ontheground = False
 
@@ -103,9 +106,13 @@ class Player_Platformer:
         #pygame.draw.rect(screen, (255, 0, 0), self.rect)
         #pygame.draw.rect(screen, (255, 0, 0), self.fist_rect)
         screen.blit(self.image, self.rect)
-        screen.blit(self.fist_img, self.fist_rect)
         if self.attacking:
-            pygame.draw.rect(screen, (255, 0, 0), self.fist_rect)
+            if self.facing == -1:
+                screen.blit(self.fist_attack_img, self.fist_rect)
+            elif self.facing == 1:
+                screen.blit(self.fist_attack_right_img, self.fist_rect)
+        if self.attacking == False:
+            screen.blit(self.fist_img, self.fist_rect)
     def update(self, screen, keys, dt, platforms):
         self.collisions(platforms)
         self.move_x(keys)
