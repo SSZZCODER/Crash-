@@ -12,6 +12,10 @@ class Skarmy:
         self.rect = pygame.Rect(0, 0, self.width, self.height)
         self.rect.center = [self.x, self.y]
         self.img = pygame.transform.scale(self.img, [self.width, self.height])
+        self.washit = False
+        self.washitcooldown = 100
+        self.washitimer = self.washitcooldown
+
     def render(self, screen):
         self.rect.center = [self.x, self.y]
         pygame.draw.rect(screen, [0, 0, 0], self.rect)
@@ -27,6 +31,19 @@ class Skarmy:
             if abs(player.rect.right - self.rect.left) < self.speed:
                 vel_x = player.rect.right - self.rect.left
         self.x += int(vel_x)
-    def update(self, screen, player):
+    def gothit(self, player, dt):
+        if player.fist_rect.colliderect(self.rect):
+            if player.attacking and self.washit == False:
+                self.washit = True
+                self.washittimer = 0
+                print("player attacked boss")
+        if self.washit:
+            if self.washittimer >= self.washitcooldown:
+                self.washit = False
+            else:
+                self.washittimer += dt 
+
+    def update(self, screen, player, dt):
         self.render(screen)
-        self.move(player)
+        self.move(player)   
+        self.gothit(player, dt)

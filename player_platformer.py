@@ -119,6 +119,7 @@ class Player_Platformer:
                 screen.blit(self.fist_attack_img, self.fist_rect)
             elif self.facing == 1:
                 screen.blit(self.fist_attack_right_img, self.fist_rect)
+                
         if self.attacking == False:
             screen.blit(self.fist_img, self.fist_rect)
             #pygame.draw.rect(screen, (255, 0, 0), self.fist_rect)
