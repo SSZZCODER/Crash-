@@ -33,7 +33,7 @@ def main():
         for platform in platforms:
             platform.update(screen)
         for enemy in enemies:
-            enemy.update(screen, player)
+            enemy.update(screen, player, dt)
         player.update(screen, keys, dt, platforms)
         pygame.display.update()
         clock.tick(60)

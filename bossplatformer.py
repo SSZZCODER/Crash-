@@ -15,6 +15,10 @@ class Skarmy:
         self.img_left = pygame.transform.scale(self.img_left, [self.width, self.height])
         self.facing = "Left"
         self.img_right = pygame.transform.flip(self.img_left, 1, 0)
+        self.washit = False
+        self.washitcooldown = 5
+        self.washitimer = self.washitcooldown
+
     def render(self, screen):
         self.rect.center = [self.x, self.y]
         pygame.draw.rect(screen, [0, 0, 0], self.rect)
@@ -37,7 +41,20 @@ class Skarmy:
         self.x += int(vel_x)
     def healthbar(self, screen):
         pygame.draw.rect(screen, [255, 0, 0], pygame.Rect(self.x-40, self.y-90, int((self.health/500)*80), 10))
-    def update(self, screen, player):
+    def gothit(self, player, dt):
+        if player.fist_rect.colliderect(self.rect):
+            if player.attacking and self.washit == False:
+                self.washit = True
+                self.washittimer = 0
+                print("player attacked boss")
+        if self.washit:
+            if self.washittimer >= self.washitcooldown:
+                self.washit = False
+            else:
+                self.washittimer += dt 
+
+    def update(self, screen, player, dt):
         self.render(screen)
+        self.move(player)   
         self.healthbar(screen)
-        self.move(player)
+        self.gothit(player, dt)
