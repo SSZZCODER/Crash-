@@ -30,11 +30,11 @@ def main():
                     return 0 
         keys = pygame.key.get_pressed()
         screen.blit(background,[0,0])
-        player.update(screen, keys, dt, platforms)
         for platform in platforms:
             platform.update(screen)
         for enemy in enemies:
             enemy.update(screen, player)
+        player.update(screen, keys, dt, platforms)
         pygame.display.update()
         clock.tick(60)
 

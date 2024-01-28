@@ -18,11 +18,11 @@ class Skarmy:
         screen.blit(self.img, self.rect)
     def move(self, player):
         vel_x = 0 
-        if player.rect.centerx > self.x:
+        if player.rect.left > self.rect.right:
             vel_x = self.speed
             if player.rect.left - self.rect.right < self.speed:
                 vel_x = player.rect.left - self.rect.right
-        if player.rect.centerx < self.x:
+        if player.rect.right < self.rect.left:
             vel_x = -self.speed
             if abs(player.rect.right - self.rect.left) < self.speed:
                 vel_x = player.rect.right - self.rect.left
