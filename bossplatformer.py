@@ -19,7 +19,7 @@ class Skarmy:
         self.washitcooldown = 5
         self.washitimer = self.washitcooldown
         self.vel_x = 0
-        self.pushback = 10
+        self.pushback = 50
 
     def render(self, screen):
         self.rect.center = [self.x, self.y]
@@ -32,15 +32,20 @@ class Skarmy:
         if player.rect.left > self.rect.right:
             self.facing = "Right"
             self.vel_x = self.speed
-            if player.rect.left - self.rect.right < self.speed:
+            if abs(player.rect.left - self.rect.right) < self.speed:
+                print("stop")
                 self.vel_x = player.rect.left - self.rect.right
+                self.rect.right = player.rect.left
         elif player.rect.right < self.rect.left:
             self.facing = "Left"
             self.vel_x = -self.speed
             if abs(player.rect.right - self.rect.left) < self.speed:
+                print("stop")
                 self.vel_x = player.rect.right - self.rect.left
+                self.rect.left = player.rect.right
         else:
-            self.vel_x = 0
+            if self.washit == False:
+                self.vel_x = 0
         self.x += int(self.vel_x)
     def healthbar(self, screen):
         pygame.draw.rect(screen, [255, 0, 0], pygame.Rect(self.x-40, self.y-90, int((self.health/500)*80), 10))
@@ -62,6 +67,7 @@ class Skarmy:
 
     def update(self, screen, player, dt):
         self.render(screen)
+        self.gothit(player, dt)
         self.move(player)   
         self.healthbar(screen)
-        self.gothit(player, dt)
+        
