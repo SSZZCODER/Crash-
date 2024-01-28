@@ -67,7 +67,6 @@ class Player_Platformer:
             if self.ontheground:
                 self.ontheground = False
                 jumpvelocity = -1*math.sqrt(-2*gravity*self.jumpheight)
-                print(jumpvelocity)
         self.vel[1] += jumpvelocity
     
     def attack(self, keys, dt):

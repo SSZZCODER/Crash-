@@ -21,7 +21,6 @@ import pryamid
 
 level = 15
 
-
 while level != -1:
     if level == 0:
         level = menu.menu()

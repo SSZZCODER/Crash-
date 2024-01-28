@@ -1,6 +1,7 @@
 import pygame
 from player_platformer import Player_Platformer
 from platformcreator import Platform
+from bossplatformer import Skarmy
 
 
 
@@ -9,9 +10,10 @@ def main():
     screen = pygame.display.set_mode((750,750))
     background = pygame.image.load('images/pryamid.png')
     background = pygame.transform.scale(background, (750,750))
-    player = Player_Platformer(25, 25, 5, 15, 50, 50, 15, 15)
+    player = Player_Platformer(25, 25, 5, 50, 50, 50, 15, 15)
     platforms = [Platform(0, 600, 150, 750, (0,0,0))]
-    
+    enemies = [Skarmy(400, 0, 100, 150, 10)]
+    enemies[0].y = platforms[0].rect.top - enemies[0].height/2
 
     clock = pygame.time.Clock()
     exit = False
@@ -31,6 +33,8 @@ def main():
         player.update(screen, keys, dt, platforms)
         for platform in platforms:
             platform.update(screen)
+        for enemy in enemies:
+            enemy.update(screen, player)
         pygame.display.update()
         clock.tick(60)
 
