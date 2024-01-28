@@ -47,18 +47,23 @@ class Skarmy:
             if self.washit == False:
                 self.vel_x = 0
         self.x += int(self.vel_x)
+
     def healthbar(self, screen):
         pygame.draw.rect(screen, [255, 0, 0], pygame.Rect(self.x-40, self.y-90, int((self.health/500)*80), 10))
+
     def gothit(self, player, dt):
         if player.fist_rect.colliderect(self.rect):
             if player.attacking and self.washit == False:
                 self.washit = True
+                self.health -= player.attack_damage
                 self.washittimer = 0
                 print("player attacked boss")
                 if self.facing == "Left":
                     self.vel_x += self.pushback
                 if self.facing == "Right":
                     self.vel_x -= self.pushback
+            print(self.health)
+
         if self.washit:
             if self.washittimer >= self.washitcooldown:
                 self.washit = False

@@ -41,6 +41,7 @@ class Player_Platformer:
         self.attacking = False
         self.attackcooldown = 2.5
         self.attacktimer = 0
+        self.attack_damage = 15
         self.fist_length = 17.5
         self.fist_attack_distance = 0
         self.fist_speed = 8.5
