@@ -18,6 +18,8 @@ class Skarmy:
         self.washit = False
         self.washitcooldown = 5
         self.washitimer = self.washitcooldown
+        self.vel_x = 0
+        self.pushback = 10
 
     def render(self, screen):
         self.rect.center = [self.x, self.y]
@@ -27,18 +29,19 @@ class Skarmy:
         if self.facing == "Right":
             screen.blit(self.img_right, self.rect)
     def move(self, player):
-        vel_x = 0 
         if player.rect.left > self.rect.right:
             self.facing = "Right"
-            vel_x = self.speed
+            self.vel_x = self.speed
             if player.rect.left - self.rect.right < self.speed:
-                vel_x = player.rect.left - self.rect.right
-        if player.rect.right < self.rect.left:
+                self.vel_x = player.rect.left - self.rect.right
+        elif player.rect.right < self.rect.left:
             self.facing = "Left"
-            vel_x = -self.speed
+            self.vel_x = -self.speed
             if abs(player.rect.right - self.rect.left) < self.speed:
-                vel_x = player.rect.right - self.rect.left
-        self.x += int(vel_x)
+                self.vel_x = player.rect.right - self.rect.left
+        else:
+            self.vel_x = 0
+        self.x += int(self.vel_x)
     def healthbar(self, screen):
         pygame.draw.rect(screen, [255, 0, 0], pygame.Rect(self.x-40, self.y-90, int((self.health/500)*80), 10))
     def gothit(self, player, dt):
@@ -47,6 +50,10 @@ class Skarmy:
                 self.washit = True
                 self.washittimer = 0
                 print("player attacked boss")
+                if self.facing == "Left":
+                    self.vel_x += self.pushback
+                if self.facing == "Right":
+                    self.vel_x -= self.pushback
         if self.washit:
             if self.washittimer >= self.washitcooldown:
                 self.washit = False
