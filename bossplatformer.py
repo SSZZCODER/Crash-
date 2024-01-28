@@ -13,7 +13,7 @@ class Skarmy:
         self.rect.center = [self.x, self.y]
         self.img = pygame.transform.scale(self.img, [self.width, self.height])
         self.washit = False
-        self.washitcooldown = 100
+        self.washitcooldown = 5
         self.washitimer = self.washitcooldown
 
     def render(self, screen):
