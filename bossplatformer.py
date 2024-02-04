@@ -62,7 +62,7 @@ class Skarmy:
                     self.vel_x += self.pushback
                 if self.facing == "Right":
                     self.vel_x -= self.pushback
-            print(self.health)
+
 
         if self.washit:
             if self.washittimer >= self.washitcooldown:

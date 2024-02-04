@@ -67,7 +67,7 @@ def main():
             slowedbar.render(screen)
             screen.blit(slowedimg, (11, 45))
         screen.blit(heart, (-29, -45))
-        screen.blit(energy, (-9, 10))
+        screen.blit(energy, (-9, 10)) 
         pygame.display.update()
         clock.tick(60)
 

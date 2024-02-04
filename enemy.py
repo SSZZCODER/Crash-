@@ -712,6 +712,12 @@ class Skeleton(enemy):
         self.damage = damage
         self.image = pygame.image.load("images/skeletonsideways.png")
         self.direction = Vector2(0)
+    
+    def attack(self, player):
+        skelrect = self.image.get_bounding_rect(center = [self.xPos, self.yPos])
+        if skelrect.collidedict(player.rect):
+            player.health -= self.damage
+
     def render(self, screen, player):
         self.direction = Vector2(player.rect.centerx, player.rect.centery) - Vector2(self.xPos, self.yPos)
         up = Vector2(-1, 0)
@@ -719,8 +725,18 @@ class Skeleton(enemy):
         image_rot = pygame.transform.rotate(self.image, -angle)
         image_rect = image_rot.get_rect(center = [self.xPos, self.yPos])
         screen.blit(image_rot, image_rect)
+    
+    def move(self):
+        direction = self.direction.normalize()
+        vel = direction * self.speed
+        self.xPos += vel[0]
+        self.yPos += vel[1]
+        
+        
+
     def update(self, screen, player):
         self.render(screen, player)
+        self.move()
 
 class Bone:
     def __init__(self, xPos, yPos, speed, health, damage,throw_cooldown, range, angle):
@@ -945,20 +961,20 @@ class spawner:
                 GameLogic.enemyList[GameLogic.current_chunk].append( Scorpian(x, y, speed, health, damage, 30, 30, 300))
                 self.enemycount += 1
                 self.life = self.spawn_cooldown     
-    def spawn_skeleton(self):
+    def spawn_skeleton(self, enemieslist):
         if self.life > 0:
             self.life -= 1
         else:
-          if self.enemycount <= self.max_enemycount:
-            enemies = random.randint(2,3)
-            if self.max_enemycount - self.enemycount < enemies:
-                enemies = self.max_enemycount - self.enemycount
-            for i in range(enemies):
-                x= random.randint(50,650)
-                y= random.randint(50,650)
-                speed = random.randint(1,2)
-                health =random.randint(100, 110)
-                damage = random.randint(5, 6)
-                GameLogic.enemyList[GameLogic.current_chunk].append( Skeleton(x, y, speed, health, damage, 30, 30, 300))
-                self.enemycount += 1
-                self.life = self.spawn_cooldown     
+            if self.enemycount <= self.max_enemycount:
+                enemies = random.randint(2,3)
+                if self.max_enemycount - self.enemycount < enemies:
+                    enemies = self.max_enemycount - self.enemycount
+                for i in range(enemies):
+                    x= random.randint(50,650)
+                    y= random.randint(50,650)
+                    speed = random.randint(1,2)
+                    health =random.randint(100, 110)
+                    damage = random.randint(5, 6)
+                    enemieslist.append( Skeleton(x, y, speed, health, damage))
+                    self.enemycount += 1
+                    self.life = self.spawn_cooldown
