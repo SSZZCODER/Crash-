@@ -1,5 +1,5 @@
 import pygame
-
+import enemy
 
 class Platform:
     def __init__(self, x, y, height, width, color):
@@ -14,7 +14,7 @@ class Platform:
 
     def update(self, screen):
         screen.blit(self.image, self.rect)
-
+        
         
 
 
