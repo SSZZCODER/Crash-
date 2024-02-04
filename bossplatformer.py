@@ -49,6 +49,7 @@ class Skarmy:
         self.x += int(self.vel_x)
 
     def healthbar(self, screen):
+        pygame.draw.rect(screen, [0, 0, 0], pygame.Rect(self.x-40, self.y-90, 80, 10))
         pygame.draw.rect(screen, [255, 0, 0], pygame.Rect(self.x-40, self.y-90, int((self.health/500)*80), 10))
 
     def gothit(self, player, dt):

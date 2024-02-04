@@ -712,8 +712,6 @@ class Skeleton:
         self.damage = damage
         self.image = pygame.image.load("images/skeletonsideways.png")
         self.direction = Vector2(0)
-    def move(self):
-        
     def render(self, screen, player):
         self.direction = Vector2(player.rect.centerx, player.rect.centery) - Vector2(self.xPos, self.yPos)
         up = Vector2(-1, 0)
