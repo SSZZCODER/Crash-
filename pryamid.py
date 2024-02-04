@@ -10,10 +10,14 @@ def main():
     screen = pygame.display.set_mode((750,750))
     background = pygame.image.load('images/pryamid.png')
     background = pygame.transform.scale(background, (750,750))
-    
+    heart = pygame.image.load('images/heart.png')
+    heart = pygame.transform.scale(heart, (120, 120))
+    HealthBar = healthbar(30, 0, 115, 20)
     player = Player_Platformer(25, 25, 5, 50, 50, 50, 15, 15)
     platforms = [Platform(0, 600, 150, 750, (0,0,0))]
     enemies = [Skarmy(400, 0, 100, 150, 10)]
+    heart = pygame.image.load('images/heart.png')
+    heart = pygame.transform.scale(heart, (120, 120))
     enemies[0].y = platforms[0].rect.top - enemies[0].height/2
     clock = pygame.time.Clock()
     exit = False
@@ -38,6 +42,7 @@ def main():
                 enemy.update(screen, player, dt)        
             else:
                 enemy.update(screen, player)
+        HealthBar.render(screen)
         skeletonspawner.spawn_skeleton(enemies)
         player.update(screen, keys, dt, platforms)
         pygame.display.update()

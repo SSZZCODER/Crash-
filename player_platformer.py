@@ -18,7 +18,10 @@ class Player_Platformer:
         self.dy = 0
         self.create_player()
         self.create_playerattack()
-        
+        self.health = 250
+
+
+
     def create_player(self):
         self.facing = 1
         self.image = pygame.image.load("images/playerbody_sideways.png") 
