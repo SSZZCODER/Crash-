@@ -703,7 +703,7 @@ class Poison_Dart:
         if self.health <= 0:
             GameLogic.enemyList[GameLogic.current_chunk].remove(self)
 
-class Skeleton:
+class Skeleton(enemy):
     def __init__(self, xPos, yPos, speed, health, damage):
         self.xPos = xPos
         self.yPos = yPos
@@ -945,7 +945,7 @@ class spawner:
                 GameLogic.enemyList[GameLogic.current_chunk].append( Scorpian(x, y, speed, health, damage, 30, 30, 300))
                 self.enemycount += 1
                 self.life = self.spawn_cooldown     
-    def spawn_skeleton(self, enemieslist):
+    def spawn_skeleton(self):
         if self.life > 0:
             self.life -= 1
         else:
@@ -959,6 +959,6 @@ class spawner:
                 speed = random.randint(1,2)
                 health =random.randint(100, 110)
                 damage = random.randint(5, 6)
-                enemieslist.append( Skeleton(x, y, speed, health, damage))
+                GameLogic.enemyList[GameLogic.current_chunk].append( Skeleton(x, y, speed, health, damage, 30, 30, 300))
                 self.enemycount += 1
                 self.life = self.spawn_cooldown     
