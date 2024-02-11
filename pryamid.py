@@ -43,7 +43,7 @@ def main():
             else:
                 enemy.update(screen, player)
         healthbar.render(screen, player)
-        skeletonspawner.spawn_skeleton(enemies)
+        #skeletonspawner.spawn_skeleton(enemies)
         player.update(screen, keys, dt, platforms)
         pygame.display.update()
         clock.tick(60)

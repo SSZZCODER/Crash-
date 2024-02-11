@@ -13,7 +13,7 @@ class Skarmy:
         self.rect = pygame.Rect(0, 0, self.width, self.height)
         self.rect.center = [self.x, self.y]
         self.img_left = pygame.transform.scale(self.img_left, [self.width, self.height])
-        self.facing = "Left"
+        self.state = "Left"
         self.img_right = pygame.transform.flip(self.img_left, 1, 0)
         self.washit = False
         self.washitcooldown = 5
@@ -24,20 +24,20 @@ class Skarmy:
     def render(self, screen):
         self.rect.center = [self.x, self.y]
         pygame.draw.rect(screen, [0, 0, 0], self.rect)
-        if self.facing == "Left":
+        if self.state == "Left":
             screen.blit(self.img_left, self.rect)
-        if self.facing == "Right":
+        if self.state == "Right":
             screen.blit(self.img_right, self.rect)
     def move(self, player):
         if player.rect.left > self.rect.right:
-            self.facing = "Right"
+            self.state = "Right"
             self.vel_x = self.speed
             if abs(player.rect.left - self.rect.right) < self.speed:
                 print("stop")
                 self.vel_x = player.rect.left - self.rect.right
                 self.rect.right = player.rect.left
         elif player.rect.right < self.rect.left:
-            self.facing = "Left"
+            self.state = "Left"
             self.vel_x = -self.speed
             if abs(player.rect.right - self.rect.left) < self.speed:
                 print("stop")
@@ -59,9 +59,9 @@ class Skarmy:
                 self.health -= player.attack_damage
                 self.washittimer = 0
                 print("player attacked boss")
-                if self.facing == "Left":
+                if self.state == "Left":
                     self.vel_x += self.pushback
-                if self.facing == "Right":
+                if self.state == "Right":
                     self.vel_x -= self.pushback
 
 
