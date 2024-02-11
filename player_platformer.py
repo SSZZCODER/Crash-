@@ -66,13 +66,17 @@ class Player_Platformer:
             self.vel[0] = 0
 
     def move_y(self, keys, dt):
-
         gravity = 5
         self.vel[1] += gravity*dt
-        jumpvelocity = -1*math.sqrt(-2*gravity*self.min_jump)
+        jumpvelocity = 0
         if keys[pygame.K_w]:
-            if self.ontheground and self.rect.bottom - self.ground.rect.top > self.max_jump:
-                self.vel[1] += jumpvelocity
+            if self.ontheground:
+                if self.rect.bottom - self.ground.rect.top > self.max_jump:
+                    jumpvelocity = -1*math.sqrt(-2*gravity*self.min_jump)
+                    self.vel[1] += jumpvelocity
+                else:
+                    jumpvelocity = 0
+                    self.vel[1] += jumpvelocity
     def attack(self, keys, dt):
         if keys[pygame.K_SPACE]:
             if self.attacktimer >= self.attackcooldown:
