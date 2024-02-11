@@ -4,7 +4,7 @@ import math
 pygame.mixer.init()
 
 class Player_Platformer:
-    def __init__(self, x, y, speed, jumpheight, width, height, fist_width, fist_height):
+    def __init__(self, x, y, speed, jumpheight, width, height, fist_width, fist_height, health):
         self.x = x
         self.y = y
         self.speed = speed
@@ -18,7 +18,8 @@ class Player_Platformer:
         self.dy = 0
         self.create_player()
         self.create_playerattack()
-        self.health = 250
+        self.health = health
+
 
 
 

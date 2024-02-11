@@ -59,7 +59,7 @@ def main():
         spawner4.spawnbandage()
         if Player.Update(screen) == True:
             return 3
-   
+        
         Spell.render(screen)
         StaminaBar.render(screen)
         HealthBar.render(screen)

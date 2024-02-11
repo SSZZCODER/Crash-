@@ -3,7 +3,7 @@ from player_platformer import Player_Platformer
 from platformcreator import Platform
 from bossplatformer import Skarmy
 from enemy import Skeleton, spawner
-from bars import *
+from healthbarplatformer import healthbar
 
 def main():
     pygame.init()
@@ -13,7 +13,7 @@ def main():
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
     HealthBar = healthbar(30, 0, 115, 20)
-    player = Player_Platformer(25, 25, 5, 50, 50, 50, 15, 15)
+    player = Player_Platformer(25, 25, 5, 50, 50, 50, 15, 15, 250)
     platforms = [Platform(0, 600, 150, 750, (0,0,0))]
     enemies = [Skarmy(400, 0, 100, 150, 10)]
     heart = pygame.image.load('images/heart.png')
