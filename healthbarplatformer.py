@@ -10,10 +10,10 @@ class bar:
 
     def render(self, screen):
         pygame.draw.rect(screen, (0,0,0), self.rect)
-class healthbar(bar):
+class HealthBar(bar):
     def __init__(self, x, y, width, height):
         super().__init__(x, y, width, height)
         self.color = (250, 28, 0)
 
     def render(self, screen, player):
-         pygame.draw.rect(screen, self.color, pygame.Rect(self.rect.x, self.rect.y, int((player.health/250)*self.rect.width), self.rect.height))
+         pygame.draw.rect(screen, self.color, pygame.Rect(player.rect.x, player.rect.y - 25, int((player.health/250)*self.rect.width), self.rect.height))
