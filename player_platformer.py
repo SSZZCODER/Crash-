@@ -8,7 +8,7 @@ class Player_Platformer:
         self.x = x
         self.y = y
         self.speed = speed
-        self.jumpheight = -jumpheight
+        #self.jumpheight = -jumpheight
         self.width = width
         self.height = height
         self.fist_width = fist_width
@@ -19,7 +19,9 @@ class Player_Platformer:
         self.create_player()
         self.create_playerattack()
         self.health = health
-
+        self.min_jump = -10
+        self.max_jump = -jumpheight
+        self.ground = pygame.Rect(0,0,0,0)
 
 
 
@@ -64,15 +66,13 @@ class Player_Platformer:
             self.vel[0] = 0
 
     def move_y(self, keys, dt):
+
         gravity = 5
         self.vel[1] += gravity*dt
-        jumpvelocity = 0
+        jumpvelocity = -1*math.sqrt(-2*gravity*self.min_jump)
         if keys[pygame.K_w]:
-            if self.ontheground:
-                self.ontheground = False
-                jumpvelocity = -1*math.sqrt(-2*gravity*self.jumpheight)
-        self.vel[1] += jumpvelocity
-    
+            if self.ontheground and self.rect.bottom - self.ground.rect.top > self.max_jump:
+                self.vel[1] += jumpvelocity
     def attack(self, keys, dt):
         if keys[pygame.K_SPACE]:
             if self.attacktimer >= self.attackcooldown:
@@ -102,6 +102,7 @@ class Player_Platformer:
                     self.dy = 0
                 self.vel[1] = 0
                 self.ontheground = True
+                self.ground = platform
         if self.rect.centerx + self.dx >= 750:
             self.rect.right = 750
             self.dx = 0
