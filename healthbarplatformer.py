@@ -14,15 +14,6 @@ class healthbar(bar):
     def __init__(self, x, y, width, height):
         super().__init__(x, y, width, height)
         self.color = (250, 28, 0)
-    
 
-
-    def render(self, screen):
-         super().render(screen)
-         pygame.draw.rect(screen, self.color, pygame.Rect(self.rect.x, self.rect.y, int((Player.health/250)*self.rect.width), self.rect.height))
-
-    
-
-
-    def render(self, screen):
-         pygame.draw.rect(screen, self.color, pygame.Rect(self.rect.x, self.rect.y, int((Player_Platformer.health/250)*self.rect.width), self.rect.height))
+    def render(self, screen, player):
+         pygame.draw.rect(screen, self.color, pygame.Rect(self.rect.x, self.rect.y, int((player.health/250)*self.rect.width), self.rect.height))
