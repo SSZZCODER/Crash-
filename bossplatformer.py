@@ -38,27 +38,13 @@ class Skarmy:
             screen.blit(self.hit_left, self.rect)
         if self.state == "hit_right":
             screen.blit(self.hit_right, self.rect)
-    def move(self, player):
-        if not self.washit:
-            if player.rect.left > self.rect.right:
-                self.state = "Right"
-                self.vel_x = self.speed
-                #print(self.distancefromplayer(player))
-                if self.distancefromplayer(player) < self.paddedstop:
-                    self.vel_x = 0
-            elif player.rect.right < self.rect.left:
-                self.state = "Left"
-                self.vel_x = -self.speed
-                #print(self.distancefromplayer(player))
-                if self.distancefromplayer(player) < self.paddedstop:
-                    self.vel_x = 0
-                
-        else:
-            if self.state == "hit_left":
-                self.vel_x = self.pushback
-
-            elif self.state == "hit_right":
-                self.vel_x = -self.pushback
+    def movetoplayer(self, player):
+        if player.rect.left > self.rect.right:
+            self.state = "Right"
+            self.vel_x = self.speed
+        elif player.rect.right < self.rect.left:
+            self.state = "Left"
+            self.vel_x = -self.speed
 
         self.x += int(self.vel_x)
 
@@ -89,7 +75,18 @@ class Skarmy:
                 self.washit = False
             else:
                 self.washittimer += dt 
+    def gothit_move(self):
+        if self.state == "hit_left":
+            self.vel_x = self.pushback
 
+        elif self.state == "hit_right":
+            self.vel_x = -self.pushback
+    def move(self, player):
+        if self.distancefromplayer(player) >= self.paddedstop and self.washit == False:
+            self.movetoplayer(player)
+        if self.washit:
+            self.gothit_move()
+        self.x += int(self.vel_x)
     def update(self, screen, player, dt):
         self.render(screen)
         self.gothit(player, dt)
