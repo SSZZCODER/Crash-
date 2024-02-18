@@ -31,6 +31,9 @@ class Skarmy:
         self.pushback = 3
         self.paddedstop = 100
         self.attack_state = "idle"
+        self.attacking = False
+        self.attack_length = 1000
+        self.attack_timer = 0
 
     def render(self, screen):
         self.rect.center = [self.x, self.y]
@@ -89,12 +92,27 @@ class Skarmy:
     def move(self, player):
         if self.distancefromplayer(player) >= self.paddedstop and self.washit == False:
             self.movetoplayer(player)
-        if self.washit:
-            self.gothit_move()
+        elif self.distancefromplayer < self.paddedstop:
+            self.vel_x = 0
+        #if self.washit:
+         #   self.gothit_move()
         self.x += int(self.vel_x)
+    def can_attack(self, player):
+        if self.distancefromplayer(player) < self.paddedstop:
+            if self.attack_state == "idle":
+                self.attack_state = "attacking"
+    def attack(self, player):
+        if self.attack_state == "attacking":
+            if self.attack_timer <= self.attack_length:
+               if self.state == "left":
+                   pass
+                   
+
+                
     def update(self, screen, player, dt):
         self.render(screen)
-        self.gothit(player, dt)
+   #     self.gothit(player, dt)
         self.move(player)   
+        self.can_attack(player)
         self.healthbar(screen)
         
