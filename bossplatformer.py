@@ -19,6 +19,7 @@ class Skarmy:
         self.hit_left = pygame.transform.scale(self.hit_left, [self.width, self.height])
         self.hit_right = pygame.image.load("images/skeletonarmy (4).png")
         self.hit_right = pygame.transform.scale(self.hit_right, [self.width, self.height])
+        self.hit_sound = pygame.mixer.Sound("sounds/skeletonhit.wav")
         self.washit = False
         self.washitcooldown = 5
         self.washitimer = self.washitcooldown
@@ -79,6 +80,7 @@ class Skarmy:
                     self.state = "hit_left"
                 if self.state == "Right":
                     self.state = "hit_right"
+                self.hit_sound.play()
 
 
 
