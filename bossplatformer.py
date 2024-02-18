@@ -7,6 +7,8 @@ class Skarmy:
         self.width = width
         self.height = height 
         self.damage = damage
+        self.attack_width = 50 
+        self.attack_height = self.height
         self.speed = 2
         self.health = 500
         self.img_left = pygame.image.load("images/skeletonarmy.png")
@@ -20,12 +22,18 @@ class Skarmy:
         self.hit_right = pygame.image.load("images/skeletonarmy (4).png")
         self.hit_right = pygame.transform.scale(self.hit_right, [self.width, self.height])
         self.hit_sound = pygame.mixer.Sound("sounds/skeletonhit.wav")
+        self.attack_rect_left = pygame.Rect(0, 0, self.attack_width, self.attack_height)
+        self.attack_rect_right = pygame.Rect(0, 0, self.attack_width, self.attack_height)
         self.washit = False
         self.washitcooldown = 5
         self.washitimer = self.washitcooldown
         self.vel_x = 0
         self.pushback = 3
         self.paddedstop = 100
+        self.attack_state = "idle"
+        self.attacking = False
+        self.attack_length = 1000
+        self.attack_timer = 0
 
     def render(self, screen):
         self.rect.center = [self.x, self.y]
@@ -84,12 +92,27 @@ class Skarmy:
     def move(self, player):
         if self.distancefromplayer(player) >= self.paddedstop and self.washit == False:
             self.movetoplayer(player)
-        if self.washit:
-            self.gothit_move()
+        elif self.distancefromplayer < self.paddedstop:
+            self.vel_x = 0
+        #if self.washit:
+         #   self.gothit_move()
         self.x += int(self.vel_x)
+    def can_attack(self, player):
+        if self.distancefromplayer(player) < self.paddedstop:
+            if self.attack_state == "idle":
+                self.attack_state = "attacking"
+    def attack(self, player):
+        if self.attack_state == "attacking":
+            if self.attack_timer <= self.attack_length:
+               if self.state == "left":
+                   pass
+                   
+
+                
     def update(self, screen, player, dt):
         self.render(screen)
-        self.gothit(player, dt)
+   #     self.gothit(player, dt)
         self.move(player)   
+        self.can_attack(player)
         self.healthbar(screen)
         
