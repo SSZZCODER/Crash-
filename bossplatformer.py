@@ -7,7 +7,7 @@ class Skarmy:
         self.width = width
         self.height = height 
         self.damage = damage
-        self.attack_width = 50 
+        self.attack_width = 60 
         self.attack_height = self.height
         self.speed = 2
         self.health = 500
@@ -29,7 +29,7 @@ class Skarmy:
         self.washitimer = self.washitcooldown
         self.vel_x = 0
         self.pushback = 3
-        self.paddedstop = 100
+        self.paddedstop = 50
         self.attack_state = "idle"
         self.attacking = False
         self.attack_length = 10
@@ -38,6 +38,7 @@ class Skarmy:
         self.cooldown = 10 
         self.cooldown_timer = 0
         self.attackvalue = 10
+        self.hit_player = False
     
     def getattackimages(self):
         self.numberofattackimg = 4
@@ -70,6 +71,8 @@ class Skarmy:
         else:
             self.attackrendertimer += dt
         if self.attackframe > self.numberofattackimg-1:
+            if self.hit_player == True:
+                self.hit_player = False
             self.attackframe = 0
         if direction == "right":
             screen.blit(self.attackimagesright[self.attackframe], self.rect)
@@ -150,7 +153,7 @@ class Skarmy:
                 self.cooldown_timer = 0
                 self.attack_state = "idle"
     def attack(self, player, screen, dt):
-        pushback = 5
+        pushback = 20
         if self.attack_state == "attackingleft":
             if self.attack_timer <= self.attack_length:
                 self.attack_rect_left.topleft = self.rect.topleft
@@ -159,8 +162,9 @@ class Skarmy:
             if self.attack_timer > self.attack_length:
                 self.attack_state = "cooldown"                
                 self.attack_timer = 0
-            if self.attack_rect_left.colliderect(player.rect):
+            if self.attack_rect_left.colliderect(player.rect) and self.hit_player == False:
                 player.gothit(self.attackvalue, -pushback)
+                self.hit_player = True
                 #self.attackframe = 0
                 #self.attack_timer = 0
                 #self.attack_state = "cooldown"
@@ -173,8 +177,9 @@ class Skarmy:
             if self.attack_timer > self.attack_length:
                 self.attack_state = "cooldown"                
                 self.attack_timer = 0
-            if self.attack_rect_right.colliderect(player.rect):
+            if self.attack_rect_right.colliderect(player.rect) and self.hit_player == False:
                 player.gothit(self.attackvalue, pushback)
+                self.hit_player = True                
                 #self.attackframe = 0
                 #self.attack_timer = 0
                 #self.attack_state = "cooldown"

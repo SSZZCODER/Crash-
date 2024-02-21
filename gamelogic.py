@@ -32,7 +32,7 @@ class GameLogic:
                       "monkey": pygame.mixer.Sound("sounds/monkeysound.wav"),
                         "roar": pygame.mixer.Sound("sounds/yetiroar.wav"),
                     "earthquake": pygame.mixer.Sound("sounds/earthquakesound.wav"),
-                    "tornado": pygame.mixer.Sound("sounds/tornado.wav")
+                    "tornado": pygame.mixer.Sound("sounds/tornado.wav"),
     }
     spellList = []
     bulletlist = []
