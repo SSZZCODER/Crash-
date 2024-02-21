@@ -74,7 +74,7 @@ class Skarmy:
         if self.attackframe > self.numberofattackimg-1:
             if self.hit_player == True:
                 self.hit_player = False
-            self.attackframe = 0
+            self.attackframe = self.numberofattackimg-1
         if direction == "right":
             screen.blit(self.attackimagesright[self.attackframe], self.rect)
         if direction == "left":
@@ -165,6 +165,7 @@ class Skarmy:
             if self.attack_timer > self.attack_length:
                 self.attack_state = "cooldown"                
                 self.attack_timer = 0
+                self.attackframe = 0
             if self.attack_rect_left.colliderect(player.rect) and self.hit_player == False:
                 if self.attackframe > 1:
                     pygame.draw.rect(screen, (255,0,0), self.attack_rect_left)
@@ -182,6 +183,7 @@ class Skarmy:
             if self.attack_timer > self.attack_length:
                 self.attack_state = "cooldown"                
                 self.attack_timer = 0
+                self.attackframe = 0
             if self.attack_rect_right.colliderect(player.rect) and self.hit_player == False:
                 if self.attackframe > 1:
                     pygame.draw.rect(screen, (255,0,0), self.attack_rect_right)
