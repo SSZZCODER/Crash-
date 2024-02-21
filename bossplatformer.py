@@ -140,8 +140,8 @@ class Skarmy:
             self.movetoplayer(player)
         elif self.distancefromplayer(player) < self.paddedstop:
             self.vel_x = 0
-        #if self.washit:
-         #   self.gothit_move()
+        if self.washit:
+            self.gothit_move()
         self.x += int(self.vel_x)
     def can_attack(self, player, dt):
         if self.distancefromplayer(player) < self.paddedstop:
