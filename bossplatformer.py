@@ -44,6 +44,7 @@ class Skarmy:
         for image in self.attackimagesright:
             self.attackimagesleft.append(pygame.transform.flip(image, True, False))
 
+    def idlerender(self,screen):
         if self.state == "Left":
             screen.blit(self.img_left, self.rect)
         if self.state == "Right":
