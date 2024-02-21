@@ -41,7 +41,7 @@ class Skarmy:
     def getattackimages(self):
         self.attackimagesright = []
         for i in range(4):
-            self.attackimagesright.append(pygame.image.load(f"images/skeletonbossattackframes/frame{i+1}.png"))
+            self.attackimagesright.append(pygame.image.load(f"images/skeletonbossattackframes/frame{i}.png"))
         self.attackimagesleft =[]
         for image in self.attackimagesright:
             self.attackimagesleft.append(pygame.transform.flip(image, True, False))
