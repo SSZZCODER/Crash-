@@ -32,20 +32,32 @@ class Skarmy:
         self.paddedstop = 100
         self.attack_state = "idle"
         self.attacking = False
-        self.attack_length = 1000
+        self.attack_length = 10
         self.attack_timer = 0
+        self.getattackimages()
+    
+    def getattackimages(self):
+        self.attackimagesright = []
+        for i in range(4):
+            self.attackimagesright.append(pygame.image.load(f"images/skeletonbossattackframes/frame{i+1}.png"))
+        self.attackimagesleft =[]
+        for image in self.attackimagesright:
+            self.attackimagesleft.append(pygame.transform.flip(image, True, False))
 
-    def render(self, screen):
-        self.rect.center = [self.x, self.y]
-        pygame.draw.rect(screen, [0, 0, 0], self.rect)
         if self.state == "Left":
             screen.blit(self.img_left, self.rect)
         if self.state == "Right":
             screen.blit(self.img_right, self.rect)
+    def hitrender(self, screen):
         if self.state == "hit_left":
             screen.blit(self.hit_left, self.rect)
         if self.state == "hit_right":
             screen.blit(self.hit_right, self.rect)
+    def render(self, screen):
+        self.rect.center = [self.x, self.y]
+        pygame.draw.rect(screen, [0, 0, 0], self.rect)
+        self.idlerender(screen)
+        self.hitrender(screen)
     def movetoplayer(self, player):
         if player.rect.left > self.rect.right:
             self.state = "Right"
@@ -92,20 +104,35 @@ class Skarmy:
     def move(self, player):
         if self.distancefromplayer(player) >= self.paddedstop and self.washit == False:
             self.movetoplayer(player)
-        elif self.distancefromplayer < self.paddedstop:
+        elif self.distancefromplayer(player) < self.paddedstop:
             self.vel_x = 0
         #if self.washit:
          #   self.gothit_move()
         self.x += int(self.vel_x)
     def can_attack(self, player):
         if self.distancefromplayer(player) < self.paddedstop:
-            if self.attack_state == "idle":
-                self.attack_state = "attacking"
-    def attack(self, player):
-        if self.attack_state == "attacking":
+            if self.attack_state == "idle" and self.state == "Left":
+                self.attack_state = "attackingleft"
+            if self.attack_state == "idle" and self.state == "Right":
+                self.attack_state = "attackingright"
+    def attack(self, player, screen, dt):
+        if self.attack_state == "attackingleft":
             if self.attack_timer <= self.attack_length:
-               if self.state == "left":
-                   pass
+                self.attack_rect_left.topleft = self.rect.topleft
+                pygame.draw.rect(screen, (255,0,0), self.attack_rect_left)
+                self.attack_timer += dt
+            if self.attack_timer > self.attack_length:
+                self.attack_state = "idle"                
+                self.attack_timer = 0
+        if self.attack_state == "attackingright":
+            if self.attack_timer <= self.attack_length:
+                self.attack_rect_right.topright = self.rect.topright
+                pygame.draw.rect(screen, (255,0,0), self.attack_rect_right)
+                self.attack_timer += dt
+            if self.attack_timer > self.attack_length:
+                self.attack_state = "idle"                
+                self.attack_timer = 0
+               
                    
 
                 
@@ -114,5 +141,7 @@ class Skarmy:
    #     self.gothit(player, dt)
         self.move(player)   
         self.can_attack(player)
+        self.attack(player, screen, dt)
         self.healthbar(screen)
+        print(self.attack_timer)
         
