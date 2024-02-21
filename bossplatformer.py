@@ -32,7 +32,7 @@ class Skarmy:
         self.paddedstop = 50
         self.attack_state = "idle"
         self.attacking = False
-        self.attack_length = 5
+        self.attack_length = 8
         self.attack_timer = 0
         self.getattackimages()
         self.cooldown = 10
@@ -109,15 +109,18 @@ class Skarmy:
     def gothit(self, player, dt):
         if player.fist_rect.colliderect(self.rect):
             if player.attacking and self.washit == False:
-                self.washit = True
-                self.health -= player.attack_damage
-                self.washittimer = 0
-                print("player attacked boss")
-                if self.state == "Left":
-                    self.state = "hit_left"
-                if self.state == "Right":
-                    self.state = "hit_right"
+                if self.attack_state == "idle" or self.attack_state == "cooldown":
+                    self.washit = True
+                    self.washittimer = 0
+                    if self.state == "Left":
+                        self.state = "hit_left"
+                    if self.state == "Right":
+                        self.state = "hit_right"
                 self.hit_sound.play()
+                self.health -= player.attack_damage
+                
+                print("player attacked boss")
+                
 
 
 
@@ -192,7 +195,7 @@ class Skarmy:
                 
     def update(self, screen, player, dt):
         self.render(screen, dt)
-   #     self.gothit(player, dt)
+        self.gothit(player, dt)
         self.move(player)   
         self.can_attack(player, dt)
         self.attack(player, screen, dt)
