@@ -37,12 +37,17 @@ class Skarmy:
         self.getattackimages()
         self.cooldown = 10 
         self.cooldown_timer = 0
+        self.attackvalue = 10
     
     def getattackimages(self):
         self.numberofattackimg = 4
+        self.attackframe = 0
+        self.attackrendertimer = 0
         self.attackimagesright = []
         for i in range(self.numberofattackimg):
-            self.attackimagesright.append(pygame.image.load(f"images/skeletonbossattackframes/frame{i}.png"))
+            image = pygame.image.load(f"images/skeletonbossattackframes/frame{i}.png")
+            image = pygame.transform.scale(image, [self.width, self.height])
+            self.attackimagesright.append(image)
         self.attackimagesleft =[]
         for image in self.attackimagesright:
             self.attackimagesleft.append(pygame.transform.flip(image, True, False))
@@ -57,18 +62,29 @@ class Skarmy:
             screen.blit(self.hit_left, self.rect)
         if self.state == "hit_right":
             screen.blit(self.hit_right, self.rect)
-    def attackrender(self, screen, direction):
-        pass
-    def render(self, screen):
+    def attackrender(self, screen, direction, dt):
+        animation_time = self.attack_length/self.numberofattackimg
+        if self.attackrendertimer >= animation_time:
+            self.attackframe += 1
+            self.attackrendertimer = 0
+        else:
+            self.attackrendertimer += dt
+        if self.attackframe > self.numberofattackimg-1:
+            self.attackframe = 0
+        if direction == "right":
+            screen.blit(self.attackimagesright[self.attackframe], self.rect)
+        if direction == "left":
+            screen.blit(self.attackimagesleft[self.attackframe], self.rect)
+    def render(self, screen, dt):
         if self.attack_state == "idle" or self.attack_state == "cooldown":
             self.rect.center = [self.x, self.y]
             pygame.draw.rect(screen, [0, 0, 0], self.rect)
             self.idlerender(screen)
             self.hitrender(screen)
         elif self.attack_state == "attackingright":
-            self.attackrender(screen, "right")
+            self.attackrender(screen, "right", dt)
         elif self.attack_state == "attackingleft":
-            self.attackrender(screen, "left")
+            self.attackrender(screen, "left", dt)
     def movetoplayer(self, player):
         if player.rect.left > self.rect.right:
             self.state = "Right"
@@ -133,6 +149,7 @@ class Skarmy:
                 self.cooldown_timer = 0
                 self.attack_state = "idle"
     def attack(self, player, screen, dt):
+        pushback = 5
         if self.attack_state == "attackingleft":
             if self.attack_timer <= self.attack_length:
                 self.attack_rect_left.topleft = self.rect.topleft
@@ -141,6 +158,12 @@ class Skarmy:
             if self.attack_timer > self.attack_length:
                 self.attack_state = "cooldown"                
                 self.attack_timer = 0
+            if self.attack_rect_left.colliderect(player.rect):
+                player.gothit(self.attackvalue, -pushback)
+                self.attackframe = 0
+                self.attack_timer = 0
+                self.attack_state = "cooldown"
+
         if self.attack_state == "attackingright":
             if self.attack_timer <= self.attack_length:
                 self.attack_rect_right.topright = self.rect.topright
@@ -149,12 +172,18 @@ class Skarmy:
             if self.attack_timer > self.attack_length:
                 self.attack_state = "cooldown"                
                 self.attack_timer = 0
+            if self.attack_rect_right.colliderect(player.rect):
+                player.gothit(self.attackvalue, pushback)
+                self.attackframe = 0
+                self.attack_timer = 0
+                self.attack_state = "cooldown"
+
                
                    
 
                 
     def update(self, screen, player, dt):
-        self.render(screen)
+        self.render(screen, dt)
    #     self.gothit(player, dt)
         self.move(player)   
         self.can_attack(player, dt)

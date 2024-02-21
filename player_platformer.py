@@ -133,6 +133,9 @@ class Player_Platformer:
             screen.blit(self.fist_img, self.fist_rect)
             #pygame.draw.rect(screen, (255, 0, 0), self.fist_rect)
             pass
+    def gothit(self, attackvalue, pushback):
+        self.health -= attackvalue
+        self.vel[0] += pushback
     def update(self, screen, keys, dt, platforms):
         self.collisions(platforms)
         self.move_x(keys)
