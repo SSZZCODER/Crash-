@@ -86,14 +86,15 @@ class Skarmy:
         elif self.attack_state == "attackingleft":
             self.attackrender(screen, "left", dt)
     def movetoplayer(self, player):
-        if player.rect.left > self.rect.right:
-            self.state = "Right"
-            self.vel_x = self.speed
-        elif player.rect.right < self.rect.left:
-            self.state = "Left"
-            self.vel_x = -self.speed
+        if self.attack_state == "idle" or self.attack_state == "cooldown":
+            if player.rect.left > self.rect.right:
+                self.state = "Right"
+                self.vel_x = self.speed
+            elif player.rect.right < self.rect.left:
+                self.state = "Left"
+                self.vel_x = -self.speed
 
-        self.x += int(self.vel_x)
+            self.x += int(self.vel_x)
 
     def distancefromplayer(self, player):
         return abs(self.rect.centerx - player.rect.centerx)
@@ -160,9 +161,9 @@ class Skarmy:
                 self.attack_timer = 0
             if self.attack_rect_left.colliderect(player.rect):
                 player.gothit(self.attackvalue, -pushback)
-                self.attackframe = 0
-                self.attack_timer = 0
-                self.attack_state = "cooldown"
+                #self.attackframe = 0
+                #self.attack_timer = 0
+                #self.attack_state = "cooldown"
 
         if self.attack_state == "attackingright":
             if self.attack_timer <= self.attack_length:
@@ -174,9 +175,9 @@ class Skarmy:
                 self.attack_timer = 0
             if self.attack_rect_right.colliderect(player.rect):
                 player.gothit(self.attackvalue, pushback)
-                self.attackframe = 0
-                self.attack_timer = 0
-                self.attack_state = "cooldown"
+                #self.attackframe = 0
+                #self.attack_timer = 0
+                #self.attack_state = "cooldown"
 
                
                    
