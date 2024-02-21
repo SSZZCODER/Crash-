@@ -7,8 +7,9 @@ class Skarmy:
         self.width = width
         self.height = height 
         self.damage = damage
-        self.attack_width = 60 
+        self.attack_width = 50
         self.attack_height = self.height
+        self.attack_dist = 25
         self.speed = 2
         self.health = 500
         self.img_left = pygame.image.load("images/skeletonarmy.png")
@@ -29,7 +30,7 @@ class Skarmy:
         self.washitimer = self.washitcooldown
         self.vel_x = 0
         self.pushback = 3
-        self.paddedstop = 50
+        self.paddedstop = 100
         self.attack_state = "idle"
         self.attacking = False
         self.attack_length = 8
@@ -159,14 +160,14 @@ class Skarmy:
         pushback = 20
         if self.attack_state == "attackingleft":
             if self.attack_timer <= self.attack_length:
-                self.attack_rect_left.topleft = self.rect.topleft
-                #pygame.draw.rect(screen, (255,0,0), self.attack_rect_left)
+                self.attack_rect_left.topleft = [self.rect.topleft[0] - self.attack_dist,self.rect.topleft[1]]
                 self.attack_timer += dt
             if self.attack_timer > self.attack_length:
                 self.attack_state = "cooldown"                
                 self.attack_timer = 0
             if self.attack_rect_left.colliderect(player.rect) and self.hit_player == False:
                 if self.attackframe > 1:
+                    pygame.draw.rect(screen, (255,0,0), self.attack_rect_left)
                     player.gothit(self.attackvalue, -pushback)
                     self.hit_player = True
                 #self.attackframe = 0
@@ -175,14 +176,15 @@ class Skarmy:
 
         if self.attack_state == "attackingright":
             if self.attack_timer <= self.attack_length:
-                self.attack_rect_right.topright = self.rect.topright
-             #   pygame.draw.rect(screen, (255,0,0), self.attack_rect_right)
+                self.attack_rect_right.topright = [self.rect.topright[0] + self.attack_dist,self.rect.topright[1]]
+
                 self.attack_timer += dt
             if self.attack_timer > self.attack_length:
                 self.attack_state = "cooldown"                
                 self.attack_timer = 0
             if self.attack_rect_right.colliderect(player.rect) and self.hit_player == False:
                 if self.attackframe > 1:
+                    pygame.draw.rect(screen, (255,0,0), self.attack_rect_right)
                     player.gothit(self.attackvalue, pushback)
                     self.hit_player = True                
                 #self.attackframe = 0
