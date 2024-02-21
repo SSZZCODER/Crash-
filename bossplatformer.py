@@ -32,12 +32,12 @@ class Skarmy:
         self.paddedstop = 50
         self.attack_state = "idle"
         self.attacking = False
-        self.attack_length = 10
+        self.attack_length = 5
         self.attack_timer = 0
         self.getattackimages()
-        self.cooldown = 10 
+        self.cooldown = 10
         self.cooldown_timer = 0
-        self.attackvalue = 10
+        self.attackvalue = 25
         self.hit_player = False
     
     def getattackimages(self):
@@ -81,7 +81,7 @@ class Skarmy:
     def render(self, screen, dt):
         if self.attack_state == "idle" or self.attack_state == "cooldown":
             self.rect.center = [self.x, self.y]
-            pygame.draw.rect(screen, [0, 0, 0], self.rect)
+            #pygame.draw.rect(screen, [0, 0, 0], self.rect)
             self.idlerender(screen)
             self.hitrender(screen)
         elif self.attack_state == "attackingright":
@@ -163,8 +163,9 @@ class Skarmy:
                 self.attack_state = "cooldown"                
                 self.attack_timer = 0
             if self.attack_rect_left.colliderect(player.rect) and self.hit_player == False:
-                player.gothit(self.attackvalue, -pushback)
-                self.hit_player = True
+                if self.attackframe > 1:
+                    player.gothit(self.attackvalue, -pushback)
+                    self.hit_player = True
                 #self.attackframe = 0
                 #self.attack_timer = 0
                 #self.attack_state = "cooldown"
@@ -178,8 +179,9 @@ class Skarmy:
                 self.attack_state = "cooldown"                
                 self.attack_timer = 0
             if self.attack_rect_right.colliderect(player.rect) and self.hit_player == False:
-                player.gothit(self.attackvalue, pushback)
-                self.hit_player = True                
+                if self.attackframe > 1:
+                    player.gothit(self.attackvalue, pushback)
+                    self.hit_player = True                
                 #self.attackframe = 0
                 #self.attack_timer = 0
                 #self.attack_state = "cooldown"
