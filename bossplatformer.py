@@ -39,8 +39,9 @@ class Skarmy:
         self.cooldown_timer = 0
     
     def getattackimages(self):
+        self.numberofattackimg = 4
         self.attackimagesright = []
-        for i in range(4):
+        for i in range(self.numberofattackimg):
             self.attackimagesright.append(pygame.image.load(f"images/skeletonbossattackframes/frame{i}.png"))
         self.attackimagesleft =[]
         for image in self.attackimagesright:
@@ -56,11 +57,18 @@ class Skarmy:
             screen.blit(self.hit_left, self.rect)
         if self.state == "hit_right":
             screen.blit(self.hit_right, self.rect)
+    def attackrender(self, screen, direction):
+        pass
     def render(self, screen):
-        self.rect.center = [self.x, self.y]
-        pygame.draw.rect(screen, [0, 0, 0], self.rect)
-        self.idlerender(screen)
-        self.hitrender(screen)
+        if self.attack_state == "idle" or self.attack_state == "cooldown":
+            self.rect.center = [self.x, self.y]
+            pygame.draw.rect(screen, [0, 0, 0], self.rect)
+            self.idlerender(screen)
+            self.hitrender(screen)
+        elif self.attack_state == "attackingright":
+            self.attackrender(screen, "right")
+        elif self.attack_state == "attackingleft":
+            self.attackrender(screen, "left")
     def movetoplayer(self, player):
         if player.rect.left > self.rect.right:
             self.state = "Right"
@@ -128,7 +136,7 @@ class Skarmy:
         if self.attack_state == "attackingleft":
             if self.attack_timer <= self.attack_length:
                 self.attack_rect_left.topleft = self.rect.topleft
-                pygame.draw.rect(screen, (255,0,0), self.attack_rect_left)
+                #pygame.draw.rect(screen, (255,0,0), self.attack_rect_left)
                 self.attack_timer += dt
             if self.attack_timer > self.attack_length:
                 self.attack_state = "cooldown"                
@@ -136,7 +144,7 @@ class Skarmy:
         if self.attack_state == "attackingright":
             if self.attack_timer <= self.attack_length:
                 self.attack_rect_right.topright = self.rect.topright
-                pygame.draw.rect(screen, (255,0,0), self.attack_rect_right)
+             #   pygame.draw.rect(screen, (255,0,0), self.attack_rect_right)
                 self.attack_timer += dt
             if self.attack_timer > self.attack_length:
                 self.attack_state = "cooldown"                
