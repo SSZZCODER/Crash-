@@ -35,6 +35,8 @@ class Skarmy:
         self.attack_length = 10
         self.attack_timer = 0
         self.getattackimages()
+        self.cooldown = 10 
+        self.cooldown_timer = 0
     
     def getattackimages(self):
         self.attackimagesright = []
@@ -110,12 +112,18 @@ class Skarmy:
         #if self.washit:
          #   self.gothit_move()
         self.x += int(self.vel_x)
-    def can_attack(self, player):
+    def can_attack(self, player, dt):
         if self.distancefromplayer(player) < self.paddedstop:
             if self.attack_state == "idle" and self.state == "Left":
                 self.attack_state = "attackingleft"
             if self.attack_state == "idle" and self.state == "Right":
                 self.attack_state = "attackingright"
+        if self.attack_state == "cooldown":
+            if self.cooldown_timer < self.cooldown:
+                self.cooldown_timer += dt
+            elif self.cooldown_timer >= self.cooldown:
+                self.cooldown_timer = 0
+                self.attack_state = "idle"
     def attack(self, player, screen, dt):
         if self.attack_state == "attackingleft":
             if self.attack_timer <= self.attack_length:
@@ -123,7 +131,7 @@ class Skarmy:
                 pygame.draw.rect(screen, (255,0,0), self.attack_rect_left)
                 self.attack_timer += dt
             if self.attack_timer > self.attack_length:
-                self.attack_state = "idle"                
+                self.attack_state = "cooldown"                
                 self.attack_timer = 0
         if self.attack_state == "attackingright":
             if self.attack_timer <= self.attack_length:
@@ -131,7 +139,7 @@ class Skarmy:
                 pygame.draw.rect(screen, (255,0,0), self.attack_rect_right)
                 self.attack_timer += dt
             if self.attack_timer > self.attack_length:
-                self.attack_state = "idle"                
+                self.attack_state = "cooldown"                
                 self.attack_timer = 0
                
                    
@@ -141,7 +149,7 @@ class Skarmy:
         self.render(screen)
    #     self.gothit(player, dt)
         self.move(player)   
-        self.can_attack(player)
+        self.can_attack(player, dt)
         self.attack(player, screen, dt)
         self.healthbar(screen)
         print(self.attack_timer)
