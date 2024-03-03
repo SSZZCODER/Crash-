@@ -1023,7 +1023,7 @@ class Icicle:
         self.attack()
 class Boss7:
     def __init__(self, damage, xPos, yPos):
-        self.health = 2500
+        self.health = 1
         self.newcenter = Vector2(0)
         self.velocity = Vector2(0)
         self.speed = 3
@@ -1054,7 +1054,7 @@ class Boss7:
                 duststorm.update(screen)
                 if duststorm.destroyed == True:
                     self.duststorms.remove(duststorm)
-        print(len(self.duststorms))
+        
     def earthquake(self, screen):
         if self.earthquaketimer >= self.earthquakescooldown:
             x = GameLogic.playerPos[0]
@@ -1075,6 +1075,7 @@ class Boss7:
         GameLogic.playSoundBoss("roar")
         if self.health <= 0:
             GameLogic.enemyList[GameLogic.current_chunk].remove(self)
+            GameLogic.desertbossdroppedkey = True
     def move(self):
         if self.moving == False and self.movetimer == 0:
             self.newcenter.x = random.randint(0,750)
@@ -1098,11 +1099,11 @@ class Boss7:
             if self.xPos == self.newcenter.x and self.yPos == self.newcenter.y:
                 self.moving = False
                 self.lunging = True
-    def takeDamage(self, damage):
-        self.health -= damage
-        GameLogic.playSoundBoss("bossdmg")
-        if self.health <= 0:
-            GameLogic.enemyList[GameLogic.current_chunk].remove(self)
+    # def takeDamage(self, damage):
+    #     self.health -= damage
+    #     GameLogic.playSoundBoss("bossdmg")
+    #     if self.health <= 0:
+    #         GameLogic.enemyList[GameLogic.current_chunk].remove(self)
 
     def attack(self):
         return [4, 3, 60]

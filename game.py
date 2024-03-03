@@ -19,7 +19,7 @@ import desert
 import desertarena
 import pryamid
 
-level = 13
+level = 14 
 
 while level != -1:
     if level == 0:
