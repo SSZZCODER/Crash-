@@ -656,7 +656,7 @@ class Scorpian(enemy):
         self.health -= damage
 
         if self.health <= 0:
-            self.dropKey = True
+            GameLogic.desertkillsforkey +=1
             GameLogic.itemlist[GameLogic.current_chunk].append( Coin(1, self.xPos, self.yPos,self))
             GameLogic.enemyList[GameLogic.current_chunk].remove(self)
         print("taken damage")
