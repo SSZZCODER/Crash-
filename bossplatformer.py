@@ -40,6 +40,7 @@ class Skarmy:
         self.cooldown_timer = 0
         self.attackvalue = 25
         self.hit_player = False
+        self.destroyed = False
     
     def getattackimages(self):
         self.numberofattackimg = 4
@@ -117,6 +118,9 @@ class Skarmy:
                         self.state = "hit_left"
                     if self.state == "Right":
                         self.state = "hit_right"
+                else:
+                    self.washit = True
+                    self.washittimer = 0
                 self.hit_sound.play()
                 self.health -= player.attack_damage
                 
@@ -204,5 +208,6 @@ class Skarmy:
         self.can_attack(player, dt)
         self.attack(player, screen, dt)
         self.healthbar(screen)
-        print(self.attack_timer)
+        if self.health <= 0:
+            self.destroyed = True
         

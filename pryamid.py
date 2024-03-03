@@ -42,8 +42,10 @@ def main():
                 enemy.update(screen, player, dt)        
             else:
                 enemy.update(screen, player)
+            if enemy.destroyed:
+                enemies.remove(enemy)
         healthbar.render(screen, player)
-        #skeletonspawner.spawn_skeleton(enemies)
+        skeletonspawner.spawn_skeleton(enemies)
         player.update(screen, keys, dt, platforms)
         pygame.display.update()
         clock.tick(60)

@@ -712,6 +712,7 @@ class Skeleton(enemy):
         self.damage = damage
         self.image = pygame.image.load("images/skeletonsideways.png")
         self.direction = Vector2(0)
+        self.destroyed = False
     
     def attack(self, player):
         skelrect = self.image.get_bounding_rect(center = [self.xPos, self.yPos])
@@ -731,11 +732,22 @@ class Skeleton(enemy):
         vel = direction * self.speed
         self.xPos += vel[0]
         self.yPos += vel[1]
+
+    
+    def gothit(self, player):
+        rect = self.image.get_bounding_rect()
+        rect.center = [self.xPos, self.yPos]
+        if player.fist_rect.colliderect(rect):
+            if player.attacking == True:
+                self.destroyed = True
+
+
         
         
 
     def update(self, screen, player):
         self.render(screen, player)
+        self.gothit(player)
         self.move()
 
 class Bone:
