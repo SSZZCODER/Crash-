@@ -620,7 +620,8 @@ class Scorpian(enemy):
         self.poison_range = 50
         self.melee_range = 10
         self.changeangle = 180
- 
+        self.itemcount = 10
+
 
 
     def assignImage(self):

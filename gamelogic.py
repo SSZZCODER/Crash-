@@ -57,6 +57,7 @@ class GameLogic:
 
     junglekillsforkey = 0
     snowkillsforkey = 0
+    desertkillsforkey = 0
 
     #pygame.mixer.music.load(soundlist[""])
     #pygame.mixer.music.set_volume(soundlist[""],.05)

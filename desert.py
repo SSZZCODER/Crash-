@@ -105,7 +105,7 @@ def main():
             #    keypos = [375, 375]
             #else:
              #   killsforkey +=1
-        if GameLogic.snowkillsforkey >= 2 and haskey == False:
+        if GameLogic.desertkillsforkey >= 2 and haskey == False:
             droppedkey = True
             GameLogic.playSound("summon")
             keypos = [375,375]
