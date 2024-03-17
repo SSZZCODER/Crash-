@@ -72,7 +72,11 @@ class Player:
         "zombie":[],
         "magma": [],
         "magma": [],
-        "shark": []
+        "shark": [],
+        "monkey": [],
+        "yeti": [],
+        "sandman": [],
+        "skeleton": [],
     }
 
     def attack():

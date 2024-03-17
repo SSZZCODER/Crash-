@@ -7,7 +7,7 @@ from player import Player
 import math
 class Boss:
     def __init__(self, damage, xPos, yPos):
-        self.health = 2500
+        self.health = 1 
         self.damage = damage
         self.xPos = xPos
         self.yPos = yPos
@@ -85,14 +85,16 @@ class Boss:
         self.health -= damage
         GameLogic.playSoundBoss("bossdmg")
         if self.health <= 0:
+            Player.bosskeys["zombie"].append(pygame.image.load("images/zombfrag.png"))
+            Player.bosskeys["zombie"].append((50, 50))
             GameLogic.enemyList[GameLogic.current_chunk].remove(self)
 
     def update(self, screen):
         self.move()
-
         self.render(screen)
         self.acid(screen)
         self.curse(screen)
+
 class Acid:
     def __init__(self, angle, direction, xPos, yPos, playerpos):
         self.imagepuddle = pygame.image.load("images/acidpuddle.png")

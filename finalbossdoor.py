@@ -21,5 +21,8 @@ def main():
     
         screen.blit(background, (0, 0))
         Player.Update(screen)
+        for key in Player.bosskeys:
+            if len(Player.bosskeys[key]) > 0:
+                screen.blit(Player.bosskeys[key][0], Player.bosskeys[key][1])
         pygame.display.flip()
         clock.tick(60)
