@@ -78,8 +78,7 @@ def main():
         if haskey == True:
             bossportal6 = Warp(625, 35,100,175,(153,76,0), 50,0) 
             droppedkey = False
-        bossportal6.Update(screen)       
-        finalroomwarp.update(screen) 
+        bossportal6.Update(screen)        
         screen.blit(portal, [600, 10])
         spawner3.spawncoin()
         spawner4.spawnbandage()
