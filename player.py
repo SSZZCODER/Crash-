@@ -68,11 +68,6 @@ class Player:
     #particlesbleed = particlePlayer(player_x, player_y, (255, 0, 0))
     t = 180
     bcount = 0
-    bosskeys = {
-        "zombie":[],
-        "magma": [],
-        "magma": [],
-    }
 
     def attack():
         Player.attacking = True   
