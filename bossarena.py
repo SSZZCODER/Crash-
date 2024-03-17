@@ -15,7 +15,7 @@ import random
 from bossarenalevel import BossArena
 
 def main():
-    zombiebossarena = BossArena("images/bossmap.png", "Boss1", Boss(7, 350, 95), 1, enemyspawner=spawner(0, 600, 10))
+    zombiebossarena = BossArena("images/bossmap.png", "Boss1", Boss(7, 350, 95), 1,"zombie" , "images/zombfrag.png", (50,50),enemyspawner=spawner(0, 600, 10))
     while not zombiebossarena.exit:
         zombiebossarena.gameloop()
         if zombiebossarena.level != None:

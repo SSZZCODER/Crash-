@@ -85,8 +85,6 @@ class Boss:
         self.health -= damage
         GameLogic.playSoundBoss("bossdmg")
         if self.health <= 0:
-            Player.bosskeys["zombie"].append(pygame.image.load("images/zombfrag.png"))
-            Player.bosskeys["zombie"].append((50, 50))
             GameLogic.enemyList[GameLogic.current_chunk].remove(self)
 
     def update(self, screen):

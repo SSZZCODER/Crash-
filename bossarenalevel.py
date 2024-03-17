@@ -14,7 +14,7 @@ import random
 
 
 class BossArena:
-    def __init__(self, backgroundimage, current_chunk, boss, original_level, enemyspawner = None):
+    def __init__(self, backgroundimage, current_chunk, boss, original_level, key, keyimage, keypos, enemyspawner = None):
         self.screen = pygame.display.set_mode((750, 750))
         self.background = pygame.image.load(backgroundimage)
         self.background = pygame.transform.scale(self.background, [750, 750])
@@ -41,6 +41,9 @@ class BossArena:
 
         self.level = None
         self.original_level = original_level
+        self.key = key
+        self.keyimage = keyimage
+        self.keypos = keypos
 
     def gameloop(self):
         for event in pygame.event.get():
@@ -62,6 +65,8 @@ class BossArena:
         if Player.Update(self.screen) == True:
             self.level = 3
         if self.boss not in GameLogic.enemyList[GameLogic.current_chunk]:
+            Player.bosskeys[self.key].append(pygame.image.load(self.keyimage))
+            Player.bosskeys[self.key].append(self.keypos)
             self.level = self.original_level
    
         self.Spell.render(self.screen)
