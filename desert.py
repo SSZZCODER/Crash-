@@ -96,6 +96,7 @@ def main():
         spawner4.spawnbandage()
         spawner4.spawncoin()
         bossportal5.Update(screen) 
+        finalroomwarp.Update(screen)
         screen.blit(portal, [600, 10])
         GameLogic.Update(screen)
         if Player.Update(screen) == True:
