@@ -36,6 +36,7 @@ def main():
     heart = pygame.image.load('images/heart.png')
     heart = pygame.transform.scale(heart, (120, 120))
     snowwarp = Warp(0,650, 35,100, (0, 0, 128), 650,0) 
+    finalroomwarp = Warp(720,650, 35,100, (255,255,255), -650,0)
     portal = pygame.image.load('images/desertportal.png')
     portal = pygame.transform.scale(portal, (150,200))
     desertkey = pygame.image.load('images/desertkey.png')
@@ -72,6 +73,10 @@ def main():
                 Player.MoveBy(bossportal5.offset_x, bossportal5.offset_y)
                 GameLogic.spellList = []
                 return 14
+            if finalroomwarp.Touched() == True:
+                Player.MoveBy(finalroomwarp.offset_x, finalroomwarp.offset_y)
+                GameLogic.spellList = []
+                return 16
             if event.type == pygame.QUIT:
                 return -1
             if event.type == pygame.KEYDOWN:

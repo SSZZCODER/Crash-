@@ -18,7 +18,7 @@ def main():
             if event.type == pygame.QUIT:
                 exit = True
                 pygame.quit()
-    
+        screen.fill((0,0,0))
         screen.blit(background, (0, 0))
         Player.Update(screen)
         for key in Player.bosskeys:
