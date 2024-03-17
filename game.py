@@ -57,4 +57,4 @@ while level != -1:
         level = pryamid.main()
     if level == 16:
         level == finalbossdoor.main()
-    print(level) 
+    print("Level: " + str(level)) 
