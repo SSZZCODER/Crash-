@@ -15,7 +15,7 @@ import random
 
 
 def main():
-    magmaboss = BossArena('images/magmaarena.png', "Boss2", Boss2(7, 350, 95), 2)
+    magmaboss = BossArena('images/magmaarena.png', "Boss2", Boss2(7, 350, 95), 2, "magma", "images/magmafrag.png", (50,50))
     while not magmaboss.exit:
         magmaboss.gameloop()
         if magmaboss.level != None:
