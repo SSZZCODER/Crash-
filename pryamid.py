@@ -44,6 +44,10 @@ def main():
                 enemy.update(screen, player)
             if enemy.destroyed:
                 enemies.remove(enemy)
+        if len(enemies) == 0:
+            return 13
+        if player.health <= 0:
+            return 3
         healthbar.render(screen, player)
         skeletonspawner.spawn_skeleton(enemies)
         player.update(screen, keys, dt, platforms)
