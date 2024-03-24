@@ -118,7 +118,7 @@ def main():
         spawner1.spawn()
         
         GameLogic.Update(screen)
-        if Player.Update(screen) == True:
+        if Player.Update(screen,events) == True:
             return 3
         if textBaron == True:
             textBar.render(screen)

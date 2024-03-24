@@ -210,10 +210,10 @@ class Player:
             Player.animations = Player.rainbowanimation
 
 
-    def Update(screen):
+    def Update(screen,events):
         Player.Rotate()
         Player.Move()
-        Player.Check()
+        Player.Check(events)
         Player.dash()
         Player.damage_check()
         Player.particlesp.Update(screen)
@@ -399,24 +399,25 @@ class Player:
             Player.t = 180
         return Player.zero()
 
-    def Check():
-        for event in pygame.event.get():
+    def Check(events):
+        for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_t:
                     Player.inventoryShow = not Player.inventoryShow
 
     def Move():
+       keys = pygame.key.get_pressed()
        Player.direction = [0, 0]
-       if pygame.key.get_pressed()[pygame.K_s]:
+       if keys[pygame.K_s]:
            Player.direction[1] = 1
 
-       if pygame.key.get_pressed()[pygame.K_w]:
+       if keys[pygame.K_w]:
             Player.direction[1] = -1
 
-       if pygame.key.get_pressed()[pygame.K_a]:
+       if keys[pygame.K_a]:
             Player.direction[0] = -1
 
-       if pygame.key.get_pressed()[pygame.K_d]:
+       if keys[pygame.K_d]:
             Player.direction[0] = 1
         
        #normalize the direction
