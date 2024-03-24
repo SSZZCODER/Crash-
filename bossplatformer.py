@@ -1,6 +1,8 @@
 import pygame
 
 class Skarmy:
+    SCREENWIDTH = 750
+    SCREENHEIGHT = 750
     def __init__(self, x, y, width, height, damage):
         self.x = x
         self.y = y
@@ -147,6 +149,10 @@ class Skarmy:
             self.vel_x = 0
         if self.washit:
             self.gothit_move()
+        if self.x < 0:
+            self.x = Skarmy.SCREENWIDTH
+        if self.x > Skarmy.SCREENWIDTH:
+            self.x = 0
         self.x += int(self.vel_x)
     def can_attack(self, player, dt):
         if self.distancefromplayer(player) < self.paddedstop:
