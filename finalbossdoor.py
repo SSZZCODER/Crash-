@@ -20,7 +20,7 @@ def main():
                 pygame.quit()
         screen.fill((0,0,0))
         screen.blit(background, (0, 0))
-        Player.Update(screen)
+        Player.Update(screen,events)
         for key in Player.bosskeys:
             if len(Player.bosskeys[key]) > 0:
                 screen.blit(Player.bosskeys[key][0], Player.bosskeys[key][1])

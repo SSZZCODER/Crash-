@@ -55,8 +55,8 @@ class Rifleweapon:
         self.bulletcount = self.bulletcapacity
         self.bullets = []
         self.bulletspeed = 20
-        self.shoottimer = 0
-        self.shootcooldown = 25
+        self.shootcooldown = 0
+        self.shoottimer = self.shootcooldown
         self.reloading = False
         self.reloadtimer = 0 
         self.reloadcooldown = 80

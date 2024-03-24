@@ -67,7 +67,8 @@ def main():
 
     while not exit:
         enemylength = len(GameLogic.enemyList[GameLogic.current_chunk])
-        for event in pygame.event.get():
+        events = pygame.event.get()
+        for event in events:
             if event.type == pygame.QUIT:   
                 exit=True
             
@@ -114,7 +115,7 @@ def main():
         spawner5.spawncoin()
         spawner5.spawnbandage()
         GameLogic.Update(screen)
-        if Player.Update(screen) == True:
+        if Player.Update(screen,events) == True:
             return 3
         if len(GameLogic.enemyList[GameLogic.current_chunk])<enemylength:
             if killsforkey >= 2 and haskey == False:

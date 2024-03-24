@@ -62,7 +62,8 @@ def main():
 
     while not exit:
         enemylength = len(GameLogic.enemyList[GameLogic.current_chunk])
-        for event in pygame.event.get():
+        events = pygame.event.get()
+        for event in events:
             if event.type == pygame.QUIT:   
                 exit=True
             if  snowwarp.Touched() == True:
@@ -100,7 +101,7 @@ def main():
         bossportal5.Update(screen)
         screen.blit(portal, [600, 10])
         GameLogic.Update(screen)
-        if Player.Update(screen) == True:
+        if Player.Update(screen,events) == True:
             return 3
         Spell.render(screen)
         StaminaBar.render(screen)
