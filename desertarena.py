@@ -3,6 +3,7 @@ from inventory import Inventory
 from particle import ParticleSystem
 from player import Player
 from hotbar import Hotbar
+from bossarena import BossArena
 
 from bars import *
 from enemy import *

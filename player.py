@@ -77,6 +77,7 @@ class Player:
         "yeti": [],
         "sandman": [],
         "skeleton": [],
+        "desert": []
     }
 
     def attack():
