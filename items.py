@@ -112,3 +112,11 @@ class pumpkin_launcher():
         self.image = pygame.image.load("images/pumpkinlauncher.png")
         self.inventoryimage = pygame.transform.scale(self.image, (60,70))
         self.inventoryrect = self.inventoryimage.get_bounding_rect()
+
+class Fist():
+    def __init__(self):
+        self.amount = 1
+        self.name = "Fist"
+        self.image = pygame.image.load("images/playerbody_sideways.png")
+        self.inventoryimage = pygame.transform.scale(self.image, (60,70))
+        self.inventoryrect = self.inventoryimage.get_bounding_rect()
