@@ -13,32 +13,28 @@ def menu():
     title = font2.render("Crash!", True, (0, 0,0))
     start = font.render("Play", True, (0, 0, 0))
     skins = font.render("Skins", True, (0,0,0) )
+    startRect = pygame.Rect((130, 145, 500, 100))
+    skinsRect = pygame.Rect((130,350,500,100))
 
     clock = pygame.time.Clock()
 
     exit = False
-    while not exit:
-        
+    while not exit:      
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:   
-                exit=True
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button ==1:
-                pos = pygame.mouse.get_pos()
-                if pygame.Rect((130, 210, 500, 100)).collidepoint(pos):
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if startRect.collidepoint(event.pos):
+                    print("Hit start button")
                     return 1
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button ==1:
-                pos = pygame.mouse.get_pos()
-                if pygame.Rect((130,350,500,100)).collidepoint(pos):
-
+                if skinsRect.collidepoint(event.pos):
                     return 4
             if event.type == pygame.QUIT:
                 return -1
-
         screen.blit(menu_image, (0,0))
         pygame.draw.rect(screen, (0,0,0), pygame.Rect(115, 335  , 530, 130))
         pygame.draw.rect(screen, (0,0,0), pygame.Rect(115, 135  , 530, 130))
         pygame.draw.rect(screen, (101, 184, 145), pygame.Rect(130, 150, 500, 100))
         pygame.draw.rect(screen, (101,184, 145), pygame.Rect(130,350,500,100))
+        #pygame.draw.rect(screen,(255,0,0),startRect)
     
        # pygame.draw.rect(screen, (0,0,0), pygame.Rect(115, 15, 530, 130))
        # pygame.draw.rect(screen, (101, 184, 145), pygame.Rect(130, 30, 500, 100))

@@ -18,8 +18,8 @@ def menu():
 
     exit = False
     while not exit:
-        
-        for event in pygame.event.get():
+        events = pygame.event.get()
+        for event in events:
             if event.type == pygame.QUIT:   
                 exit=True
             if event.type == pygame.MOUSEBUTTONDOWN and event.button ==1:

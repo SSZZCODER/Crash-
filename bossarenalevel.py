@@ -46,7 +46,8 @@ class BossArena:
         self.keypos = keypos
 
     def gameloop(self):
-        for event in pygame.event.get():
+        events = pygame.event.get()
+        for event in events:
             if event.type == pygame.QUIT:   
                 self.exit=True
             if event.type == pygame.QUIT:
@@ -62,7 +63,7 @@ class BossArena:
         if self.enemyspawner != None:
             self.enemyspawner.spawn()
 
-        if Player.Update(self.screen) == True:
+        if Player.Update(self.screen,events) == True:
             self.level = 3
         if self.boss not in GameLogic.enemyList[GameLogic.current_chunk]:
             Player.bosskeys[self.key].append(pygame.image.load(self.keyimage))

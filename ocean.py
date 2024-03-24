@@ -61,7 +61,8 @@ def main():
 
     while not exit:
         enemylength = len(GameLogic.enemyList[GameLogic.current_chunk])
-        for event in pygame.event.get():
+        events = pygame.event.get()
+        for event in events:
             if event.type == pygame.QUIT:   
                 exit=True
             if  lavawarp.Touched() == True:
@@ -98,7 +99,7 @@ def main():
         GameLogic.Update(screen)
         spawner4.spawnbandage()
         spawner4.spawncoin()
-        if Player.Update(screen) == True:
+        if Player.Update(screen,events) == True:
             return 3
         Spell.render(screen)
         spawner3.spawn_fish()

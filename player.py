@@ -53,6 +53,7 @@ class Player:
     
     playercenter = [300, 300]
     playerInventory = Inventory(5)
+    playerInventory.addObject(Fist())
     inventoryShow = False
     #playerhotbar = Hotbar()
     poison_cooldown = 0
@@ -142,25 +143,23 @@ class Player:
     def itemCheck():
         for items in GameLogic.itemlist[GameLogic.current_chunk]:
             if items.image.get_rect(center = (items.xPos, items.yPos)).colliderect(Player.imageload.get_rect(center = Player.playercenter)):
-
-                    print("Picked up item")
-                    items.spawner.itemcount -= 1
-                    GameLogic.itemlist[GameLogic.current_chunk].remove(items)
-                    if items.name == "Coin":
+                print("Picked up item")
+                items.spawner.itemcount -= 1
+                GameLogic.itemlist[GameLogic.current_chunk].remove(items)
+                if items.name == "Coin":
+                    amount = Player.playerInventory.addItem(items)
+                    Player.title = Player.font.render(str(amount), True, (244, 44, 4))
+                    Player.timer = 120 
+                    print("picked up c")    
+                    GameLogic.playSound("coin")
+                if items.name == "Bandages":              
+                    if Player.health < 250:
+                        Player.t = 180
+                        Player.bcount +=1
+                    else:
                         amount = Player.playerInventory.addItem(items)
                         Player.title = Player.font.render(str(amount), True, (244, 44, 4))
-                        Player.timer = 120 
-                        print("picked up c")    
-                        GameLogic.playSound("coin")
-                    if items.name == "Bandages":
-                    
-                        if Player.health < 250:
-                            Player.t = 180
-                            Player.bcount +=1
-                        else:
-                            amount = Player.playerInventory.addItem(items)
-                            Player.title = Player.font.render(str(amount), True, (244, 44, 4))
-                            Player.timer = 120                         
+                        Player.timer = 120                         
 
                     
 
@@ -210,10 +209,11 @@ class Player:
             Player.animations = Player.rainbowanimation
 
 
-    def Update(screen):
+    def Update(screen,events):
+        mousePressed = False
         Player.Rotate()
         Player.Move()
-        Player.Check()
+        Player.Check(events)
         Player.dash()
         Player.damage_check()
         Player.particlesp.Update(screen)
@@ -228,12 +228,12 @@ class Player:
             Player.weapon.update(screen, Player.playercenter[0] , Player.playercenter[1],Player.playercenter)   
             Player.playerimage = Player.skinnew 
             if Player.weapon.reloading == True:
-                    if Player.weapon.reloadtimer >= Player.weapon.reloadcooldown:
-                        Player.weapon.bulletcount = Player.weapon.bulletcapacity
-                        Player.weapon.reloading = False
-                        Player.weapon.reloadtimer = 0
-                    else:
-                        Player.weapon.reloadtimer += 1
+                if Player.weapon.reloadtimer >= Player.weapon.reloadcooldown:
+                    Player.weapon.bulletcount = Player.weapon.bulletcapacity
+                    Player.weapon.reloading = False
+                    Player.weapon.reloadtimer = 0
+                else:
+                    Player.weapon.reloadtimer += 1
             
         elif Player.weapon_name == "Sword":
             Player.weapon = Player.weapon_sword
@@ -287,7 +287,12 @@ class Player:
         Player.itemCheck()
         if Player.weaponcooldown != 0:
                 Player.weaponcooldown -= 1
-        if pygame.mouse.get_pressed()[0]:
+        # if pygame.mouse.get_pressed()[0]:
+        #     mousePressed = True
+        for event in events:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mousePressed = True
+        if mousePressed:
             if Player.weapon_name == "Fist":
                 if Player.weaponcooldown <= 0:
                     Player.attack()
@@ -300,9 +305,10 @@ class Player:
                             Player.dmgcounter = 300
                     Player.weaponcooldown = 30
             elif Player.weapon_name == "Rifle":
-                if Player.weapon.reloading == False:               
+                if Player.weapon.reloading == False and not Player.inventoryShow:               
                     if Player.weapon.shoottimer >= Player.weapon.shootcooldown:
                         Player.weapon.attack(screen, GameLogic.playerPos)
+                        mousePressed = False
                         Player.weapon.shoottimer = 0
                         Player.weapon.bulletcount -=1
                     else: 
@@ -399,24 +405,25 @@ class Player:
             Player.t = 180
         return Player.zero()
 
-    def Check():
-        for event in pygame.event.get():
+    def Check(events):
+        for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_t:
                     Player.inventoryShow = not Player.inventoryShow
 
     def Move():
+       keys = pygame.key.get_pressed()
        Player.direction = [0, 0]
-       if pygame.key.get_pressed()[pygame.K_s]:
+       if keys[pygame.K_s]:
            Player.direction[1] = 1
 
-       if pygame.key.get_pressed()[pygame.K_w]:
+       if keys[pygame.K_w]:
             Player.direction[1] = -1
 
-       if pygame.key.get_pressed()[pygame.K_a]:
+       if keys[pygame.K_a]:
             Player.direction[0] = -1
 
-       if pygame.key.get_pressed()[pygame.K_d]:
+       if keys[pygame.K_d]:
             Player.direction[0] = 1
         
        #normalize the direction
@@ -501,6 +508,9 @@ class Player:
                         elif item.name == "Pumpkin_Launcher":
                             Player.weapon_name = "Pumpkin_Launcher"
                             Player.weapon = Player.weapon_pumpkinlauncher
+                        elif item.name == "Fist":
+                            Player.weapon_name = "Fist"
+                            Player.weapon = Player.weapon_fist
                         clicked = False
                         break
 

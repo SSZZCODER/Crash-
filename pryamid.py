@@ -22,6 +22,7 @@ def main():
     clock = pygame.time.Clock()
     exit = False
     skeletonspawner = spawner(0, 300, 3)
+    mousedown = False
 
     while not exit:
         dt = clock.get_time()/100
@@ -33,6 +34,11 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_m:
                     return 0 
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mousedown = True
+            if event.type == pygame.MOUSEBUTTONUP:
+                mousedown = False
+        
         keys = pygame.key.get_pressed()
         screen.blit(background,[0,0])
         for platform in platforms:
@@ -50,7 +56,7 @@ def main():
             return 3
         healthbar.render(screen, player)
         skeletonspawner.spawn_skeleton(enemies)
-        player.update(screen, keys, dt, platforms)
+        player.update(screen, keys, dt, platforms, mousedown)
         pygame.display.update()
         clock.tick(60)
 

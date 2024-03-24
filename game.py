@@ -20,7 +20,7 @@ import desertarena
 import pryamid
 import finalbossdoor
 
-level = 0
+level = 1
 
 while level != -1:
     if level == 0:
