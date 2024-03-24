@@ -16,7 +16,7 @@ from warp import *
 
 
 def main():
-    desertboss = BossArena('images/sandarena.png', "Boss7", Boss7(7, 350, 95), 2, "desert", "images/sandmanfrag.png", (50,50))
+    desertboss = BossArena('images/sandarena.png', "Boss7", Boss7(7, 350, 95), 15, "desert", "images/sandmanfrag.png", (50,50))
     while not desertboss.exit:
         desertboss.gameloop()
         if desertboss.level != None:
