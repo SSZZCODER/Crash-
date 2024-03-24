@@ -77,8 +77,8 @@ class Player_Platformer:
                 else:
                     jumpvelocity = 0
                     self.vel[1] += jumpvelocity
-    def attack(self, keys, dt):
-        if keys[pygame.K_SPACE]:
+    def attack(self, keys, dt, mousedown):
+        if mousedown:
             if self.attacktimer >= self.attackcooldown:
                 self.attack_sound.play()
                 self.attacking = True
@@ -136,10 +136,10 @@ class Player_Platformer:
     def gothit(self, attackvalue, pushback):
         self.health -= attackvalue
         self.vel[0] += pushback
-    def update(self, screen, keys, dt, platforms):
+    def update(self, screen, keys, dt, platforms, mousedown):
         self.collisions(platforms)
         self.move_x(keys)
         self.move_y(keys, dt)
         self.render(screen)
-        self.attack(keys, dt)
+        self.attack(keys, dt, mousedown)
 
