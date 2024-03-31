@@ -11,6 +11,7 @@ def main():
     openedbackground = pygame.image.load("images/finalbossdooropen.png")
     openedbackground = pygame.transform.scale(openedbackground, [750, 750]) 
     dooropened = False
+    finalbosswarp = Warp(250, 600, 100, 100, (255, 255, 0), 25, 25)
     clock = pygame.time.Clock()
     exit = False
      
@@ -27,12 +28,16 @@ def main():
         else:
             screen.fill((255,0,0))
             screen.blit(openedbackground, (0, 0))
+            finalbosswarp.Update(screen)
+            if finalbosswarp.Touched():
+                print("teleported")
+                return 17
         Player.Update(screen,events)
         for key in Player.bosskeys:
             if len(Player.bosskeys[key]) > 0:
                 screen.blit(Player.bosskeys[key][0], Player.bosskeys[key][1])
                 keys += 1
-        if keys >= 4:
+        if keys >= 1:
             dooropened = True
         pygame.display.flip()
         clock.tick(60)
