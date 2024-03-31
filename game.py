@@ -21,7 +21,7 @@ import pryamid
 import finalbossdoor
 import finalbosslevel
 
-level = 0
+level = 16
 
 while level != -1:
     if level == 0:
@@ -57,7 +57,7 @@ while level != -1:
     if level == 15:
         level = pryamid.main()
     if level == 16:
-        level == finalbossdoor.main()
+        level = finalbossdoor.main()
     if level == 17:
         level = finalbosslevel.main()
     print("Level: " + str(level)) 
