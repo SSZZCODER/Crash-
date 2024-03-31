@@ -4,9 +4,9 @@ class GameLogic:
     #pygame.mixer.pre_init(44100, 16, 2, 4096)
     pygame.mixer.init()
     up = False
-    enemyList = {"grass":[], "lava":[], "ocean":[], "Boss1":[], "Boss2":[], "Boss3":[], "Boss4":[], "Boss5": [], "Boss6": [],"jungle":[], "snow":[], "desert":[], "Boss7":[], "Boss8":[]}
-    itemlist = {"grass":[], "lava":[], "ocean":[],"Boss1":[],"Boss2":[], "Boss3":[],"Boss4":[],"Boss5": [],"Boss6": [], "jungle":[], "snow":[], "desert":[], "Boss7":[], "Boss8":[]}
-    objects = {"grass":[], "lava":[], "ocean":[], "Boss1":[],"Boss2":[], "Boss3":[], "Boss4":[], "Boss5": [],"Boss6": [],"jungle":[], "snow":[], "desert":[], "Boss7":[], "Boss8":[]}
+    enemyList = {"grass":[], "lava":[], "ocean":[], "Boss1":[], "Boss2":[], "Boss3":[], "Boss4":[], "Boss5": [], "Boss6": [],"jungle":[], "snow":[], "desert":[], "Boss7":[], "Boss8":[], "Boss9":[]}
+    itemlist = {"grass":[], "lava":[], "ocean":[],"Boss1":[],"Boss2":[], "Boss3":[],"Boss4":[],"Boss5": [],"Boss6": [], "jungle":[], "snow":[], "desert":[], "Boss7":[], "Boss8":[], "Boss9":[]}
+    objects = {"grass":[], "lava":[], "ocean":[], "Boss1":[],"Boss2":[], "Boss3":[], "Boss4":[], "Boss5": [],"Boss6": [],"jungle":[], "snow":[], "desert":[], "Boss7":[], "Boss8":[], "Boss9":[]}
     soundlist = {"zombie": pygame.mixer.Sound("sounds/hurt.wav"), 
                 "achievement": pygame.mixer.Sound("sounds/power.wav"), 
                 "coin": pygame.mixer.Sound("sounds/coin.wav"), 
@@ -33,6 +33,7 @@ class GameLogic:
                         "roar": pygame.mixer.Sound("sounds/yetiroar.wav"),
                     "earthquake": pygame.mixer.Sound("sounds/earthquakesound.wav"),
                     "tornado": pygame.mixer.Sound("sounds/tornado.wav"),
+                    "dragon": pygame.mixer.Sound("sounds/dragonroar.wav"),
     }
     spellList = []
     bulletlist = []
