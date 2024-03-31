@@ -1309,5 +1309,9 @@ class Boss9:
         self.render(screen)
     
 class fireBreath:
-    def __init__(self):
+    def __init__(self,target_pos,boss):
+        self.target_pos = target_pos
+        self.beam_image = pygame.image.load("")
+        self.blast_image = pygame.image.load("")
+        self.boss = boss
 
