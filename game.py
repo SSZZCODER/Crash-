@@ -19,8 +19,9 @@ import desert
 import desertarena
 import pryamid
 import finalbossdoor
+import finalbosslevel
 
-level = 1
+level = 0
 
 while level != -1:
     if level == 0:
@@ -57,4 +58,6 @@ while level != -1:
         level = pryamid.main()
     if level == 16:
         level == finalbossdoor.main()
+    if level == 17:
+        level = finalbosslevel.main()
     print("Level: " + str(level)) 

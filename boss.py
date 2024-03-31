@@ -173,7 +173,7 @@ class Acid:
 
 class Boss2:
     def __init__(self, damage, xPos, yPos):
-        self.health = 2500
+        self.health = 1
         self.damage = damage
         self.xPos = xPos
         self.yPos = yPos
@@ -297,7 +297,7 @@ class Fireball:
                 
 class Boss3:
         def __init__(self, damage, xPos, yPos):
-            self.health = 2500
+            self.health = 1 #2500
             self.damage = damage
             self.xPos = xPos
             self.yPos = yPos
@@ -487,7 +487,7 @@ class Tooth:
         self.attack()
 class Boss4:
     def __init__(self, damage, xPos, yPos):
-        self.health = 2500
+        self.health = 1
         self.damage = damage
         self.xPos = xPos
         self.yPos = yPos
