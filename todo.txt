@@ -1,0 +1,7 @@
+1. Finish final dragon boss
+    a.Make dragon fire attack - Try to finish fire attack
+    b.Make death code
+2. Add a End Screen,when player has killed final boss - Sam make end screen
+3. Fix the sword swing (Animation does not play when hitting enemy)
+4. Fix Player spawning in obstacle(Bush,magma rock,coral....). Player gets stuck if spawned in osbstacle
+5. Bug Testing- test our game and see what we need to fix

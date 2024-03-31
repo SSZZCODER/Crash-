@@ -21,7 +21,7 @@ import pryamid
 import finalbossdoor
 import finalbosslevel
 
-level = 16
+level = 17
 
 while level != -1:
     if level == 0:

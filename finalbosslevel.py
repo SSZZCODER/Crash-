@@ -9,13 +9,13 @@ from enemy import *
 import time
 from gamelogic import GameLogic
 from items import spawneritems
-from boss import Boss
+from boss import Boss9
 import random
 
 from bossarenalevel import BossArena
 
 def main():
-    dragonbossarena = BossArena("images/finalbossmap.png", "Boss1", Boss(7, 350, 95), 1,"dragon" , "images/dragon.png", (50,50),enemyspawner=spawner(0, 600, 10))
+    dragonbossarena = BossArena("images/finalbossmap.png", "Boss1", Boss9(7, 350, 95), 1,"dragon" , "images/dragon.png", (50,50))
     while not dragonbossarena.exit:
         dragonbossarena.gameloop()
         if dragonbossarena.level != None:

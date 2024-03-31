@@ -1308,5 +1308,6 @@ class Boss9:
         self.move()            
         self.render(screen)
     
-    class fireBreath:
-        pass
+class fireBreath:
+    def __init__(self):
+
