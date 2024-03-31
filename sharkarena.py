@@ -17,6 +17,7 @@ def main():
     sharkboss = BossArena('images/oceanboss.png', "Boss3", Boss3(7, 350, 95), 5 ,"shark", "images/sharkfrag.png", (50,50))
     while not sharkboss.exit:
         sharkboss.gameloop()
+        print(sharkboss.boss.health)
         if sharkboss.level != None:
             return sharkboss.level
     # pygame.init()
